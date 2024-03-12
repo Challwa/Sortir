@@ -36,12 +36,12 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column(name : 'mot_de_passe', type: Types::STRING, nullable: false)]
-    private ?string $motDePasse;
+    private ?string $password;
 
     /**
      * @var list<string> The user roles
      */
-    #[ORM\Column(name: 'roles', type: Types::STRING, nullable: false)]
+    #[ORM\Column(name: 'roles')]
     private array $roles = [];
 
     #[ORM\Column(name : 'actif', type: Types::BOOLEAN, nullable: false)]
@@ -161,16 +161,6 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     public function setTelephone(?string $telephone): void
     {
         $this->telephone = $telephone;
-    }
-
-    public function getMotDePasse(): ?string
-    {
-        return $this->motDePasse;
-    }
-
-    public function setMotDePasse(?string $motDePasse): void
-    {
-        $this->motDePasse = $motDePasse;
     }
 
     public function getActif(): ?bool
