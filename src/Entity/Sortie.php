@@ -13,7 +13,7 @@ class Sortie
     #[ORM\Column(type: 'integer')]
     private $idSortie;
 
-    #[ORM\Column(name:'id',type: Types::INTEGER, nullable: false, options: ['unsigned' => true], length: 30)]
+    #[ORM\Column(name:'nom',type: Types::INTEGER, nullable: false, options: ['unsigned' => true], length: 30)]
     private $nom;
 
     #[ORM\Column(name: 'dateHeureDebut',type: Types::DATETIME_MUTABLE, nullable: false)]
