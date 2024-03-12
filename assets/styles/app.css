@@ -32,6 +32,20 @@ ul{
 .home-wrapper {
     text-align: center;
 }
+button[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10% 30% 50% 70%;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
 footer {
     position: fixed;
     bottom: 0;
