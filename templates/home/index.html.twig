@@ -1,11 +1,15 @@
-{% extends 'base.html.twig' %}
+{% extends "base.html.twig" %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}{{ parent() }}: Accueil {% endblock %} {# parent para recuperar toddo de la pagina madre #}
 
 {% block body %}
+    <div class="home-wrapper">
+        <h1>Bienvenue <a href="#">Sign in</a></h1>
 
-<div>
-    <h1>Home</h1>
+        <div>
+            <img src="{{ asset('Images/sortir_home.png') }}" alt="sortir" width="500px">
+        </div>
+    </div>
 
-</div>
+
 {% endblock %}
