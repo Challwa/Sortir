@@ -41,4 +41,5 @@ class HomeController extends AbstractController
         return $this->render('home/inscription.html.twig');
     }
 
+
 }
