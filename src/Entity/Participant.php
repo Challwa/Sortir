@@ -30,7 +30,7 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $telephone;
 
     #[ORM\Column(name : 'email', type: Types::STRING, length: 20, nullable: false)]
-    private ?string $email = null;
+    private ?string $email;
 
     /**
      * @var string The hashed password
