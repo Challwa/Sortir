@@ -20,6 +20,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  * */
 
 
+
 class ParticipantType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
