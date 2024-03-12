@@ -18,9 +18,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  * pour ne pas nous bloquer
  *
  * */
-
-
-
 class ParticipantType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -92,12 +89,10 @@ class ParticipantType extends AbstractType
 
             ->add('submit', SubmitType::class, [
                 'label' => 'Save'
-            ])
-        ;
+            ]);
+
 
     }
-
-
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
