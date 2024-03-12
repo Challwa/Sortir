@@ -35,10 +35,10 @@ class HomeController extends AbstractController
         return $this->render('home/profil.html.twig');
     }
 
-    #[Route(path: "inscription", name: "app_inscription", methods: ["GET"])]
-    public function inscription(): Response
+    #[Route(path: "creationCompte", name: "app_creationCompte", methods: ["GET"])]
+    public function creationCompte(): Response
     {
-        return $this->render('home/inscription.html.twig');
+        return $this->render('home/creationCompte.html.twig');
     }
 
 }

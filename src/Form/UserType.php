@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  * pour ne pas nous bloquer
  *
  * */
-class ParticipantType extends AbstractType
+class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
