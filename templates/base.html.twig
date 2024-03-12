@@ -27,9 +27,11 @@
                         <li><a href="{{ path('app_sites') }}">Sites</a></li>
                         <li><a href="{{ path('app_profil') }}">Mon Profil</a></li>
                         <li><a href="{{ path('app_inscription') }}">S'inscrire</a></li>
-                        <li><a href="#">Logout</a></li>
-
-                        {#            <li><a href="#">Login</a></li>#}
+                        {% if is_granted('IS_AUTHENTICATED') %}
+                        <li><a href="{{ path('app_logout') }}">Se déconnecter</a></li>
+                        {% else %}
+                        <li><a href="{{ path('app_login') }}">Se connecter</a></li>
+                        {% endif %}
 
                     </ul>
                 </nav>
