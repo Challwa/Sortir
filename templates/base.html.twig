@@ -28,7 +28,7 @@
                         <li><a href="{{ path('app_profil') }}">Mon Profil</a></li>
                         <li><a href="{{ path('register') }}">S'inscrire</a></li>
                         {% if is_granted('IS_AUTHENTICATED') %}
-                            <li><a href="{{ path('app_logout') }}">Se déconnecter</a></li>
+                            <li><a href="{{ path('app_logout') }}">Se déconnecter<small>({{ app.user.email }})</small></a></li>
                         {% else %}
                             <li><a href="{{ path('app_login') }}">Se connecter</a></li>
                         {% endif %}
