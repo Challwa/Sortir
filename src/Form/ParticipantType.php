@@ -94,6 +94,7 @@ class ParticipantType extends AbstractType
                 'label' => 'Save'
             ])
         ;
+
     }
 
     public function configureOptions(OptionsResolver $resolver): void
