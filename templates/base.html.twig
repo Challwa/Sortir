@@ -1,49 +1,49 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>{% block title %}Sortir App{% endblock %}</title>
-    <link rel="icon" href="{{ asset('Images/logo.jpg') }}" type="image/x-icon"> {# favicon #}
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anta&display=swap">
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Sortir App{% endblock %}</title>
+        <link rel="icon" href="{{ asset('Images/logo.jpg') }}" type="image/x-icon"> {# favicon #}
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anta&display=swap">
 
-    {% block stylesheets %}
+        {% block stylesheets %}
 
-    {% endblock %}
+        {% endblock %}
 
-    {% block javascripts %}
-        {% block importmap %}{{ importmap('app') }}{% endblock %}
-    {% endblock %}
-</head>
-<header>
-    <div class="header-wrapper">
-        <div class="header-logo">
-            <h1>[Sortir Logo ici]</h1>
+        {% block javascripts %}
+            {% block importmap %}{{ importmap('app') }}{% endblock %}
+        {% endblock %}
+    </head>
+    <header>
+        <div class="header-wrapper">
+            <div class="header-logo">
+                <h1>[Sortir Logo ici]</h1>
+            </div>
+            <div class="header-barre">
+                <nav>
+                    <ul>
+                        <li><a href="{{ path('app_home') }}">Accueil</a></li>
+                        <li><a href="{{ path('app_villes') }}">Villes</a></li>
+                        <li><a href="{{ path('app_sites') }}">Sites</a></li>
+                        <li><a href="{{ path('app_profil') }}">Mon Profil</a></li>
+                        <li><a href="{{ path('app_inscription') }}">S'inscrire</a></li>
+                        <li><a href="#">Logout</a></li>
+
+                        {#            <li><a href="#">Login</a></li>#}
+
+                    </ul>
+                </nav>
+            </div>
         </div>
-        <div class="header-barre">
-            <nav>
-                <ul>
-                    <li><a href="{{ path('app_home') }}">Accueil</a></li>
-                    <li><a href="{{ path('app_villes') }}">Villes</a></li>
-                    <li><a href="{{ path('app_sites') }}">Sites</a></li>
-                    <li><a href="{{ path('app_profil') }}">Mon Profil</a></li>
-                    <li><a href="{{ path('register') }}">Créer un compte</a></li>
-                    <li><a href="#">Logout</a></li>
+    </header>
 
-                    {#            <li><a href="#">Login</a></li>#}
+    <body>
+        {% block body %}{% endblock %}
+    </body>
 
-                </ul>
-            </nav>
+    <footer>
+        <div>
+            <b>2024 - ENI - AppSortir</b>
         </div>
-    </div>
-</header>
-
-<body>
-{% block body %}{% endblock %}
-</body>
-
-<footer>
-    <div>
-        <b>2024 - ENI - AppSortir</b>
-    </div>
-</footer>
+    </footer>
 </html>
