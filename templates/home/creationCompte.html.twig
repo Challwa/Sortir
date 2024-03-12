@@ -8,22 +8,19 @@
     {% endfor %}
 
     <h1>Créer un compte</h1>
-
-    {{ form_errors(registrationForm) }}
-
-
-
+<form action="{{ path('register') }}" method="post">
     {{ form_row(registrationForm.pseudo) }}
     {{ form_row(registrationForm.nom) }}
     {{ form_row(registrationForm.prenom) }}
     {{ form_row(registrationForm.telephone) }}
     {{ form_row(registrationForm.email) }}
-    {{ form_row(registrationForm.plainPassword, {
-        label: 'Password'
-    }) }}
-
+    {{ form_row(registrationForm.password) }}
 
 
     <button type="submit" class="btn">créer mon compte</button>
 
+    <a href="{{ url('app_login') }}">Déjà enregistré?</a>
+
+
+</form>
 {% endblock %}

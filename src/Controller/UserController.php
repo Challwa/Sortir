@@ -12,33 +12,29 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 
-
 class UserController extends AbstractController
 {
     #[Route('/register', name: 'register')]
-    public function register(Request $request,UserPasswordHasherInterface $userPasswordHasher , EntityManagerInterface $entityManager,UserPasswordHasherInterface $participantPasswordHasher): Response
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager,): Response
     {
-        $participant = new Participant();
-        $form = $this->createForm(UserType::class, $participant);
+        $user = new Participant();
+        $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
-//        if ($form->isSubmitted() && $form->isValid()) {
-//            // encode the plain password
-//            $participant->setPassword(
-//                $participantPasswordHasher->hashPassword(
-//                    $participant,
-//                    $form->get('plainPassword')->getData()
-//                )
-    //);
-//
-//            $entityManager->persist($participant);
-//            $entityManager->flush();
-//
-//            $text = "Un nouveau participant vient d'arriver : " . $participant->getEmail() . ". Bienvenue à lui sur Sortir !";;
-//
-//
-//            return $this->redirectToRoute('app_login');
-//        }
+        if ($form->isSubmitted() && $form->isValid()) {
+            // encode the plain password
+            $user->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    $form->get('plainPassword')->getData()
+                )
+            );
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+
+            return $this->redirectToRoute('app_login');
+        }
 
         return $this->render('home/creationCompte.html.twig', [
             'registrationForm' => $form,
