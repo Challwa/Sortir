@@ -1,8 +1,34 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ parent() }}: Villes {% endblock %}
+{% block title %}Gérer les lieux{% endblock %}
 
 {% block body %}
-    <h1>Some cities here!</h1>
-{% endblock %}
+    <h1>Gérer les lieux</h1>
 
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Nom</th>
+            <th>CodePostal</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for ville in villes %}
+            <tr>
+                <td>{{ ville.nom }}</td>
+                <td>{{ ville.codePostal }}</td>
+                <td>
+                    <a href="{{ path('app_ville_edit', {'id': ville.id}) }}">modifier</a>
+                    <a href="{{ path('app_ville_delete', {'id': ville.id}) }}">supprimer</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_ville_new') }}">Ajouter</a>
+{% endblock %}
