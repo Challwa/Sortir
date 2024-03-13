@@ -3,5 +3,37 @@
 {% block title %}{{ parent() }}: Sites {% endblock %}
 
 {% block body %}
-    <h1>Some sites here!</h1>
+    <div class="container">
+        <h1>Gérer les sites</h1>
+
+        <div>
+            <p>Filtrer les sites</p>
+            <label for="site-search">Le nom contient:</label>
+            <input type="search" id="site-search" name="filter"/>
+            <button type="submit">Rechercher</button>
+        </div>
+        <br>
+        <div class="table-container">
+            <table>
+                <thead>
+                <tr>
+                    <th>Ville</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                {% for i in sites %}
+                    <tbody>
+                    <tr>
+                        <th>{{ i.nom }}</th>
+                        <th>Modifier </th>
+                        <th>-</th>
+                        <th> Supprimer</th>
+                    </tr>
+                    </tbody>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+
 {% endblock %}

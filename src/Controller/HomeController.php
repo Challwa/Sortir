@@ -23,13 +23,7 @@ class HomeController extends AbstractController
         return $this->render('home/villes.html.twig');
     }
 
-    #[Route(path: "sites", name: "app_sites", methods: ["GET"])]
-    public function sites(): Response
-    {
-        return $this->render('home/sites.html.twig');
-    }
-
-    #[Route(path: "profil", name: "app_profil", methods: ["GET"])]
+   #[Route(path: "profil", name: "app_profil", methods: ["GET"])]
     public function profil(): Response
     {
         return $this->render('home/profil.html.twig');
