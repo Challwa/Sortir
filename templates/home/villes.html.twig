@@ -1,34 +1,40 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Gérer les lieux{% endblock %}
+{% block title %}{{ parent() }}: Villes {% endblock %}
 
 {% block body %}
-    <h1>Gérer les lieux</h1>
+    <div class="container">
+        <h1>Gérer les villes</h1>
 
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Nom</th>
-            <th>CodePostal</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for ville in villes %}
-            <tr>
-                <td>{{ ville.nom }}</td>
-                <td>{{ ville.codePostal }}</td>
-                <td>
-                    <a href="{{ path('app_ville_edit', {'id': ville.id}) }}">modifier</a>
-                    <a href="{{ path('app_ville_delete', {'id': ville.id}) }}">supprimer</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        <div>
+            <p>Filtrer les sites</p>
+            <label for="site-search">Le nom contient:</label>
+            <input type="search" id="site-search" name="filter"/>
+            <button type="submit">Rechercher</button>
+        </div>
+        <br>
+        <div class="table-container">
+            <table>
+                <thead>
+                <tr>
+                    <th>Ville</th>
+                    <th>Code Postal</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                {% for i in villes %}
+                    <tbody>
+                    <tr>
+                        <th>{{ i.nom }}</th>
+                        <th>Modifier </th>
+                        <th>-</th>
+                        <th> Supprimer</th>
+                    </tr>
+                    </tbody>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
 
-    <a href="{{ path('app_ville_new') }}">Ajouter</a>
+
 {% endblock %}
