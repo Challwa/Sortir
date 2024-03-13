@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ parent() }} : Créer une sortie
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Créer une sortie</h1>
+
+        <form action="{{ path('sortie_creer') }}" method="post">
+            {{ form_row(formSortie.nom) }}
+            {{ form_row(formSortie.dateHeureDebut) }}
+            {{ form_row(formSortie.dateLimiteInscription) }}
+            {{ form_row(formSortie.nbInscriptionsMax) }}
+            {{ form_row(formSortie.duree) }}
+            {{ form_row(formSortie.infosSortie) }}
+            {{ form_row(formSortie.Submit) }}
+        </form>
+{#        <div>#}
+{#            {{ form(formSortie) }}#}
+{#        </div>#}
+    </div>
+
+
+{% endblock %}
+
+
+

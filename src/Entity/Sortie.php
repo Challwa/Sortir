@@ -34,6 +34,11 @@ class Sortie
     #[ORM\Column(name: 'etat',type: Types::STRING, nullable: false)]
     private $etat;
 
+    public function __construct()
+    {
+
+    }
+
     /**
      * @return mixed
      */
