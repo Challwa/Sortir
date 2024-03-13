@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route(path: '/sortie', name: 'sortie_')]
 class SortieController extends AbstractController
 {
-    #[Route(path: '/creer', name: 'creer', methods: ["GET", "POST"])]
+    #[Route(path: '/creer', name: 'creer')]
     public function creerSortie(Request $request, EntityManagerInterface $entityManager): Response
 {
 
@@ -24,7 +24,6 @@ class SortieController extends AbstractController
     $formSortie->handleRequest($request);
 
     if ($formSortie->isSubmitted() && $formSortie->isValid()) {
-
         $entityManager->persist($sortie);
         $entityManager->flush();
 
@@ -34,7 +33,7 @@ class SortieController extends AbstractController
     }
 
         return $this->render('sortie/creerSortie.html.twig', [
-            'formSortie' => $formSortie->createView(),
+            'formSortie' => $formSortie
         ]);
 
 }
