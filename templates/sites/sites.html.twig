@@ -26,10 +26,10 @@
                 <tbody>
                 {% for i in sites %}
                     <tr>
-                        <th>{{ i.nom }}</th>
-                        <th>Modifier</th>
+                        <th>{{ i.nom|upper }}</th>
+                        <th><a href="{{ path('app_sites_edit', { id : i.id }) }}">Modifier</a></th>
                         <th>-</th>
-                        <th> Supprimer</th>
+                        <th><a href="">Supprimer</a></th>
                     </tr>
                 {% endfor %}
                 </tbody>
@@ -38,6 +38,4 @@
         <br>
         <button type="submit">Ajouter</button>
     </div>
-
-
 {% endblock %}
