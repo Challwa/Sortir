@@ -46,7 +46,10 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(name: 'roles')]
     private array $roles = [];
 
-    #[ORM\Column(name : 'actif', type: Types::BOOLEAN, nullable: false)]
+    /*
+     * ne pas oublier de gérer le nullable de l'actif pour l'instant on le laisse en true
+     * */
+    #[ORM\Column(name : 'actif', type: Types::BOOLEAN, nullable: true)]
     private ?bool $actif;
 
     #[ORM\Column(type: 'boolean')]
