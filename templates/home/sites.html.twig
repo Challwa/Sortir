@@ -19,20 +19,24 @@
                 <tr>
                     <th>Ville</th>
                     <th>Actions</th>
+                    <th></th>
+                    <th></th>
                 </tr>
                 </thead>
+                <tbody>
                 {% for i in sites %}
-                    <tbody>
                     <tr>
                         <th>{{ i.nom }}</th>
-                        <th>Modifier </th>
+                        <th>Modifier</th>
                         <th>-</th>
                         <th> Supprimer</th>
                     </tr>
-                    </tbody>
                 {% endfor %}
+                </tbody>
             </table>
         </div>
+        <br>
+        <button type="submit">Ajouter</button>
     </div>
 
 
