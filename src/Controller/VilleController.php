@@ -15,15 +15,16 @@ class VilleController extends AbstractController
 {
 
 
-    #[Route('/ville', name: 'ville', methods: ['GET', 'POST'])]
+    #[Route('/ville', name: 'ville', methods: ['GET'])]
     /*
   * ne pas oublier le
   #[IsGranted('ROLE_USER')]
   * */
     public function ville(): Response
     {
+        $villes = $this->getRepository(Ville::class)->findAll();
         return $this->render('ville/index.html.twig', [
-            'controller_name' => 'VilleController',
+            'villes' => $villes
         ]);
     }
 
