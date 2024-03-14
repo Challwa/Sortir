@@ -26,6 +26,7 @@ class RegistrationFormType extends AbstractType
             ->add('email')
             ->add('image', FileType::class, [
 
+
                 'required' => false,
                 'constraints' => [
                     new File([
