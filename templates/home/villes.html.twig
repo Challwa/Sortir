@@ -8,8 +8,8 @@
 
         <div>
             <p>Filtrer les sites</p>
-            <label for="site-search">Le nom contient:</label>
-            <input type="search" id="site-search" name="filter"/>
+            <label for="ville-search">Le nom contient:</label>
+            <input type="search" id="ville-search" name="filter"/>
             <button type="submit">Rechercher</button>
         </div>
         <br>
@@ -26,14 +26,18 @@
                     <tbody>
                     <tr>
                         <th>{{ i.nom }}</th>
-                        <th>Modifier </th>
-                        <th>-</th>
-                        <th> Supprimer</th>
+                        <th>{{ i.codePostal }}</th>
+                        <td>
+                        <a href="{{ path('app_edit', { id : i.id }) }}">Modifier</a> |
+                            <a href="{{ path('app_delete', { id : i.id}) }}">Supprimer</a>
+                        </td>
                     </tr>
                     </tbody>
                 {% endfor %}
             </table>
         </div>
+        <br>
+        <button type="submit">Ajouter</button>
     </div>
 
 

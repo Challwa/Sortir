@@ -19,4 +19,16 @@ class VilleController extends AbstractController
 
         return $this->render('home/villes.html.twig', compact('villes'));
     }
+
+    #[Route(path: 'edit/{id}', name: 'edit')]
+    public function edit(Ville $ville): Response
+    {
+        return $this->render('ville/edit.html.twig', compact('ville'));
+    }
+
+    #[Route(path: 'delete/{id}', name: 'delete')]
+    public function delete(Ville $ville): Response
+    {
+        return $this->render('ville/delete.html.twig', compact('ville'));
+    }
 }
