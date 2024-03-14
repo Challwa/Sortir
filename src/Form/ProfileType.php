@@ -18,9 +18,6 @@ class ProfileType extends AbstractType
             ->add('telephone')
             ->add('email')
             ->add('password')
-            ->add('roles')
-            ->add('actif')
-            ->add('isVerified')
         ;
     }
 

@@ -4,13 +4,16 @@ namespace App\Controller;
 
 use App\Entity\Participant;
 
+use App\Form\ProfileType;
 use App\Form\RegistrationFormType;
-use Cassandra\Type\UserType;
+use App\Security\AppAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -24,44 +27,42 @@ class UserController extends AbstractController
 
 //fonction afficher profil user par son id
     #[Route(path: '', name: 'profil', methods: ['GET'])]
-    public function profil(EntityManagerInterface $entityManager): Response
+    public function profil(Request $request, UserPasswordHasherInterface $userPasswordHasher, Security $security, EntityManagerInterface $entityManager): Response
     {
-//        $profils = $entityManager->getRepository(Participant::class)->findOneBy(
-//            ['idParticipant' => $id]
+        $user = new Participant();
+        $form = $this->createForm(ProfileType::class, $user);
+        $form->handleRequest($request);
 
-//        );
+        if ($form->isSubmitted() && $form->isValid()) {
+            // encode the plain password
+            $user->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    $form->get('plainPassword')->getData()
+                )
+            );
 
-        return $this->render('home/profil.html.twig');
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            // generate a signed url and email it to the user
+            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+                (new TemplatedEmail())
+                    ->from(new Address('test@test.com', 'Test'))
+                    ->to($user->getEmail())
+                    ->subject('Please Confirm your Email')
+                    ->htmlTemplate('registration/confirmation_email.html.twig')
+            );
+
+            // do anything else you need here, like send an email
+
+            return $security->login($user, AppAuthenticator::class, 'main');
+        }
+
+        return $this->render('home/profil.html.twig', [
+            'profilForm' => $form,
+        ]);
     }
-
-
-
-//    #[Route(path: "register", name: 'register')]
-//    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager,): Response
-//    {
-//        $user = new Participant();
-//        $form = $this->createForm(RegistrationFormType::class, $user);
-//        $form->handleRequest($request);
-//
-//        if ($form->isSubmitted() && $form->isValid()) {
-//            // encode the plain password
-//            $user->setPassword(
-//                $userPasswordHasher->hashPassword(
-//                    $user,
-//                    $form->get('plainPassword')->getData()
-//                )
-//            );
-//            $entityManager->persist($user);
-//            $entityManager->flush();
-//
-//
-//            return $this->redirectToRoute('app_login');
-//        }
-//
-//        return $this->render('registration/register.html.twig', [
-//            'registrationForm' => $form,
-//        ]);
-   // }
 
 
 
