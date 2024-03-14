@@ -2,7 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Participant;
+use App\Entity\Site;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -10,12 +11,11 @@ use Symfony\Component\Routing\Attribute\Route;
 class HomeController extends AbstractController
 {
     #[Route(path: "")]
-    #[Route('/home', name: 'app_home', methods: ['GET'])]
-    public function home(): Response
+    #[Route('/home', name: 'app_home', methods : ['GET'])]
+    public function home(EntityManagerInterface $entityManager): Response
     {
-        return $this->render('home/index.html.twig', [
-            'controller_name' => 'HomeController',
-        ]);
+        $sites = $entityManager->getRepository(Site::class)->findAll();
+        return $this->render('home/index.html.twig', compact('sites'));
     }
 
     #[Route(path: "villes", name: "app_villes", methods: ["GET"])]
@@ -24,6 +24,11 @@ class HomeController extends AbstractController
         return $this->render('home/villes.html.twig');
     }
 
+   #[Route(path: "profil", name: "app_profil", methods: ["GET"])]
+    public function profil(): Response
+    {
+        return $this->render('home/profil.html.twig');
+    }
 
     #[Route(path: "creationCompte", name: "app_creationCompte", methods: ["GET"])]
     public function creationCompte(): Response
