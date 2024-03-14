@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Site;
+use App\Form\SiteTypes;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -19,14 +21,24 @@ class SiteController extends AbstractController
         return $this->render('sites/sites.html.twig', compact('sites'));
     }
 
-    #[Route(path: '{id}', name: 'edit')]
-    public function edit(int $id, EntityManagerInterface $entityManager): Response
+    #[Route(path: 'ajouter', name: 'ajouter')]
+    public function create(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $detail = $entityManager->getRepository(Site::class)->findOneBy([
-            'id' => $id
-        ]);
+        $site= new Site();
+        $formSite = $this->createForm(SiteTypes::class, $site);
 
-        return $this->render('sites/edit.html.twig', compact('detail'));
+        $formSite->handleRequest($request);
+
+        if($formSite->isSubmitted()){
+
+            $entityManager->persist($site);
+            $entityManager->flush();
+
+            $this->addFlash('succes', 'Le site a bien été enregistré');
+            return $this->redirectToRoute('app_sites_');
+        }
+
+        return $this->render('sites/edit.html.twig', compact('formSite'));
     }
 
 

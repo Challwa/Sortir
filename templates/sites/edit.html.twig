@@ -1,15 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ parent() }}: Edit sites {% endblock %}
+{% block title %}{{ parent() }}: Edit site {% endblock %}
 
 {% block body %}
     <div class="container">
-        <h1>Modifier un site</h1>
+        <h1>Nouveau site</h1>
 
         <div>
-            <label for="edit">Nom du site</label>
-            <input type="text" id="edit" name="edit" placeholder="{{ detail.nom }}"/>
-            <button type="submit">Enregistrer</button>
+            {{ form(formSite) }}
+{#            <label for="edit">Nom du site</label>#}
+{#            <input type="text" id="edit" name="edit" placeholder="{{ detail.nom }}"/>#}
+{#            <button type="submit"><a href="{{ path('app_sites_') }}">Enregistrer</a></button>#}
         </div>
     </div>
 

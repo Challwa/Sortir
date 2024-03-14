@@ -29,12 +29,12 @@ class Site
         return $this->idSite;
     }
 
-//    public function setIdSite(int $idSite): static
-//    {
-//        $this->idSite = $idSite;
-//
-//        return $this;
-//    }
+    public function setIdSite(int $idSite): static
+    {
+        $this->idSite = $idSite;
+
+        return $this;
+    }
 
     public function getNom(): ?string
     {
@@ -47,4 +47,6 @@ class Site
 
         return $this;
     }
+
+
 }

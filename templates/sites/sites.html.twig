@@ -3,6 +3,13 @@
 {% block title %}{{ parent() }}: Sites {% endblock %}
 
 {% block body %}
+    <div>
+        {% for group, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ group }}" role="alert">{{ message }}</div>
+            {% endfor %}
+        {% endfor %}
+    </div>
     <div class="container">
         <h1>Gérer les sites</h1>
 
@@ -27,7 +34,7 @@
                 {% for i in sites %}
                     <tr>
                         <th>{{ i.nom|upper }}</th>
-                        <th><a href="{{ path('app_sites_edit', { id : i.id }) }}">Modifier</a></th>
+                        <th><a href="{{ path('app_sites_ajouter', { id : i.id }) }}">Modifier</a></th>
                         <th>-</th>
                         <th><a href="">Supprimer</a></th>
                     </tr>
@@ -36,6 +43,6 @@
             </table>
         </div>
         <br>
-        <button type="submit">Ajouter</button>
+        <button type="submit"><a href="{{ path('app_sites_ajouter') }}">Ajouter</a></button>
     </div>
 {% endblock %}
