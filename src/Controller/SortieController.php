@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Etat;
 use App\Entity\Sortie;
 use App\Form\SortieType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -24,6 +25,10 @@ class SortieController extends AbstractController
     $formSortie->handleRequest($request);
 
     if ($formSortie->isSubmitted() && $formSortie->isValid()) {
+
+        $etats = $entityManager->getRepository(Etat::class)->find(1);
+        $sortie->setEtats($etats);
+
         $entityManager->persist($sortie);
         $entityManager->flush();
 

@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }}: Edit Ville {% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Nouvelle ville</h1>
+
+        <div>
+            {{ form(formVille) }}
+            {#            <label for="edit">Nom du site</label>#}
+            {#            <input type="text" id="edit" name="edit" placeholder="{{ detail.nom }}"/>#}
+            {#            <button type="submit"><a href="{{ path('app_sites_') }}">Enregistrer</a></button>#}
+        </div>
+    </div>
+
+{% endblock %}

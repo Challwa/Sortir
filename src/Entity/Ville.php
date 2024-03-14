@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
+use App\Repository\VilleRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity()]
-#[ORM\Table(name: 'Villes')]
+#[ORM\Entity(repositoryClass: VilleRepository::class)]
 class Ville
 {
 
@@ -38,7 +38,7 @@ class Ville
         $this->nom = $nom;
     }
 
-    public function getCodePostal(): string
+    public function getcodePostal(): string
     {
         return $this->codePostal;
     }

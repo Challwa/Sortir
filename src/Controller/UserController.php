@@ -64,59 +64,32 @@ class UserController extends AbstractController
         ]);
     }
 
+    #[Route('/{id}', name: 'profil_update', methods: ['GET', 'POST'])]
+    public function updateUser(User $user, Request $request, EntityManagerInterface $em, SluggerInterface $slugger): Response
+    {
+        $form = $this->createForm(ProfileType::class, $user);
+        $form->handleRequest($request);
 
+        if($form->isSubmitted() && $form->isValid()) {
 
+            if($form->get('picture_file')->getData() instanceof UploadedFile) {
+                $pictureFile = $form->get('picture_file')->getData();
+                $fileName = $slugger->slug($user->getLastName()) . '-' . uniqid() . '.' . $pictureFile->guessExtension();
+                $pictureFile->move('uploads', $fileName);
+                $user->setPicture($fileName);
+            }
 
-//    #[Route('update/{id}
-//    ', name: 'update', methods: ['GET', 'POST'])]
-//    // #[IsGranted('ROLE_USER')]
-//    public function updateUser(Security $security, Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
-//    {
-//        $user = $security->getUser() instanceof Participant ? $security->getUser() : $entityManager->getRepository(Participant::class)->find($security->getUser());
-//
-//        $form = $this->createForm(RegistrationFormType::class, $user);
-//        $form->handleRequest($request);
-//
-//        if ($form->isSubmitted() && $form->isValid()) {
-//            $formData = $form->getData();
-//            if (!empty($formData->getPseudo())) {
-//                $user->setPseudo($formData->getPseudo());
-//            }
-//            if (!empty($formData->getPrenom())) {
-//                $user->setPrenom($formData->getPrenom());
-//            }
-//            if (!empty($formData->getNom())) {
-//                $user->setNom($formData->getNom());
-//            }
-//            if (!empty($formData->getTelephone())) {
-//                $user->setTelephone($formData->getTelephone());
-//            }
-//
-//            if (!empty($formData->getEmail())) {
-//                $user->setEmail($formData->getEmail());
-//            }
-////            if ($form->get('picture')->getData() instanceof UploadedFile) {
-////                $pictureFile = $form->get('picture')->getData();
-////                $fileName = $slugger->slug($user->getUsername()) . '-' . uniqid() . '.' . $pictureFile->guessExtension();
-////                $pictureFile->move($this->getParameter('picture_dir'), $fileName);
-////                if (!empty($user->getPicture())) {
-////                    $picturePath = $this->getParameter('picture_dir') . '/' . $user->getPicture();
-////                    if (file_exists($picturePath)) {
-////                        unlink($picturePath);
-////                    }
-////                }
-////                $user->setPicture($fileName);
-////            }
-//            $entityManager->persist($user);
-//            $entityManager->flush();
-//
-//            $this->addFlash('success', 'Le profil a été mis à jour avec succès !');
-//            return $this->redirectToRoute('user/index');
-//        }
-//
-//        return $this->render('participant/updateUser.html.twig', [
-//            'user' => $user,
-//            'form' => $form->createView(),
-//        ]);
-//    }
+            $em->persist($user);
+            $em->flush();
+
+            $this->addFlash('success text-center', 'Votre profil a bien été mis à jour');
+            return $this->redirectToRoute('app_show_profile', ['id' => $user->getId()]);
+        }
+
+        return $this->render('user/edit.html.twig', [
+            'form' => $form,
+            'user' => $user
+        ]);
+    }
+
 }

@@ -4,8 +4,10 @@ namespace App\Form;
 
 use App\Entity\Participant;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 
 class ProfileType extends AbstractType
 {
@@ -17,6 +19,21 @@ class ProfileType extends AbstractType
             ->add('prenom')
             ->add('telephone')
             ->add('email')
+            ->add('image', FileType::class, [
+
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'image/*',
+                        ],
+                        'maxSizeMessage' => 'Ce fichier est trop lourd',
+                    ])
+
+
+
+                ]])
             ->add('password')
         ;
     }

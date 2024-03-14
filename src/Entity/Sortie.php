@@ -44,12 +44,16 @@ class Sortie
     #[Assert\NotBlank(message: 'Le lieu de la sortie est obligatoire')]
     private ?string $infosSortie = null;
 
-    #[ORM\Column(name: 'etat',type: Types::STRING, nullable: false)]
-    private $etat;
+//    #[ORM\Column(name: 'etat',type: Types::STRING, nullable: false)]
+//    private $etat;
+
+    #[ORM\ManyToOne(inversedBy: 'sorties')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Etat $etats = null;
 
     public function __construct()
     {
-        $this->etat = 'ouverte';
+//        $this->etat = 'ouverte';
     }
 
     /**
@@ -148,21 +152,21 @@ class Sortie
         $this->infosSortie = $infosSortie;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getEtat()
-    {
-        return $this->etat;
-    }
-
-    /**
-     * @param mixed $etat
-     */
-    public function setEtat($etat): void
-    {
-        $this->etat = $etat;
-    }
+//    /**
+//     * @return mixed
+//     */
+//    public function getEtat()
+//    {
+//        return $this->etat;
+//    }
+//
+//    /**
+//     * @param mixed $etat
+//     */
+//    public function setEtat($etat): void
+//    {
+//        $this->etat = $etat;
+//    }
 
     /**
      * @return mixed
@@ -170,6 +174,18 @@ class Sortie
     public function getIdSortie()
     {
         return $this->idSortie;
+    }
+
+    public function getEtats(): ?Etat
+    {
+        return $this->etats;
+    }
+
+    public function setEtats(?Etat $etats): static
+    {
+        $this->etats = $etats;
+
+        return $this;
     }
 
 
