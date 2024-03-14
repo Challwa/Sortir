@@ -2,33 +2,44 @@
 
 namespace App\Controller;
 
-use App\Entity\Site;
 use App\Entity\Ville;
+use App\Form\VilleType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route(path: 'villes/', name: 'app_')]
+#[Route(path: 'villes/', name: 'app_villes_')]
 class VilleController extends AbstractController
 {
-    #[Route(path: '', name: 'villes')]
-    public function villes(EntityManagerInterface $entityManager): Response
+    #[Route(path: '', name: '')]
+    public function ville(EntityManagerInterface $entityManager): Response
     {
-        $villes = $entityManager->getRepository(Ville::class)->findAll();
+        $ville = $entityManager->getRepository(Ville::class)->findAll();
 
-        return $this->render('home/villes.html.twig', compact('villes'));
+        return $this->render('villes/villes.html.twig', compact('ville'));
     }
 
-    #[Route(path: 'edit/{id}', name: 'edit')]
-    public function edit(Ville $ville): Response
+    #[Route(path: 'ajouter', name: 'ajouter')]
+    public function create(Request $request, EntityManagerInterface $entityManager): Response
     {
-        return $this->render('ville/edit.html.twig', compact('ville'));
+        $ville= new Ville();
+        $formVille = $this->createForm(VilleType::class, $ville);
+
+        $formVille->handleRequest($request);
+
+        if($formVille->isSubmitted()){
+
+            $entityManager->persist($ville);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'La  ville a bien été enregistrée');
+            return $this->redirectToRoute('app_villes_');
+        }
+
+        return $this->render('villes/edit.html.twig', compact('formVille'));
     }
 
-    #[Route(path: 'delete/{id}', name: 'delete')]
-    public function delete(Ville $ville): Response
-    {
-        return $this->render('ville/delete.html.twig', compact('ville'));
-    }
+
 }

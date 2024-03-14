@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Site;
-use App\Form\SiteTypes;
+use App\Form\SiteType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,7 +25,7 @@ class SiteController extends AbstractController
     public function create(Request $request, EntityManagerInterface $entityManager): Response
     {
         $site= new Site();
-        $formSite = $this->createForm(SiteTypes::class, $site);
+        $formSite = $this->createForm(SiteType::class, $site);
 
         $formSite->handleRequest($request);
 
@@ -34,7 +34,7 @@ class SiteController extends AbstractController
             $entityManager->persist($site);
             $entityManager->flush();
 
-            $this->addFlash('succes', 'Le site a bien été enregistré');
+            $this->addFlash('success', 'Le site a bien été enregistré');
             return $this->redirectToRoute('app_sites_');
         }
 

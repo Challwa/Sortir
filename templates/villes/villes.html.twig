@@ -7,7 +7,7 @@
         <h1>Gérer les villes</h1>
 
         <div>
-            <p>Filtrer les sites</p>
+            <p>Filtrer les villes</p>
             <label for="ville-search">Le nom contient:</label>
             <input type="search" id="ville-search" name="filter"/>
             <button type="submit">Rechercher</button>
@@ -22,14 +22,14 @@
                     <th>Actions</th>
                 </tr>
                 </thead>
-                {% for i in villes %}
+                {% for i in ville %}
                     <tbody>
                     <tr>
-                        <th>{{ i.nom }}</th>
-                        <th>{{ i.codePostal }}</th>
+                        <th>{{ i.nom | upper}}</th>
+                        <th>{{ i.CodePostal }}</th>
                         <td>
-                        <a href="{{ path('app_edit', { id : i.id }) }}">Modifier</a> |
-                            <a href="{{ path('app_delete', { id : i.id}) }}">Supprimer</a>
+{#                        <a href="{{ path('app_villes_modifier', { id : i.id }) }}">Modifier</a> |#}
+{#                            <a href="{{ path('app_delete', { id : i.id}) }}">Supprimer</a>#}
                         </td>
                     </tr>
                     </tbody>
@@ -37,7 +37,7 @@
             </table>
         </div>
         <br>
-        <button type="submit">Ajouter</button>
+        <button type="submit"><a href="{{ path('app_villes_ajouter') }}">Ajouter</a></button>
     </div>
 
 
