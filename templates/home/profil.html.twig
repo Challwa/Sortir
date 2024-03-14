@@ -1,7 +1,35 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ parent() }}: Sites {% endblock %}
+{% block title %}Mon profil{% endblock %}
 
 {% block body %}
-    <h1>A profile here!</h1>
+    {% for flash_error in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+    {% endfor %}
+    <div class="container">
+        <h1>Mon profil</h1>
+        {% if is_granted('IS_AUTHENTICATED') %}
+            {{ form_errors(profilForm) }}
+
+            {{ form_start(profilForm) }}
+
+            {{ form_row(profilForm.pseudo, {'value': app.user.pseudo}) }}
+            {{ form_row(profilForm.nom, {'value': app.user.nom}) }}
+            {{ form_row(profilForm.prenom, {'value': app.user.prenom}) }}
+            {{ form_row(profilForm.telephone, {'value': app.user.telephone}) }}
+            {{ form_row(profilForm.email, {'value': app.user.email}) }}
+
+
+            {#        {{ form_row(profilForm.plainPassword, {label: 'Password'}) }} #}
+
+
+            {{ form_end(profilForm) }}
+        {% endif %}
+        <button type="submit" class="btn">Modifier mon profil</button>
+
+    </div>
+
 {% endblock %}
+
+
+

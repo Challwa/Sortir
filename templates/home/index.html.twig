@@ -3,13 +3,68 @@
 {% block title %}{{ parent() }}: Accueil {% endblock %} {# parent para recuperar toddo de la pagina madre #}
 
 {% block body %}
-    <div class="home-wrapper">
-        <h1>Bienvenue <a href="{{ path('app_login') }}">Sign in</a></h1>
 
-        <div>
-            <img src="{{ asset('Images/sortir_home.png') }}" alt="sortir" width="500px">
+    {% if is_granted('IS_AUTHENTICATED') %}
+        <div class="container">
+            <div>
+                <p>Filtrer les sorties</p>
+                <label for="site">Site :</label>
+                <select name="site" id="site">
+                    <option value="">--Choisir un site--</option>
+                    {% for i in sites %}
+                    <option>{{ i.nom|upper }}</option>
+                    {% endfor %}
+                </select>
+                <br>
+                <br>
+                <label for="sortie">Le nom de la sortie contient:</label>
+                <input type="search" id="sortie" name="filter"/>
+                <button type="submit">Rechercher</button>
+            </div>
+            <br>
+            <br>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Nom de la sortie</th>
+                        <th>Date de la sortie</th>
+                        <th>Clôture</th>
+                        <th>Inscrits/places</th>
+                        <th>Etat</th>
+                        <th>Inscrit</th>
+                        <th>Organisateur</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th>a</th>
+                        <th>b</th>
+                        <th>c</th>
+                        <th>d</th>
+                        <th>e</th>
+                        <th>f</th>
+                        <th>g</th>
+                        <th>h</th>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <br>
+            <button type="submit"></button>
         </div>
-    </div>
+
+    {% else %}
+        <div class="home-wrapper">
+            <h1>Bienvenue</h1>
+
+            <div>
+                <img src="{{ asset('Images/sortir_home.png') }}" alt="sortir" width="500px">
+            </div>
+        </div>
+    {% endif %}
 
 
 {% endblock %}

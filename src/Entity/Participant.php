@@ -31,7 +31,7 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(name : 'telephone', type: Types::STRING ,length: 15, nullable: true)]
     private ?string $telephone;
 
-    #[ORM\Column(name : 'email', type: Types::STRING, length: 50, nullable: false)]
+    #[ORM\Column(name : 'email', type: Types::STRING, length: 60, nullable: false)]
     private ?string $email;
 
     /**
@@ -203,4 +203,6 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+
 }
