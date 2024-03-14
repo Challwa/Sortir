@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Participant;
+use App\Entity\Site;
 use App\Form\RegistrationFormType;
 use App\Repository\ParticipantRepository;
 use App\Security\AppAuthenticator;
@@ -30,17 +31,22 @@ class RegistrationController extends AbstractController
         $this->emailVerifier = $emailVerifier;
     }
 
+    //find all pour le ste
+
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, Security $security, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, Security $security, EntityManagerInterface $entityManager, SluggerInterface $slugger, Site $site): Response
     {
         $user = new Participant();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
+        $site = $entityManager->getRepository(Site::class)->findAll();
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            if ($form->get('picture_file')->getData() instanceof UploadedFile) {
-                $pictureFile = $form->get('picture_file')->getData();
+
+
+            if ($form->get('image')->getData() instanceof UploadedFile) {
+                $pictureFile = $form->get('image')->getData();
                 $fileName = $slugger->slug($user->getNom()) . '-' . uniqid() . '.' . $pictureFile->guessExtension();
                 $pictureFile->move($this->getParameter('picture_dir'), $fileName);
                 $user->setImage($fileName);
@@ -72,7 +78,9 @@ class RegistrationController extends AbstractController
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form,
-        ]);
+
+            'sites' => $site
+        ], );
     }
 
     #[Route('/verify/email', name: 'app_verify_email')]

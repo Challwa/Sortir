@@ -79,7 +79,7 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getId(): ?int
     {
-        return $this->idParticipant;
+        return $this->id;
     }
 
     public function getEmail(): ?string

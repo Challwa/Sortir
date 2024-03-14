@@ -72,8 +72,8 @@ class UserController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()) {
 
-            if($form->get('picture_file')->getData() instanceof UploadedFile) {
-                $pictureFile = $form->get('picture_file')->getData();
+            if($form->get('image')->getData() instanceof UploadedFile) {
+                $pictureFile = $form->get('image')->getData();
                 $fileName = $slugger->slug($user->getLastName()) . '-' . uniqid() . '.' . $pictureFile->guessExtension();
                 $pictureFile->move('uploads', $fileName);
                 $user->setPicture($fileName);
