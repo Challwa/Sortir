@@ -2,41 +2,54 @@
 
 namespace App\Entity;
 
+use App\Repository\SortieRepository;
+
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
-#[ORM\Entity()]
+#[ORM\Entity(repositoryClass: SortieRepository::class)]
 class Sortie
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
-    private $idSortie;
+    #[ORM\Column]
+    private ?int $idSortie = null;
 
-    #[ORM\Column(name:'nom',type: Types::INTEGER, nullable: false, options: ['unsigned' => true], length: 30)]
-    private $nom;
+    #[ORM\Column(length: 255, nullable: false)]
+    #[Assert\NotBlank(message: 'Le nom de la sortie est obligatoire')]
+    #[Assert\Length(max:255, maxMessage: 'Le nom de la sortie ne doit pas dépasser 255 caractères')]
+    private ?string $nom = null;
 
-    #[ORM\Column(name: 'dateHeureDebut',type: Types::DATETIME_MUTABLE, nullable: false)]
-    private $dateHeureDebut;
+    #[ORM\Column(name :'date_heure_debut',type: Types::DATETIME_MUTABLE)]
+    #[Assert\NotNull(message: 'La date de la sortie est obligatoire')]
+    private ? \DateTimeInterface $dateHeureDebut = null;
 
-    #[ORM\Column(name: 'duree',type: Types::DATETIME_MUTABLE, nullable: false)]
-    private $duree;
+    #[ORM\Column]
+    #[Assert\NotNull(message: 'La duree de la sortie est obligatoire')]
+    #[Assert\Positive(message: 'La duree de la sortie doit être positive')]
+    private ?int $duree = null;
 
-    #[ORM\Column(name: 'dateLimiteInscription',type: Types::DATETIME_MUTABLE, nullable: false)]
-    private $dateLimiteInscription;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Assert\NotNull(message: 'La date de la sortie est obligatoire')]
+    private ? \DateTimeInterface $dateLimiteInscription = null;
 
-    #[ORM\Column(name: 'nbInscriptionsMax',type: Types::INTEGER, nullable: false)]
-    private $nbInscriptionsMax;
+    #[ORM\Column(length: 255)]
+    #[Assert\NotNull(message: 'Le nombre maximum d\'inscrits est obligatoire')]
+    #[Assert\Positive(message: 'Le nombre maximum d\'inscrits doit être positif')]
+    private ?int $nbInscriptionsMax = null;
 
-    #[ORM\Column(name: 'infosSortie',type: Types::TEXT, nullable: false)]
-    private $infosSortie;
+    #[ORM\Column(length: 255)]
+    #[Assert\Length(max: 255, maxMessage: 'Le lieu de la sortie ne doit pas dépasser 255 caractères')]
+    #[Assert\NotBlank(message: 'Le lieu de la sortie est obligatoire')]
+    private ?string $infosSortie = null;
 
     #[ORM\Column(name: 'etat',type: Types::STRING, nullable: false)]
     private $etat;
 
     public function __construct()
     {
-
+        $this->etat = 'ouverte';
     }
 
     /**

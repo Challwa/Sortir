@@ -24,59 +24,31 @@ class SortieType extends AbstractType
         $builder
             ->add('nom',TextType::class, [
                 'label' => 'Nom de la sortie : ',
-                'constraints' => [
-                    new notBlank(),
-                    new Length(['min' => 2, 'max' => 30])
-                ]
             ])
             ->add('dateHeureDebut', DateTimeType::class, [
-                'input' => 'string',
-                'input_format' => 'd/m/Y H:i',
-                'widget' => 'single_text',
                 'label' => 'Date et heure de la sortie : ',
-                'constraints' => [
-                    new NotBlank(),
-                    new DateTime()
-                ]
+                'widget' => 'single_text',
             ])
-            ->add('dateLimiteInscription', DateType::class, [
-                'widget' => 'choice',
-                'label' => 'Date limite d\'inscription : ',
-                'format' => 'dd/MM/yyyy',
-                'constraints' => [
-                    new notBlank(),
-                    new DateTime()
-                ]
+            ->add('dateLimiteInscription', DateTimeType::class, [
+                'label' => 'Date limite d\'inscriptions : ',
+                'widget' => 'single_text',
             ])
             ->add('nbInscriptionsMax', IntegerType::class, [
                 'label' => 'Nombre de places : ',
                 'attr' => [
                     'min' => 2,
+                    'max' => 255
                 ],
-                'constraints' => [
-                    new notBlank(),
-                ]
             ])
             ->add('duree', IntegerType::class, [
                 'label' => 'Durée de la sortie (en minutes) : ',
                 'attr' => [
                     'min' => 1,
-                    'step' => 1
+                    'max' => 1440
                 ],
-                'constraints' => [
-                    new notBlank(),
-                    new Length(['min' => 30])
-                ]
             ])
             ->add('infosSortie',TextareaType::class, [
                 'label' => 'Description et infos : ',
-                'attr' => [
-                    'rows' => 5,
-                    'cols' => 40,
-                ],
-                'constraints' => [
-                    new Length(['max' => 1000])
-                ]
             ])
             ->add('Submit',SubmitType::class,[
                 'label' => 'Créer une sortie',
