@@ -28,9 +28,12 @@
                         <li><a href="{{ path('app_sites_') }}">Sites</a></li>
                     {% endif %}
                     {% if is_granted('IS_AUTHENTICATED') %}
-                        <li><a href="{{ path('app_profil') }}">Mon Profil</a></li>
+
+                        {% for i in profils %}
+                        <li><a href="{{ path('app_profil', {'id': i.idParticipant })}}">Mon Profil</a></li>
+                        {% endfor %}
                     {% endif %}
-                    <li><a href="{{ path('register') }}">S'inscrire</a></li>
+                    <li><a href="{{ path('app_register') }}">S'inscrire</a></li>
                     {% if is_granted('IS_AUTHENTICATED') %}
                         <li><a href="{{ path('app_logout') }}">Se déconnecter</a></li>
                     {% else %}

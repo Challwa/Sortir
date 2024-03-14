@@ -3,5 +3,40 @@
 {% block title %}{{ parent() }}: Sites {% endblock %}
 
 {% block body %}
-    <h1>A profile here!</h1>
+
+    <div class=container>
+        <h1>Mes informations
+            <div class="card-header"></div>
+        </h1>
+
+        <h1>Profil de
+            <div class="card-header"> {{ profils.prenom }} </div>
+        </h1>
+
+        <tr>
+            <th>: </th>
+            <td>{{ profils.nom }}</td>
+        </tr>
+        <br>
+        <tr>
+            <th>Prénom: </th>
+            <td>{{ profils.prenom }}</td>
+        </tr>
+        <br>
+        <tr>
+            <th>Téléphone: </th>
+            <td>{{ profils.telephone }} </td>
+        </tr>
+        <br>
+        <tr>
+            <th>Email: </th>
+            <td>{{ profils.email }}</td>
+        </tr>
+
+    </div>
+
+
+
+    {#   <button href="{{path('update', {id : participant.idParticipant})}} ">Modifier mon profil</button> #}
+
 {% endblock %}
