@@ -4,39 +4,53 @@
 
 {% block body %}
 
-    <div class=container>
-        <h1>Mes informations
-            <div class="card-header"></div>
-        </h1>
+        <div class="container">
+            <h1>modifier mes infos</h1>
 
-        <h1>Profil de
-            <div class="card-header"> {{ profils.prenom }} </div>
-        </h1>
+            {{ form_errors(profilType) }}
 
-        <tr>
-            <th>: </th>
-            <td>{{ profils.nom }}</td>
-        </tr>
-        <br>
-        <tr>
-            <th>Prénom: </th>
-            <td>{{ profils.prenom }}</td>
-        </tr>
-        <br>
-        <tr>
-            <th>Téléphone: </th>
-            <td>{{ profils.telephone }} </td>
-        </tr>
-        <br>
-        <tr>
-            <th>Email: </th>
-            <td>{{ profils.email }}</td>
-        </tr>
-
-    </div>
+            {{ form_start(profilType) }}
 
 
+            {{ form_row(registrationForm.pseudo) }}
+            {{ form_row(registrationForm.nom) }}
+            {{ form_row(registrationForm.prenom) }}
+            {{ form_row(registrationForm.telephone) }}
+            {{ form_row(registrationForm.email) }}
+            {{ form_row(registrationForm.plainPassword, {
+                label: 'Password'
+            }) }}
+            {#        {{ form_row(registrationForm.agreeTerms) }}#}
 
-    {#   <button href="{{path('update', {id : participant.idParticipant})}} ">Modifier mon profil</button> #}
+            <button type="submit" class="btn">Créer mon compte</button>
+            {{ form_end(registrationForm) }}
+        </div>
+{#        <h1>Profil de<div class="card-header"> {{ profils.prenom }} </div>#}
+{#        </h1>#}
+
+{#        <tr>#}
+{#            <th>: </th>#}
+{#            <td>{{ profils.nom }}</td>#}
+{#        </tr>#}
+{#        <br>#}
+{#        <tr>#}
+{#            <th>Prénom: </th>#}
+{#            <td>{{ profils.prenom }}</td>#}
+{#        </tr>#}
+{#        <br>#}
+{#        <tr>#}
+{#            <th>Téléphone: </th>#}
+{#            <td>{{ profils.telephone }} </td>#}
+{#        </tr>#}
+{#        <br>#}
+{#        <tr>#}
+{#            <th>Email: </th>#}
+{#            <td>{{ profils.email }}</td>#}
+{#        </tr>#}
+
+{#    {% for i in profils %}#}
+{#        <button href="{{path('app_update', {'id': i.idParticipant })}}">Modifier mon profil</button>#}
+{#    {% endfor %}#}
+
 
 {% endblock %}

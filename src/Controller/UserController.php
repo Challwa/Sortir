@@ -22,113 +22,100 @@ use Symfony\Bundle\SecurityBundle\Security;
 class UserController extends AbstractController
 {
 
-//    #[Route(path: "profil", name: "app_profil", methods: ["GET"])]
-//    public function profil(): Response
+//fonction afficher profil user par son id
+    #[Route(path: '', name: 'profil', methods: ['GET'])]
+    public function profil(EntityManagerInterface $entityManager): Response
+    {
+//        $profils = $entityManager->getRepository(Participant::class)->findOneBy(
+//            ['idParticipant' => $id]
+
+//        );
+
+        return $this->render('home/profil.html.twig');
+    }
+
+
+
+//    #[Route(path: "register", name: 'register')]
+//    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager,): Response
 //    {
-//        //$participant = $this->getUser();
-//        //TODO gérer le participant lorsqu'on est logé
-//        $participant = new Participant();
+//        $user = new Participant();
+//        $form = $this->createForm(RegistrationFormType::class, $user);
+//        $form->handleRequest($request);
 //
-//        $participant->setNom('lisou');
-//        $participant->setIdParticipant('1');
+//        if ($form->isSubmitted() && $form->isValid()) {
+//            // encode the plain password
+//            $user->setPassword(
+//                $userPasswordHasher->hashPassword(
+//                    $user,
+//                    $form->get('plainPassword')->getData()
+//                )
+//            );
+//            $entityManager->persist($user);
+//            $entityManager->flush();
 //
 //
-//        return $this->render('home/profil.html.twig',['participant' => $participant]);
-//    }
-
-    #[Route(path: '{id}', name: 'profil', methods: ['GET'])]
-    public function profil(int $id,EntityManagerInterface $entityManager): Response
-    {
-        $profils = $entityManager->getRepository(Participant::class)->findOneBy(
-            ['idParticipant' => $id]
-
-        );
-
-        return $this->render('home/profil.html.twig', compact('profils'));
-    }
-
-
-
-    #[Route(path: "register", name: 'register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager,): Response
-    {
-        $user = new Participant();
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
-            $user->setPassword(
-                $userPasswordHasher->hashPassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
-                )
-            );
-            $entityManager->persist($user);
-            $entityManager->flush();
-
-
-            return $this->redirectToRoute('app_login');
-        }
-
-        return $this->render('home/creationCompte.html.twig', [
-            'registrationForm' => $form,
-        ]);
-    }
+//            return $this->redirectToRoute('app_login');
+//        }
+//
+//        return $this->render('registration/register.html.twig', [
+//            'registrationForm' => $form,
+//        ]);
+   // }
 
 
 
 
-    #[Route('update/{id}
-    ', name: 'update', methods: ['GET', 'POST'])]
-    // #[IsGranted('ROLE_USER')]
-    public function updateUser(Security $security, Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
-    {
-        $user = $security->getUser() instanceof Participant ? $security->getUser() : $entityManager->getRepository(Participant::class)->find($security->getUser());
-
-        $form = $this->createForm(RegistrationFormType::class, $user);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $formData = $form->getData();
-            if (!empty($formData->getPseudo())) {
-                $user->setPseudo($formData->getPseudo());
-            }
-            if (!empty($formData->getPrenom())) {
-                $user->setPrenom($formData->getPrenom());
-            }
-            if (!empty($formData->getNom())) {
-                $user->setNom($formData->getNom());
-            }
-            if (!empty($formData->getTelephone())) {
-                $user->setTelephone($formData->getTelephone());
-            }
-
-            if (!empty($formData->getEmail())) {
-                $user->setEmail($formData->getEmail());
-            }
-//            if ($form->get('picture')->getData() instanceof UploadedFile) {
-//                $pictureFile = $form->get('picture')->getData();
-//                $fileName = $slugger->slug($user->getUsername()) . '-' . uniqid() . '.' . $pictureFile->guessExtension();
-//                $pictureFile->move($this->getParameter('picture_dir'), $fileName);
-//                if (!empty($user->getPicture())) {
-//                    $picturePath = $this->getParameter('picture_dir') . '/' . $user->getPicture();
-//                    if (file_exists($picturePath)) {
-//                        unlink($picturePath);
-//                    }
-//                }
-//                $user->setPicture($fileName);
+//    #[Route('update/{id}
+//    ', name: 'update', methods: ['GET', 'POST'])]
+//    // #[IsGranted('ROLE_USER')]
+//    public function updateUser(Security $security, Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
+//    {
+//        $user = $security->getUser() instanceof Participant ? $security->getUser() : $entityManager->getRepository(Participant::class)->find($security->getUser());
+//
+//        $form = $this->createForm(RegistrationFormType::class, $user);
+//        $form->handleRequest($request);
+//
+//        if ($form->isSubmitted() && $form->isValid()) {
+//            $formData = $form->getData();
+//            if (!empty($formData->getPseudo())) {
+//                $user->setPseudo($formData->getPseudo());
 //            }
-            $entityManager->persist($user);
-            $entityManager->flush();
-
-            $this->addFlash('success', 'Le profil a été mis à jour avec succès !');
-            return $this->redirectToRoute('user/index');
-        }
-
-        return $this->render('participant/updateUser.html.twig', [
-            'user' => $user,
-            'form' => $form->createView(),
-        ]);
-    }
+//            if (!empty($formData->getPrenom())) {
+//                $user->setPrenom($formData->getPrenom());
+//            }
+//            if (!empty($formData->getNom())) {
+//                $user->setNom($formData->getNom());
+//            }
+//            if (!empty($formData->getTelephone())) {
+//                $user->setTelephone($formData->getTelephone());
+//            }
+//
+//            if (!empty($formData->getEmail())) {
+//                $user->setEmail($formData->getEmail());
+//            }
+////            if ($form->get('picture')->getData() instanceof UploadedFile) {
+////                $pictureFile = $form->get('picture')->getData();
+////                $fileName = $slugger->slug($user->getUsername()) . '-' . uniqid() . '.' . $pictureFile->guessExtension();
+////                $pictureFile->move($this->getParameter('picture_dir'), $fileName);
+////                if (!empty($user->getPicture())) {
+////                    $picturePath = $this->getParameter('picture_dir') . '/' . $user->getPicture();
+////                    if (file_exists($picturePath)) {
+////                        unlink($picturePath);
+////                    }
+////                }
+////                $user->setPicture($fileName);
+////            }
+//            $entityManager->persist($user);
+//            $entityManager->flush();
+//
+//            $this->addFlash('success', 'Le profil a été mis à jour avec succès !');
+//            return $this->redirectToRoute('user/index');
+//        }
+//
+//        return $this->render('participant/updateUser.html.twig', [
+//            'user' => $user,
+//            'form' => $form->createView(),
+//        ]);
+//    }
 }

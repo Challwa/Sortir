@@ -1,90 +1,31 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit{% endblock %}
+{% block title %}Modifier mon profil{% endblock %}
 
 {% block body %}
-    <main class="d-flex">
-        {% block sidebar %}
-            {{ parent() }}
-        {% endblock %}
-        <div class="container">
-            {% for group, messages in app.flashes %}
-                {% for message in messages %}
-                    <div class="alert alert-{{ group }}" role="alert">{{ message }}</div>
-                {% endfor %}
-            {% endfor %}
-            <h1>Edit {{ user.username }}</h1>
-            <div class="row">
-                <div class="col-md-6">
-                    {{ form_start(form) }}
-                    <div class="mb-3">
-                        {{ form_label(form.username, 'Pseudo:', {'label_attr': {'class': 'form-label'}}) }}
-                        {{ form_widget(form.username, {'attr': {'class': 'form-control', 'readonly': 'readonly'}}) }}
-                        {% set errors = form_errors(form.username) %}
-                        {% if errors %}
-                            <div class="text-danger">
-                                {{ errors|striptags }}
-                            </div>
-                        {% endif %}
-                    </div>
-                    <div class="mb-3">
-                        {{ form_label(form.firstName, 'Prénom:', {'label_attr': {'class': 'form-label'}}) }}
-                        {{ form_widget(form.firstName, {'attr': {'class': 'form-control'}}) }}
-                        {% set errors = form_errors(form.firstName) %}
-                        {% if errors %}
-                            <div class="text-danger">
-                                {{ errors|striptags }}
-                            </div>
-                        {% endif %}
-                    </div>
-                    <div class="mb-3">
-                        {{ form_label(form.lastName, 'Nom:', {'label_attr': {'class': 'form-label'}}) }}
-                        {{ form_widget(form.lastName, {'attr': {'class': 'form-control'}}) }}
-                        {% set errors = form_errors(form.lastName) %}
-                        {% if errors %}
-                            <div class="text-danger">
-                                {{ errors|striptags }}
-                            </div>
-                        {% endif %}
-                    </div>
-                    <div class="mb-3">
-                        {{ form_label(form.mail, 'Email:', {'label_attr': {'class': 'form-label'}}) }}
-                        {{ form_widget(form.mail, {'attr': {'class': 'form-control'}}) }}
-                        {% set errors = form_errors(form.mail) %}
-                        {% if errors %}
-                            <div class="text-danger">
-                                {{ errors|striptags }}
-                            </div>
-                        {% endif %}
-                    </div>
-                    <div class="mb-3">
-                        {{ form_label(form.phoneNumber, 'Téléphone:', {'label_attr': {'class': 'form-label'}}) }}
-                        {{ form_widget(form.phoneNumber, {'attr': {'class': 'form-control'}}) }}
-                        {% set errors = form_errors(form.phoneNumber) %}
-                        {% if errors %}
-                            <div class="text-danger">
-                                {{ errors|striptags }}
-                            </div>
-                        {% endif %}
-                    </div>
-{#                    <div class="mb-3">#}
-{#                        {{ form_label(form.picture, 'Avatar:', {'label_attr': {'class': 'form-label'}}) }}#}
-{#                        {{ form_widget(form.picture, {'attr': {'class': 'form-control'}}) }}#}
-{#                        {% set errors = form_errors(form.picture) %}#}
-{#                        {% if errors %}#}
-{#                            <div class="text-danger">#}
-{#                                {{ errors|striptags }}#}
-{#                            </div>#}
-{#                        {% endif %}#}
-{#                    </div>#}
-                    <div class="d-flex justify-content-between">
-                        <a href="{{ path('user/index') }}" class="btn btn-outline-danger">Retour à la liste</a>
-                        <a href="{{ path('user/change_password') }}" class="btn btn-outline-secondary">Modifier votre mot de passe</a>
-                        {{ form_row(form.submit, {'label': 'Modifier votre profil'}) }}
-                    </div>
-                    {{ form_end(form) }}
-                </div>
-            </div>
-        </div>
-    </main>
+    {% for flash_error in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+    {% endfor %}
+    <div class="container">
+        <h1>modifier mes infos</h1>
+
+        {{ form_errors(registrationForm) }}
+
+        {{ form_start(registrationForm) }}
+
+
+        {{ form_row(registrationForm.pseudo) }}
+        {{ form_row(registrationForm.nom) }}
+        {{ form_row(registrationForm.prenom) }}
+        {{ form_row(registrationForm.telephone) }}
+        {{ form_row(registrationForm.email) }}
+        {{ form_row(registrationForm.plainPassword, {
+            label: 'Password'
+        }) }}
+        {#        {{ form_row(registrationForm.agreeTerms) }}#}
+
+        <button type="submit" class="btn">Créer mon compte</button>
+        {{ form_end(registrationForm) }}
+    </div>
+
 {% endblock %}
