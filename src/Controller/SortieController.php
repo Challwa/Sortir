@@ -29,28 +29,29 @@ class SortieController extends AbstractController
     public function creerSortie(Request $request, EntityManagerInterface $entityManager): Response
 {
 
-
     $sortie = new Sortie();
-
 
     $user = $this->getUser();
 
-
     $sortie->setOrganisateur($user);
-
 
     $formSortie = $this->createForm(SortieType::class, $sortie);
 
-
     $formSortie->handleRequest($request);
-
 
     if ($formSortie->isSubmitted() && $formSortie->isValid()) {
 
+        if ($formSortie->get('btnRegister')->isClicked()) {
 
-        $etats = $entityManager->getRepository(Etat::class)->find(1);
-        $sortie->setEtats($etats);
+            $etat = $entityManager->getRepository(Etat::class)->find(1);
 
+        } elseif ($formSortie->get('btnPublish')->isClicked()) {
+
+            $etat = $entityManager->getRepository(Etat::class)->find(2);
+
+        }
+
+        $sortie->setEtats($etat);
 
         $sites = $entityManager->getRepository(Site::class)->find(1);
         $sortie->setSites($sites);
@@ -59,9 +60,7 @@ class SortieController extends AbstractController
         $entityManager->persist($sortie);
         $entityManager->flush();
 
-
         $this->addFlash('success', 'La sortie a bien été crée.');
-
 
         return $this->redirectToRoute('app_home'); // a changer apres la creation de la vue des sorties -> sorties.html.twig
     }

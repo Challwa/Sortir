@@ -66,9 +66,6 @@ class SortieType extends AbstractType
                 'required' => true,
             ])
 
-//            ->add('Submit',SubmitType::class,[
-//                'label' => 'Sauvegarder',
-//            ])
             ->add('btnRegister', SubmitType::class, [
                 'label' => 'Enregistrer',
             ])

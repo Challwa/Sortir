@@ -18,16 +18,19 @@
             {{ form_row(profilForm.prenom, {'value': app.user.prenom}) }}
             {{ form_row(profilForm.telephone, {'value': app.user.telephone}) }}
             {{ form_row(profilForm.email, {'value': app.user.email}) }}
+            {{ form_row(profilForm.image) }}
+            {{ form_row(profilForm.sites)  }}
+            {{ form_row(profilForm.plainPassword, {
+                label: 'Password'
+            }) }}
+            {{ form_row(profilForm.submit) }}
+
 {#            {{ form_row(profilForm.sites, {'value': app.user.site})  }}#}
 
 
             {#        {{ form_row(profilForm.plainPassword, {label: 'Password'}) }} #}
-
-
             {{ form_end(profilForm) }}
         {% endif %}
-        <button type="submit" class="btn">Modifier mon profil</button>
-
     </div>
 
 {% endblock %}
