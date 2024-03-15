@@ -3,7 +3,9 @@
 namespace App\Form;
 
 use App\Entity\Etat;
+use App\Entity\Lieu;
 use App\Entity\Sortie;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -56,8 +58,22 @@ class SortieType extends AbstractType
                 'label' => 'Description et infos : ',
                 'data' => 'Description et infos',
             ])
-            ->add('Submit',SubmitType::class,[
-                'label' => 'Créer une sortie',
+            ->add('lieux', EntityType::class, [ // Agregar el campo para elegir un lieu
+                'class' => Lieu::class,
+                'choice_label' => 'nom', // Campo de la entidad Lieu para mostrar en la lista desplegable
+                'label' => 'Lieu de la sortie : ',
+                'placeholder' => 'Choisir un lieu',
+                'required' => true,
+            ])
+
+//            ->add('Submit',SubmitType::class,[
+//                'label' => 'Sauvegarder',
+//            ])
+            ->add('btnRegister', SubmitType::class, [
+                'label' => 'Enregistrer',
+            ])
+            ->add('btnPublish', SubmitType::class, [
+                'label' => 'Publier la sortie',
             ])
         ;
     }

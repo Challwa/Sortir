@@ -46,9 +46,6 @@ class Sortie
     #[Assert\NotBlank(message: 'Le lieu de la sortie est obligatoire')]
     private ?string $infosSortie = null;
 
-//    #[ORM\Column(name: 'etat',type: Types::STRING, nullable: false)]
-//    private $etat;
-
     #[ORM\ManyToOne(inversedBy: 'sorties')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Etat $etats = null;
@@ -70,7 +67,6 @@ class Sortie
 
     public function __construct()
     {
-//        $this->etat = 'ouverte';
 $this->participants = new ArrayCollection();
     }
 
