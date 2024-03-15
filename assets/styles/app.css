@@ -64,7 +64,7 @@ textarea {
     border-radius: 5px;
     box-sizing: border-box;
 }
-button,
+button.btn.btn-primary,
 button[type="submit"] {
     background-color: #007bff;
     color: #fff;
@@ -76,7 +76,7 @@ button[type="submit"] {
     margin-top: 10px;
 
 }
-
+button.btn.btn-primary.btn:hover,
 button[type="submit"]:hover {
     background-color: #0056b3;
 }
@@ -139,4 +139,9 @@ thead {
     align-items: center;
 }
 
+.form-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
 
