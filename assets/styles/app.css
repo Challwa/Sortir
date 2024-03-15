@@ -114,4 +114,28 @@ thead {
     z-index: 1;
 }
 
+#home-page {
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+#filter {
+    display: flex;
+    flex-direction: column;
+
+}
+
+#filter > div {
+    margin-bottom: 10px; /* Espacement entre chaque élément */
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+}
+
 
