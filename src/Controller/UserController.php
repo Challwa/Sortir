@@ -11,6 +11,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mime\Address;
@@ -65,7 +66,9 @@ class UserController extends AbstractController
     }
 
     #[Route('/{id}', name: 'profil_update', methods: ['GET', 'POST'])]
-    public function updateUser(User $user, Request $request, EntityManagerInterface $em, SluggerInterface $slugger): Response
+    public function updateUser(Participant $user,UserPasswordHasherInterface $userPasswordHasher,
+                               Request $request, EntityManagerInterface $entityManager,
+                               SluggerInterface $slugger): Response
     {
         $form = $this->createForm(ProfileType::class, $user);
         $form->handleRequest($request);
@@ -74,20 +77,25 @@ class UserController extends AbstractController
 
             if($form->get('image')->getData() instanceof UploadedFile) {
                 $pictureFile = $form->get('image')->getData();
-                $fileName = $slugger->slug($user->getLastName()) . '-' . uniqid() . '.' . $pictureFile->guessExtension();
+                $fileName = $slugger->slug($user->getNom()) . '-' . uniqid() . '.' . $pictureFile->guessExtension();
                 $pictureFile->move('uploads', $fileName);
-                $user->setPicture($fileName);
-            }
+                $user->setImage($fileName);
 
-            $em->persist($user);
-            $em->flush();
+            }
+            $user->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    $form->get('plainPassword')->getData()));
+
+            $entityManager->persist($user);
+            $entityManager->flush();
 
             $this->addFlash('success text-center', 'Votre profil a bien été mis à jour');
-            return $this->redirectToRoute('app_show_profile', ['id' => $user->getId()]);
+            return $this->redirectToRoute('app_profil', ['id' => $user->getId()]);
         }
 
-        return $this->render('user/edit.html.twig', [
-            'form' => $form,
+        return $this->render('home/profil.html.twig', [
+            'profilForm' => $form,
             'user' => $user
         ]);
     }
