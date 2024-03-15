@@ -72,6 +72,13 @@
                             <th>{{ sortie.etats.libelle }}</th>
                             <th></th>
                             <th>{{ sortie.organisateur.prenom|capitalize }} {{ sortie.organisateur.nom|upper|u.truncate(2,'.') }}</th>
+                            {% if sortie.etats.id == 1 %}
+                            <th><a href="">Modifier</a> - Publier</th>
+{#                                {% elseif sortie.etat.id == 2 %}#}
+{#                                <th>Afficher - S'inscrire</th>#}
+{#                                {% elseif sortie.etat.id == 3 %}#}
+{#                                <th></th>#}
+                            {% endif %}
 
                         {% endfor %}
                     </tr>
