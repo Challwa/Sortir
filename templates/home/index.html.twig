@@ -5,15 +5,21 @@
 {% block body %}
 
     {% if is_granted('IS_AUTHENTICATED') %}
+        <div>
+            {% for group, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ group }}" role="alert">{{ message }}</div>
+                {% endfor %}
+            {% endfor %}
+        </div>
         <div class="container" id="home-page">
             <div id="filter">
                 <div>
                     <p>Filtrer les sorties</p>
                     <label for="site">Site :</label>
                     <select name="site" id="site">
-                        <option value="">--Choisir un site--</option>
-                        {% for i in sites %}
-                            <option>{{ i.nom|upper }}</option>
+                        {% for site in sites %}
+                            <option>{{ site.nom|upper }}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -63,8 +69,8 @@
                     </tr>
                     </thead>
                     <tbody>
+                    {% for sortie in sorties %}
                     <tr>
-                        {% for sortie in sorties %}
                             <th>{{ sortie.nom }}</th>
                             <th>{{ sortie.dateHeureDebut|date("d/m/Y H:i") }}</th>
                             <th>{{ sortie.dateLimiteInscription|date("d/m/Y") }}</th>
@@ -74,14 +80,17 @@
                             <th>{{ sortie.organisateur.prenom|capitalize }} {{ sortie.organisateur.nom|upper|u.truncate(2,'.') }}</th>
                             {% if sortie.etats.id == 1 %}
                             <th><a href="">Modifier</a> - Publier</th>
-{#                                {% elseif sortie.etat.id == 2 %}#}
-{#                                <th>Afficher - S'inscrire</th>#}
-{#                                {% elseif sortie.etat.id == 3 %}#}
+                                {% elseif sortie.etats.id == 2 and sortie.organisateur == app.user %}
+                                <th>Afficher - Annuler</th>
+                                {% elseif sortie.etats.id == 2 %}
+                                <th>Afficher - S'inscrire</th>
+{#                                {% elseif sortie.etats.id == 2 and %}#}
 {#                                <th></th>#}
+                                {% else %}
+                                <th>Afficher</th>
                             {% endif %}
-
-                        {% endfor %}
                     </tr>
+                    {% endfor %}
                     </tbody>
                 </table>
             </div>
