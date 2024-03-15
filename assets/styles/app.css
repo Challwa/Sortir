@@ -64,6 +64,7 @@ textarea {
     border-radius: 5px;
     box-sizing: border-box;
 }
+button,
 button[type="submit"] {
     background-color: #007bff;
     color: #fff;
