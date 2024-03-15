@@ -34,7 +34,6 @@ class RegistrationController extends AbstractController
     //find all pour le ste
 
     #[Route('/register', name: 'app_register')]
-
     /*
      * $request => données de la requête HTTP
      * $userPasswordHasher => permet de hasher le mot de passe
@@ -75,7 +74,7 @@ class RegistrationController extends AbstractController
             'registrationForm' => $form,
 
             'sites' => $site
-        ], );
+        ],);
     }
 
     #[Route('/verify/email', name: 'app_verify_email')]
@@ -93,7 +92,7 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('app_register');
         }
 
-        // validate email confirmation link, sets User::isVerified=true and persists
+
         try {
             $this->emailVerifier->handleEmailConfirmation($request, $user);
         } catch (VerifyEmailExceptionInterface $exception) {
