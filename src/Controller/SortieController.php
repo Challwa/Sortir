@@ -48,13 +48,13 @@ class SortieController extends AbstractController
         } elseif ($formSortie->get('btnPublish')->isClicked()) {
 
             $etat = $entityManager->getRepository(Etat::class)->find(2);
-
         }
-
         $sortie->setEtats($etat);
 
-        $sites = $entityManager->getRepository(Site::class)->find(1);
+
+        $sites = $user->getSites();
         $sortie->setSites($sites);
+
 
 
         $entityManager->persist($sortie);
