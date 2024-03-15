@@ -3,9 +3,13 @@
 {% block title %}Mon profil{% endblock %}
 
 {% block body %}
-    {% for flash_error in app.flashes('verify_email_error') %}
-        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-    {% endfor %}
+    <div>
+        {% for group, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ group }}" role="alert">{{ message }}</div>
+            {% endfor %}
+        {% endfor %}
+    </div>
     <div class="container">
         <h1>Mon profil</h1>
         {% if is_granted('IS_AUTHENTICATED') %}
@@ -19,13 +23,15 @@
             {{ form_row(profilForm.telephone, {'value': app.user.telephone}) }}
             {{ form_row(profilForm.email, {'value': app.user.email}) }}
             {{ form_row(profilForm.image) }}
-            {{ form_row(profilForm.sites)  }}
+            {{ form_row(profilForm.sites) }}
             {{ form_row(profilForm.plainPassword, {
                 label: 'Password'
             }) }}
-            {{ form_row(profilForm.submit) }}
 
-{#            {{ form_row(profilForm.sites, {'value': app.user.site})  }}#}
+            {# bouton udpate permettant de mettre à jour le profil. Relié au controler et au form #}
+            {{ form_row(profilForm.btnUpdate) }}
+
+            {#            {{ form_row(profilForm.sites, {'value': app.user.site})  }} #}
 
 
             {#        {{ form_row(profilForm.plainPassword, {label: 'Password'}) }} #}

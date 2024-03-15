@@ -44,7 +44,6 @@ class ProfileType extends AbstractType
                     ])
 
 
-
                 ]])
             ->add('plainPassword', PasswordType::class, [
 
@@ -62,11 +61,10 @@ class ProfileType extends AbstractType
                     ]),
                 ],
             ])
+            ->add('btnUpdate', SubmitType::class, [
 
-        -> add('submit', SubmitType::class, [
-
-            'label' => 'Enregistrer les modifications',
-        ]);
+                'label' => 'Enregistrer les modifications',
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -22,6 +22,7 @@ use App\Repository\ParticipantRepository;
 
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
+
 #[Route(path: 'profil/', name: 'app_', methods: ['GET'])]
 class UserController extends AbstractController
 {
@@ -66,18 +67,18 @@ class UserController extends AbstractController
     }
 
     #[Route('/{id}', name: 'profil_update', methods: ['GET', 'POST'])]
-    public function updateUser(Participant $user,UserPasswordHasherInterface $userPasswordHasher,
-                               Request $request, EntityManagerInterface $entityManager,
+    public function updateUser(Participant      $user, UserPasswordHasherInterface $userPasswordHasher,
+                               Request          $request, EntityManagerInterface $entityManager,
                                SluggerInterface $slugger): Response
     {
         $form = $this->createForm(ProfileType::class, $user);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid() && $form->get('btnUpdate')->isClicked()) {
 
             /*check les données du form relatives à l'image sont une instance de UpdloadedFile
              ==> que qqc a bien été téléchargé dans le champ form de image*/
-            if($form->get('image')->getData() instanceof UploadedFile) {
+            if ($form->get('image')->getData() instanceof UploadedFile) {
 
                 //récupère l'objet UpdloadedFile et stock dans $pictureFile
                 $pictureFile = $form->get('image')->getData();
@@ -94,7 +95,7 @@ class UserController extends AbstractController
             }
             //pour modifier le mdp
             $user->setPassword(
-                //service symfony permettant de hasher le mdp
+            //service symfony permettant de hasher le mdp
                 $userPasswordHasher->hashPassword(
                     $user,
                     //récupère le mdp en clair depuis le form
@@ -103,9 +104,9 @@ class UserController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            //message flash
+            //message flash indiquand que tout s'est bien déroulé
             $this->addFlash('success text-center', 'Votre profil a bien été mis à jour');
-            return $this->redirectToRoute('app_profil', ['id' => $user->getId()]);
+            return $this->redirectToRoute('app_home', ['id' => $user->getId()]);
         }
         //renvoie vers le twig concernant le formulaire
         return $this->render('home/profil.html.twig', [
