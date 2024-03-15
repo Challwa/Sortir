@@ -3,6 +3,13 @@
 {% block title %}{{ parent() }}: Edit site {% endblock %}
 
 {% block body %}
+    <div>
+        {% for group, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ group }}" role="alert">{{ message }}</div>
+            {% endfor %}
+        {% endfor %}
+    </div>
     <div class="container">
         <h1>Nouveau site</h1>
 

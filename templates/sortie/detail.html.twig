@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} :: Detail{% endblock %}
+
+{% block body %}
+    <h2>Afficher une sortie</h2>
+
+    <ul>
+        {% for sortie in sorties %}
+        <li>Nom de la sortie:  {{ sortie.nom }}</li>
+        <li>Date et heure de la sortie: {{ sortie.dateheuredebut|date("d/m/Y H:i") }}</li>
+        <li>Date limite d'inscription: {{ sortie.dateLimiteInscription|date("d/m/Y") }}</li>
+        <li>Nombre de places: {{ sortie.nbInscriptionsMax}}</li>
+        <li>Durée: {{ sortie.duree }}</li>
+        <li>Description et infos: {{ sortie.infosSortie }}</li>
+        <li>Lieu: {{ sortie.lieux }}</li>
+        <li>Ville: {{ lieu.rue }}</li>
+        <li>Ville: {{ ville.nom }}</li>
+        <li>Ville: {{ lieu.latitudel }}</li>
+        <li>Ville: {{ lieu.longitude }}</li>
+        {% endfor %}
+    </ul>
+    <br>
+{% endblock %}

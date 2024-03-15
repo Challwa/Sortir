@@ -48,7 +48,7 @@ class Ville
         $this->nom = $nom;
     }
 
-    public function getcodePostal(): string
+    public function getCodePostal(): string
     {
         return $this->codePostal;
     }

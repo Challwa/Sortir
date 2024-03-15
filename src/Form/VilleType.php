@@ -16,7 +16,7 @@ class VilleType extends AbstractType
         $builder->add('nom', TextType::class, [
             'label' => 'Nom de la ville'
         ]);
-        $builder->add('codePostal', TextType::class, [
+        $builder->add('CodePostal', TextType::class, [
             'label' => 'Code postal'
         ]);
         $builder->add('submit', SubmitType::class, [
