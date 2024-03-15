@@ -75,27 +75,44 @@ class UserController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()) {
 
+            /*check les données du form relatives à l'image sont une instance de UpdloadedFile
+             ==> que qqc a bien été téléchargé dans le champ form de image*/
             if($form->get('image')->getData() instanceof UploadedFile) {
+
+                //récupère l'objet UpdloadedFile et stock dans $pictureFile
                 $pictureFile = $form->get('image')->getData();
+
+                //pour le nom de l'image (uniqid génère un id unique pour l'image)
                 $fileName = $slugger->slug($user->getNom()) . '-' . uniqid() . '.' . $pictureFile->guessExtension();
+
+                //fichier téléchargé déplacé dans le dossier updloads
                 $pictureFile->move('uploads', $fileName);
+
+                //définir le nom du fichier dans image de user
                 $user->setImage($fileName);
 
             }
+            //pour modifier le mdp
             $user->setPassword(
+                //service symfony permettant de hasher le mdp
                 $userPasswordHasher->hashPassword(
                     $user,
+                    //récupère le mdp en clair depuis le form
                     $form->get('plainPassword')->getData()));
 
             $entityManager->persist($user);
             $entityManager->flush();
 
+            //message flash
             $this->addFlash('success text-center', 'Votre profil a bien été mis à jour');
             return $this->redirectToRoute('app_profil', ['id' => $user->getId()]);
         }
-
+        //renvoie vers le twig concernant le formulaire
         return $this->render('home/profil.html.twig', [
+            //each éléments du tableau représentent une variable dispo dans le twig
             'profilForm' => $form,
+
+            //données du user utilisables dans le twig form pour afficher ses informations
             'user' => $user
         ]);
     }
