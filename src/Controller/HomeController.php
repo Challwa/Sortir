@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Site;
+use App\Entity\Sortie;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,7 +16,8 @@ class HomeController extends AbstractController
     public function home(EntityManagerInterface $entityManager): Response
     {
         $sites = $entityManager->getRepository(Site::class)->findAll();
-        return $this->render('home/index.html.twig', compact('sites'));
+        $sorties = $entityManager->getRepository(Sortie::class)->findAll();
+        return $this->render('home/index.html.twig', compact('sites', 'sorties'));
     }
 
 //    #[Route(path: "villes", name: "app_villes", methods: ["GET"])]
