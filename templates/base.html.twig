@@ -23,28 +23,23 @@
             <nav>
                 <ul>
                     <li><a href="{{ path('app_home') }}">Accueil</a></li>
-                    {% if is_granted('ROLE_ADMIN') %}
+                    {% if is_granted('ROLE_ADMIN', 'IS_AUTHENTICATED') %}
                         <li><a href="{{ path('app_villes_') }}">Villes</a></li>
                         <li><a href="{{ path('app_sites_') }}">Sites</a></li>
+                        <li><a href="{{ path('app_register') }}">Inscrire un étudiant</a></li>
                     {% endif %}
                     {% if is_granted('IS_AUTHENTICATED') %}
-
-                        <li><a href="{{ path('app_profil')}}">Mon Profil</a></li>
-{#                        {% for i in profils %}#}
-{#                        <li><a href="{{ path('app_profil', {'id': i.idParticipant })}}">Mon Profil</a></li>#}
-{#                        {% endfor %}#}
-                    {% endif %}
-                    {% if is_granted('IS_AUTHENTICATED') %}
+                        <li><a href="{{ path('app_profil') }}">Mon Profil</a></li>
                         <li><a href="{{ path('app_logout') }}">Se déconnecter</a></li>
                     {% else %}
-                        <li><a href="{{ path('app_register') }}">S'inscrire</a></li>
                         <li><a href="{{ path('app_login') }}">Se connecter</a></li>
                     {% endif %}
                 </ul>
                 {% if is_granted('IS_AUTHENTICATED') %}
                     <ul>
                         <li>Date du jour : {{ "now"|date("d/m/Y") }}</li>
-                        <li>Participant : {{ app.user.prenom|capitalize }} {{ app.user.nom|upper|u.truncate(2,'.') }}</li>
+                        <li>Participant
+                            : {{ app.user.prenom|capitalize }} {{ app.user.nom|upper|u.truncate(2,'.') }}</li>
                     </ul>
                 {% endif %}
             </nav>
