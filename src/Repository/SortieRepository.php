@@ -21,4 +21,13 @@ class SortieRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Sortie::class);
     }
+
+    public function findAllWithEtat()
+    {
+        return $this->createQueryBuilder('s')
+            ->leftJoin('s.etats','e')
+            ->addSelect('e')
+            ->getQuery()
+            ->getResult();
+    }
 }
