@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Participant;
+use App\Entity\Site;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,6 +21,12 @@ class ProfileType extends AbstractType
             ->add('prenom')
             ->add('telephone')
             ->add('email')
+            ->add('sites', EntityType::class, [
+                'label' => 'Site',
+                'choice_label' => 'nom',
+                'class' => Site::class,
+
+            ])
             ->add('image', FileType::class, [
 
                 'required' => false,
