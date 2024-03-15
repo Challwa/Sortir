@@ -34,6 +34,14 @@ class RegistrationController extends AbstractController
     //find all pour le ste
 
     #[Route('/register', name: 'app_register')]
+
+    /*
+     * $request => données de la requête HTTP
+     * $userPasswordHasher => permet de hasher le mot de passe
+     * $security => service de sécurité de Symfony
+     * $entityManager => permet de faire les requêtes en base de données
+     * $slugger => conversion d'une string en url + propre
+     * */
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, Security $security, EntityManagerInterface $entityManager, SluggerInterface $slugger, Site $site): Response
     {
         $user = new Participant();

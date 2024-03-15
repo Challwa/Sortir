@@ -70,4 +70,13 @@ class ParticipantRepository extends ServiceEntityRepository implements PasswordU
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    public function findAllWithOrganisateur()
+{
+    return $this->createQueryBuilder('s')
+        ->leftJoin('s.sortiesOrganisees','o')
+        ->addSelect('o')
+        ->getQuery()
+        ->getResult();
+}
 }
