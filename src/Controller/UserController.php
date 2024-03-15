@@ -87,7 +87,7 @@ class UserController extends AbstractController
                 $fileName = $slugger->slug($user->getNom()) . '-' . uniqid() . '.' . $pictureFile->guessExtension();
 
                 //fichier téléchargé déplacé dans le dossier updloads
-                $pictureFile->move('uploads', $fileName);
+                $pictureFile->move($this->getParameter('picture_dir'), $fileName);
 
                 //définir le nom du fichier dans image de user
                 $user->setImage($fileName);
