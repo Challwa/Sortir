@@ -40,14 +40,12 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <th>a</th>
-                        <th>b</th>
-                        <th>c</th>
-                        <th>d</th>
-                        <th>e</th>
-                        <th>f</th>
-                        <th>g</th>
-                        <th>h</th>
+
+                        {% for i in sorties %}
+                            <th>{{ i.nom }}</th>
+                        {% endfor %}
+                        <th></th>
+                        <th></th>
                     </tr>
                     </tbody>
                 </table>
