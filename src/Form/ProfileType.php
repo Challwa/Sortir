@@ -32,7 +32,7 @@ class ProfileType extends AbstractType
 
             ])
             ->add('image', FileType::class, [
-
+                'data_class' => null,
                 'required' => false,
                 'constraints' => [
                     new File([
