@@ -3,11 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Etat;
+use App\Entity\Lieu;
 use App\Entity\Participant;
 use App\Entity\Site;
 use App\Entity\Sortie;
 use App\Form\SortieType;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -62,7 +64,7 @@ class SortieController extends AbstractController
 
         $this->addFlash('success', 'La sortie a bien été crée.');
 
-        return $this->redirectToRoute('app_home'); // a changer apres la creation de la vue des sorties -> sorties.html.twig
+        return $this->redirectToRoute('app_home');
     }
 
         return $this->render('sortie/creerSortie.html.twig', [

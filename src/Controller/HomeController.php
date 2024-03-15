@@ -23,12 +23,6 @@ class HomeController extends AbstractController
         return $this->render('home/index.html.twig', compact('sites', 'sorties', 'organisateur'));
     }
 
-//    #[Route(path: "villes", name: "app_villes", methods: ["GET"])]
-//    public function villes(): Response
-//    {
-//        return $this->render('home/villes.html.twig');
-//    }
-
    #[Route(path: "profil", name: "app_profil", methods: ["GET"])]
     public function profil(): Response
     {

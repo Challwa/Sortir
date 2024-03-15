@@ -58,9 +58,9 @@ class SortieType extends AbstractType
                 'label' => 'Description et infos : ',
                 'data' => 'Description et infos',
             ])
-            ->add('lieux', EntityType::class, [ // Agregar el campo para elegir un lieu
+            ->add('lieux', EntityType::class, [
                 'class' => Lieu::class,
-                'choice_label' => 'nom', // Campo de la entidad Lieu para mostrar en la lista desplegable
+                'choice_label' => 'nom',
                 'label' => 'Lieu de la sortie : ',
                 'placeholder' => 'Choisir un lieu',
                 'required' => true,
