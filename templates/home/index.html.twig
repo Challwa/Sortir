@@ -59,7 +59,9 @@
                             <td>
                                 <div class="button-container">
                                     {% if sortie.etats.id != 1 %}
-                                        <button class="btn btn-primary">Afficher</button>
+                                        <form action="{{ path('sortie_detail', {'id': sortie.id}) }}">
+                                            <button class="btn btn-primary">Afficher</button>
+                                        </form>
                                     {% endif %}
                                     {% if sortie.etats.id == 2 and sortie.participants.contains(app.user) %}
                                         <form action="{{ path('desinscription_sortie', {'id': sortie.id}) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir vous désinscrire de cette sortie ?');">
