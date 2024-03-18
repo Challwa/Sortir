@@ -13,7 +13,14 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class InscriptionSortieController extends AbstractController
 {
+    private $security;
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
+
     #[Route('/inscription/{id}', name: 'inscription_sortie')]
+    #[Security("is_granted('ROLE_USER')")]
     public function inscription(EntityManagerInterface $entityManager, Participant $participant, $security, Request $request , int $id): Response
     {
         $user = $security->getUser();
