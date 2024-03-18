@@ -20,12 +20,12 @@ class Sortie
 
     #[ORM\Column(length: 255, nullable: false)]
     #[Assert\NotBlank(message: 'Le nom de la sortie est obligatoire')]
-    #[Assert\Length(max:255, maxMessage: 'Le nom de la sortie ne doit pas dépasser 255 caractères')]
+    #[Assert\Length(max: 255, maxMessage: 'Le nom de la sortie ne doit pas dépasser 255 caractères')]
     private ?string $nom = null;
 
-    #[ORM\Column(name :'date_heure_debut',type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(name: 'date_heure_debut', type: Types::DATETIME_MUTABLE)]
     #[Assert\NotNull(message: 'La date de la sortie est obligatoire')]
-    private ? \DateTimeInterface $dateHeureDebut = null;
+    private ?\DateTimeInterface $dateHeureDebut = null;
 
     #[ORM\Column]
     #[Assert\NotNull(message: 'La duree de la sortie est obligatoire')]
@@ -34,7 +34,7 @@ class Sortie
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Assert\NotNull(message: 'La date de la sortie est obligatoire')]
-    private ? \DateTimeInterface $dateLimiteInscription = null;
+    private ?\DateTimeInterface $dateLimiteInscription = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotNull(message: 'Le nombre maximum d\'inscrits est obligatoire')]
@@ -67,7 +67,7 @@ class Sortie
 
     public function __construct()
     {
-$this->participants = new ArrayCollection();
+        $this->participants = new ArrayCollection();
     }
 
     /**
@@ -261,7 +261,6 @@ $this->participants = new ArrayCollection();
 
         return $this;
     }
-
 
 
 }

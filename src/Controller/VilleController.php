@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Ville;
 use App\Form\VilleType;
+use App\Repository\VilleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,11 +15,16 @@ use Symfony\Component\Routing\Attribute\Route;
 class VilleController extends AbstractController
 {
     #[Route(path: '', name: '')]
-    public function ville(EntityManagerInterface $entityManager): Response
+    public function ville(EntityManagerInterface $entityManager, VilleRepository $villeRepository, Request $request): Response
     {
-        $ville = $entityManager->getRepository(Ville::class)->findAll();
+        $ville = new  Ville();
 
-        return $this->render('villes/villes.html.twig', compact('ville'));
+        $ville = $villeRepository->findAll();
+
+        $formVille = $this->createForm(VilleType::class, $ville);
+
+
+        return $this->render('villes/villes.html.twig', compact('ville', 'formVille'));
     }
 
     #[Route(path: 'ajouter', name: 'ajouter')]

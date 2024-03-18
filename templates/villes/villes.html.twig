@@ -22,11 +22,11 @@
                     <th>Actions</th>
                 </tr>
                 </thead>
-                {% for i in ville %}
+                {% for ville in ville %}
                     <tbody>
                     <tr>
-                        <th>{{ i.nom | upper}}</th>
-                        <th>{{ i.CodePostal }}</th>
+                        <th>{{ ville.nom | upper}}</th>
+                        <th>{{ ville.codePostal }}</th>
                         <td>
 {#                        <a href="{{ path('app_villes_modifier', { id : i.id }) }}">Modifier</a> |#}
 {#                            <a href="{{ path('app_delete', { id : i.id}) }}">Supprimer</a>#}
