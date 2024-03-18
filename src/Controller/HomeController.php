@@ -29,8 +29,7 @@ class HomeController extends AbstractController
             // Requête pour récupérer les sorties filtrées en fonction de la recherche
             $sorties =  $entityManager->getRepository(Sortie::class)->filter($searchData);
 
-            $entityManager->persist();
-            $entityManager->flush();
+            //A suivre
 
         }
 
