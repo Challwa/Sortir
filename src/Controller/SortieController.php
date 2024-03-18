@@ -85,8 +85,10 @@ class SortieController extends AbstractController
     }
 
     #[Route(path: '/modifier/{id}', name: 'modifier', requirements: ['id' => '\d+'])]
-    public function modifierSortie(Sortie $sortie, Request $request, EntityManagerInterface $entityManager): Response
+    public function modifierSortie(int $id, Sortie $sortie, Request $request, EntityManagerInterface $entityManager): Response
     {
+        $detailSortie = $entityManager->getRepository(Sortie::class)->find($id);
+
         $form = $this->createForm(SortieType::class, $sortie);
         $form->handleRequest($request);
 
@@ -99,7 +101,7 @@ class SortieController extends AbstractController
         }
 
         return $this->render('sortie/modifier.html.twig', [
-            'modif_form' => $form
+            'modif_form' => $form, 'detailSortie' => $detailSortie,
         ]);
 
     }

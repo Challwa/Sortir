@@ -4,8 +4,15 @@
 
 {% block body %}
     <div class="container">
+
         {{ form_start(modif_form) }}
+        {{ form_row(modif_form.nom, {'value': detailSortie.nom}) }}
+{#        {{ form_row(modif_form.dateHeureDebut, {'value': detailSortie}) }}#}
+{#        {{ form_row(modif_form.dateLimiteInscription) }}#}
+{#        {{ form_row(modif_form.nbInscriptionsMax) }}#}
+{#        {{ form_row(modif_form.duree, {'value': detailSortie.duree}) }}#}
         {{ form_end(modif_form) }}
+
     </div>
 
 {% endblock %}
