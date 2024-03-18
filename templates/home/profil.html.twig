@@ -16,6 +16,9 @@
             {{ form_errors(profilForm) }}
 
             {{ form_start(profilForm) }}
+            {% if user.image is not empty %}
+                <img src="{{ asset(picture_dir ~ '/' ~ app.user.image) }}" width="500px"/>
+            {% endif %}
 
             {{ form_row(profilForm.pseudo, {'value': app.user.pseudo}) }}
             {{ form_row(profilForm.nom, {'value': app.user.nom}) }}
