@@ -48,17 +48,4 @@ class HomeController extends AbstractController
         return $this->render('home/index.html.twig', compact('sites', 'sorties', 'organisateur', 'form'));
     }
 
-
-   #[Route(path: "profil", name: "app_profil", methods: ["GET"])]
-    public function profil(): Response
-    {
-        return $this->render('home/profil.html.twig');
-    }
-
-    #[Route(path: "creationCompte", name: "app_creationCompte", methods: ["GET"])]
-    public function creationCompte(): Response
-    {
-        return $this->render('home/creationCompte.html.twig');
-    }
-
 }

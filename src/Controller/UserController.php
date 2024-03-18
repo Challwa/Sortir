@@ -61,7 +61,7 @@ class UserController extends AbstractController
             return $security->login($user, AppAuthenticator::class, 'main');
         }
 
-        return $this->render('home/profil.html.twig', [
+        return $this->render('participant/profil.html.twig', [
             'profilForm' => $form,
         ]);
     }
