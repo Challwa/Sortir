@@ -74,19 +74,33 @@
                             <th>{{ sortie.nom }}</th>
                             <th>{{ sortie.dateHeureDebut|date("d/m/Y H:i") }}</th>
                             <th>{{ sortie.dateLimiteInscription|date("d/m/Y") }}</th>
-                            <th>/{{ sortie.nbInscriptionsMax }}</th>
+                            <th>{{ sortie.participants.count }}/{{ sortie.nbInscriptionsMax }}</th>
                             <th>{{ sortie.etats.libelle }}</th>
-                            <th></th>
+                            <th>{{ sortie.participants.contains(app.user) ? 'X' : '' }}</th>
                             <th>{{ sortie.organisateur.prenom|capitalize }} {{ sortie.organisateur.nom|upper|u.truncate(2,'.') }}</th>
-                            {% if sortie.etats.id == 1 and sortie.organisateur == app.user %}
-                            <th><a href="">Modifier</a> - Publier</th>
-                                {% elseif sortie.etats.id == 2 and sortie.organisateur == app.user %}
-                                <th>Afficher - Annuler</th>
-                                {% elseif sortie.etats.id == 2 %}
-                                <th>Afficher - S'inscrire</th>
+
+                            {% if sortie.etats.id == 2 %}
+                                <th>
+                                    <form action="{{ path('inscription_sortie', {'id': sortie.id}) }}" method="post">
+                                        <button type="submit" class="btn btn-primary">
+                                            {% if sortie.participants.contains(app.user) %}
+                                                Se désister
+                                            {% else %}
+                                                S'inscrire
+                                            {% endif %}
+                                        </button>
+                                    </form>
+                                </th>
+                            {% else %}
+{#                            {% if sortie.etats.id == 1 and sortie.organisateur == app.user %}#}
+{#                            <th><a href="">Modifier</a> - Publier</th>#}
+{#                                {% elseif sortie.etats.id == 2 and sortie.organisateur == app.user %}#}
+{#                                <th>Afficher - Annuler</th>#}
+{#                                {% elseif sortie.etats.id == 2 %}#}
+{#                                <th>Afficher - S'inscrire</th>#}
 {#    revoir quand on est inscrit et état ouvert           {% elseif sortie.etats.id == 2 and %}#}
 {#                                <th></th>  #}
-                                {% else %}
+{#                                {% else %}#}
                                 <th>Afficher</th>
                             {% endif %}
                     </tr>
