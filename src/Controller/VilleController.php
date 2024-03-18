@@ -15,16 +15,11 @@ use Symfony\Component\Routing\Attribute\Route;
 class VilleController extends AbstractController
 {
     #[Route(path: '', name: '')]
-    public function ville(EntityManagerInterface $entityManager, VilleRepository $villeRepository, Request $request): Response
+    public function ville(VilleRepository $VilleRepository): Response
     {
-        $ville = new  Ville();
-
-        $ville = $villeRepository->findAll();
-
-        $formVille = $this->createForm(VilleType::class, $ville);
-
-
-        return $this->render('villes/villes.html.twig', compact('ville', 'formVille'));
+        return $this->render('villes/villes.html.twig', [
+            'ville' => $VilleRepository->findAll(),
+        ]);
     }
 
     #[Route(path: 'ajouter', name: 'ajouter')]
