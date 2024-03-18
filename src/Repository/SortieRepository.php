@@ -30,4 +30,13 @@ class SortieRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function filter(array $searchData):array
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.nom LIKE :nom')
+            ->setParameter('nom', '%' .$searchData['nom'] . '%')
+            ->getQuery()
+            ->getResult();
+    }
 }

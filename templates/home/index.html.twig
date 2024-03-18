@@ -17,14 +17,14 @@
             {{ form_start(form) }}
             <div id="filter">
             {{ form_row(form.sites) }}
-            {{ form_row(form.search) }}
+            {{ form_row(form.nom) }}
             {{ form_row(form.startDate) }}
             {{ form_row(form.endDate) }}
             <div class="checkbox-group">
-                {{ form_row(form.organisateur) }}
-                {{ form_row(form.inscrit) }}
-                {{ form_row(form.nonInscrit) }}
-                {{ form_row(form.passees) }}
+{#                {{ form_row(form.organisateur) }}#}
+{#                {{ form_row(form.inscrit) }}#}
+{#                {{ form_row(form.nonInscrit) }}#}
+{#                {{ form_row(form.passees) }}#}
             </div>
             {{ form_row(form.submit) }}
             </div>
@@ -48,26 +48,32 @@
                     </thead>
                     <tbody>
                     {% for sortie in sorties %}
-                        <tr>
+                    <tr>
                             <th>{{ sortie.nom }}</th>
                             <th>{{ sortie.dateHeureDebut|date("d/m/Y H:i") }}</th>
                             <th>{{ sortie.dateLimiteInscription|date("d/m/Y") }}</th>
-                            <th>/{{ sortie.nbInscriptionsMax }}</th>
+                            <th>{{ sortie.participants.count }}/{{ sortie.nbInscriptionsMax }}</th>
                             <th>{{ sortie.etats.libelle }}</th>
-                            <th></th>
+                            <th>{{ sortie.participants.contains(app.user) ? 'X' : '' }}</th>
                             <th>{{ sortie.organisateur.prenom|capitalize }} {{ sortie.organisateur.nom|upper|u.truncate(2,'.') }}</th>
-                            {% if sortie.etats.id == 1 and sortie.organisateur == app.user %}
-                                <th><a href="">Modifier</a> - Publier</th>
-                            {% elseif sortie.etats.id == 2 and sortie.organisateur == app.user %}
-                                <th>Afficher - Annuler</th>
-                            {% elseif sortie.etats.id == 2 %}
-                                <th>Afficher - S'inscrire</th>
-                                {#    revoir quand on est inscrit et état ouvert           {% elseif sortie.etats.id == 2 and %} #}
-                                {#                                <th></th>  #}
+
+                        <th>
+                            {% if sortie.etats.id == 2 %}
+                                {% if sortie.participants.contains(app.user) %}
+                                    <form action="{{ path('desinscription_sortie', {'id': sortie.id}) }}" method="post">
+                                        <button type="submit" class="btn btn-danger">Se désister</button>
+                                    </form>
+                                {% else %}
+                                    <form action="{{ path('inscription_sortie', {'id': sortie.id}) }}" method="post">
+                                        <button type="submit" class="btn btn-primary">S'inscrire</button>
+                                    </form>
+                                {% endif %}
+                        </th>
                             {% else %}
                                 <th>Afficher</th>
                             {% endif %}
-                        </tr>
+
+                    </tr>
                     {% endfor %}
                     </tbody>
                 </table>
@@ -75,7 +81,6 @@
             <br>
             <button type="submit"><a href="{{ path('sortie_creer') }}"> Créer une sortie</a></button>
         </div>
-
     {% else %}
         <div class="home-wrapper">
             <h1>Bienvenue</h1>

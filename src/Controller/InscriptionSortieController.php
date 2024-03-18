@@ -6,53 +6,91 @@ use App\Entity\Participant;
 use App\Entity\Sortie;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Bundle\SecurityBundle\Security;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 class InscriptionSortieController extends AbstractController
 {
-    private $security;
-    public function __construct(Security $security)
-    {
-        $this->security = $security;
-    }
-
     #[Route('/inscription/{id}', name: 'inscription_sortie')]
-    #[Security("is_granted('ROLE_USER')")]
-    public function inscription(EntityManagerInterface $entityManager, Participant $participant, $security, Request $request , int $id): Response
+    public function inscription(EntityManagerInterface $entityManager, int $id): Response
     {
-        $user = $security->getUser();
+        $userId = $this->getUser()->getId();
+
+        // Recuperer la sortie
         $sortie = $entityManager->getRepository(Sortie::class)->find($id);
 
-        //état de la sortie?
+        // Recuperer le participant
+        $participant = $entityManager->getRepository(Participant::class)->find($userId);
 
+        if (!$sortie) {
+            throw $this->createNotFoundException('La sortie demandée n\'existe pas.');
+        }
+
+        // Verifier l'etat de la sortie et tout les contraintes
         $etatSortie = $sortie->getEtats()->getId();
 
-        if($etatSortie !== 2){
+        if ($etatSortie !== 2) {
             $this->addFlash('danger', 'La sortie n\'est pas encore ouverte');
             return $this->redirectToRoute('app_home');
         }
-       if ($sortie->getParticipants()->contains($user)) {
-           $this->addFlash('danger', 'Vous participez déja a cette sortie');
-           return $this->redirectToRoute('app_home');
-       }
-       if ($sortie->getDateLimiteInscription() < new \DateTime()) {
-           $this->addFlash('danger', 'La date d\'inscription est dépassée');
-           return $this->redirectToRoute('app_home');
-       }
-       if($sortie->getParticipants()->count() >= $sortie->getNbInscriptionsMax()){
-           $this->addFlash('danger', 'La sortie est complete');
-           return $this->redirectToRoute('app_home');
-       }
-        // Ajouter l'user
-        $sortie->addParticipant($participant);
 
-        // Enregistrer dans la base de données
+        if ($sortie->getParticipants()->contains($participant)) {
+            $this->addFlash('danger', 'Vous participez déjà à cette sortie');
+            return $this->redirectToRoute('app_home');
+        }
+
+        if ($sortie->getDateLimiteInscription() < new \DateTime()) {
+            $this->addFlash('danger', 'La date d\'inscription est dépassée');
+            return $this->redirectToRoute('app_home');
+        }
+
+        if ($sortie->getParticipants()->count() >= $sortie->getNbInscriptionsMax()) {
+            $this->addFlash('danger', 'La sortie est complète');
+            return $this->redirectToRoute('app_home');
+        }
+
+        // Asocier le participant à la sortie
+        $sortie->getParticipants()->add($participant);
+
+        // Persist vers la bdd
         $entityManager->persist($sortie);
         $entityManager->flush();
 
-        return $this->render('home/index.html.twig');
+        $this->addFlash('success', 'Inscription réussie !');
+
+        return $this->redirectToRoute('app_home');
     }
+
+    #[Route('/desinscription/{id}', name: 'desinscription_sortie')]
+    public function desinscription(EntityManagerInterface $entityManager, int $id): Response
+    {
+        $userId = $this->getUser()->getId();
+
+        // Recuperer la sortie
+        $sortie = $entityManager->getRepository(Sortie::class)->find($id);
+
+        // Recuperer le participant
+        $participant = $entityManager->getRepository(Participant::class)->find($userId);
+
+        if (!$sortie) {
+            throw $this->createNotFoundException('La sortie demandée n\'existe pas.');
+        }
+
+        // verifier si le participant est inscrit
+        if ($sortie->getParticipants()->contains($participant)) {
+            // Desinscrire le participant
+            $sortie->removeParticipant($participant);
+
+            // Persist en bdd
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Vous êtes désinscrit de cette sortie avec succès !');
+        } else {
+            $this->addFlash('danger', 'Vous n\'êtes pas inscrit à cette sortie.');
+        }
+
+        return $this->redirectToRoute('app_home');
+    }
+
+
 }

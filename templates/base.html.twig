@@ -23,10 +23,11 @@
             <nav>
                 <ul>
                     <li><a href="{{ path('app_home') }}">Accueil</a></li>
+                    <li><a href="{{ path('app_register') }}">S'incrire</a></li>
                     {% if is_granted('ROLE_ADMIN', 'IS_AUTHENTICATED') %}
                         <li><a href="{{ path('app_villes_') }}">Villes</a></li>
                         <li><a href="{{ path('app_sites_') }}">Sites</a></li>
-                        <li><a href="{{ path('app_register') }}">Inscrire un étudiant</a></li>
+
                     {% endif %}
                     {% if is_granted('IS_AUTHENTICATED') %}
                         <li><a href="{{ path('app_profil_update', {'id' : app.user.id}) }}">Mon Profil</a></li>
