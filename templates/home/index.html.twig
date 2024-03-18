@@ -79,7 +79,7 @@
                             <th></th>
                             <th>{{ sortie.organisateur.prenom|capitalize }} {{ sortie.organisateur.nom|upper|u.truncate(2,'.') }}</th>
                             {% if sortie.etats.id == 1 and sortie.organisateur == app.user %}
-                            <th><a href="{{ path('sortie_modifier') }}">Modifier</a> - Publier</th>
+                            <th><a href="">Modifier</a> - Publier</th>
                                 {% elseif sortie.etats.id == 2 and sortie.organisateur == app.user %}
                                 <th>Afficher - Annuler</th>
                                 {% elseif sortie.etats.id == 2 %}
