@@ -50,7 +50,7 @@ class InscriptionSortieController extends AbstractController
         }
 
         // Asocier le participant à la sortie
-        $sortie->addParticipant($participant);
+        $sortie->getParticipants()->add($participant);
 
         // Persist vers la bdd
         $entityManager->persist($sortie);
@@ -60,4 +60,37 @@ class InscriptionSortieController extends AbstractController
 
         return $this->redirectToRoute('app_home');
     }
+
+    #[Route('/desinscription/{id}', name: 'desinscription_sortie')]
+    public function desinscription(EntityManagerInterface $entityManager, int $id): Response
+    {
+        $userId = $this->getUser()->getId();
+
+        // Recuperer la sortie
+        $sortie = $entityManager->getRepository(Sortie::class)->find($id);
+
+        // Recuperer le participant
+        $participant = $entityManager->getRepository(Participant::class)->find($userId);
+
+        if (!$sortie) {
+            throw $this->createNotFoundException('La sortie demandée n\'existe pas.');
+        }
+
+        // verifier si le participant est inscrit
+        if ($sortie->getParticipants()->contains($participant)) {
+            // Desinscrire le participant
+            $sortie->removeParticipant($participant);
+
+            // Persist en bdd
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Vous êtes désinscrit de cette sortie avec succès !');
+        } else {
+            $this->addFlash('danger', 'Vous n\'êtes pas inscrit à cette sortie.');
+        }
+
+        return $this->redirectToRoute('app_home');
+    }
+
+
 }

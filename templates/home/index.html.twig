@@ -92,15 +92,6 @@
                                     </form>
                                 </th>
                             {% else %}
-{#                            {% if sortie.etats.id == 1 and sortie.organisateur == app.user %}#}
-{#                            <th><a href="">Modifier</a> - Publier</th>#}
-{#                                {% elseif sortie.etats.id == 2 and sortie.organisateur == app.user %}#}
-{#                                <th>Afficher - Annuler</th>#}
-{#                                {% elseif sortie.etats.id == 2 %}#}
-{#                                <th>Afficher - S'inscrire</th>#}
-{#    revoir quand on est inscrit et état ouvert           {% elseif sortie.etats.id == 2 and %}#}
-{#                                <th></th>  #}
-{#                                {% else %}#}
                                 <th>Afficher</th>
                             {% endif %}
                     </tr>
@@ -110,15 +101,6 @@
             </div>
             <br>
             <button type="submit"><a href="{{ path('sortie_creer') }}"> Créer une sortie</a></button>
-        </div>
-
-    {% else %}
-        <div class="home-wrapper">
-            <h1>Bienvenue</h1>
-
-            <div>
-                <img src="{{ asset('Images/sortir_home.png') }}" alt="sortir" width="500px">
-            </div>
         </div>
     {% endif %}
 
