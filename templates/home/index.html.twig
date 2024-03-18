@@ -13,45 +13,23 @@
             {% endfor %}
         </div>
         <div class="container" id="home-page">
+
+            {{ form_start(form) }}
             <div id="filter">
-                <div>
-                    <p>Filtrer les sorties</p>
-                    <label for="site">Site :</label>
-                    <select name="site" id="site">
-                        {% for site in sites %}
-                            <option>{{ site.nom|upper }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div>
-                    <label for="sortie">Le nom de la sortie contient:</label>
-                    <input type="search" id="sortie" name="filter"/>
-                </div>
-                <div>
-                    <label for="meeting-time">Entre</label>
-                    <input type="datetime-local" id="meeting-time" name="meeting-time"/>
-                    <label for="meeting-time"> et </label>
-                    <input type="datetime-local" id="meeting-time" name="meeting-time"/>
-                </div>
-                <br>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="sortie-orga" name="sortie-orga"/>
-                    <label for="sortie-orga">Sorties dont je suis l'organisateur/trice</label>
-                </div>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="sortie-inscrit" name="sortie-inscrit"/>
-                    <label for="sortie-inscrit">Sorties auxquelles je suis inscrit/e</label>
-                </div>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="sortie-non-inscrit" name="sortie-non-inscrit"/>
-                    <label for="sortie-non-inscrit">Sorties auxquelles je ne suis pas inscrit/e</label>
-                </div>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="sortie-archive" name="sortie-archive"/>
-                    <label for="sortie-archive">Sorties passées</label>
-                </div>
+            {{ form_row(form.sites) }}
+            {{ form_row(form.search) }}
+            {{ form_row(form.startDate) }}
+            {{ form_row(form.endDate) }}
+            <div class="checkbox-group">
+                {{ form_row(form.organisateur) }}
+                {{ form_row(form.inscrit) }}
+                {{ form_row(form.nonInscrit) }}
+                {{ form_row(form.passees) }}
             </div>
-                <button type="submit">Rechercher</button>
+            {{ form_row(form.submit) }}
+            </div>
+            {{ form_end(form) }}
+
             <br>
             <br>
             <div class="table-container">
@@ -70,7 +48,7 @@
                     </thead>
                     <tbody>
                     {% for sortie in sorties %}
-                    <tr>
+                        <tr>
                             <th>{{ sortie.nom }}</th>
                             <th>{{ sortie.dateHeureDebut|date("d/m/Y H:i") }}</th>
                             <th>{{ sortie.dateLimiteInscription|date("d/m/Y") }}</th>
@@ -79,17 +57,17 @@
                             <th></th>
                             <th>{{ sortie.organisateur.prenom|capitalize }} {{ sortie.organisateur.nom|upper|u.truncate(2,'.') }}</th>
                             {% if sortie.etats.id == 1 and sortie.organisateur == app.user %}
-                            <th><a href="">Modifier</a> - Publier</th>
-                                {% elseif sortie.etats.id == 2 and sortie.organisateur == app.user %}
+                                <th><a href="">Modifier</a> - Publier</th>
+                            {% elseif sortie.etats.id == 2 and sortie.organisateur == app.user %}
                                 <th>Afficher - Annuler</th>
-                                {% elseif sortie.etats.id == 2 %}
+                            {% elseif sortie.etats.id == 2 %}
                                 <th>Afficher - S'inscrire</th>
-{#    revoir quand on est inscrit et état ouvert           {% elseif sortie.etats.id == 2 and %}#}
-{#                                <th></th>  #}
-                                {% else %}
+                                {#    revoir quand on est inscrit et état ouvert           {% elseif sortie.etats.id == 2 and %} #}
+                                {#                                <th></th>  #}
+                            {% else %}
                                 <th>Afficher</th>
                             {% endif %}
-                    </tr>
+                        </tr>
                     {% endfor %}
                     </tbody>
                 </table>
