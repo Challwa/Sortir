@@ -109,7 +109,7 @@ class UserController extends AbstractController
             return $this->redirectToRoute('app_home', ['id' => $user->getId()]);
         }
         //renvoie vers le twig concernant le formulaire
-        return $this->render('home/profil.html.twig', [
+        return $this->render('participant/profil.html.twig', [
             //each éléments du tableau représentent une variable dispo dans le twig
             'profilForm' => $form,
 
