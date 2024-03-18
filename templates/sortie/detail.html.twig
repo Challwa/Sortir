@@ -5,20 +5,38 @@
 {% block body %}
     <h2>Afficher une sortie</h2>
 
-    <ul>
+    <table class="table">
+    <tbody>
+   <tr>
 
-        <li>Nom de la sortie:  {{ sortie.nom }}</li>
-        <li>Date et heure de la sortie: {{ sortie.dateheuredebut|date("d/m/Y H:i") }}</li>
-        <li>Date limite d'inscription: {{ sortie.dateLimiteInscription|date("d/m/Y") }}</li>
-        <li>Nombre de places: {{ sortie.nbInscriptionsMax}}</li>
-        <li>Durée: {{ sortie.duree }}</li>
-        <li>Description et infos: {{ sortie.infosSortie }}</li>
-{#        <li>Lieu: {{ sortie.lieux }}</li>#}
+        <th>Nom de la sortie:</th>
+        <td>{{ sortie.nom }}</td>
+        <th>Date et heure de la sortie: </th>
+        <td>{{ sortie.dateHeureDebut|date("d/m/Y H:i") }}</td>
+        <th>Date limite d'inscription:</th>
+        <td>{{ sortie.dateLimiteInscription|date("d/m/Y") }}</td>
+        <th>Nombre de places: </th>
+        <td>{{ sortie.nbInscriptionsMax}}</td>
+        <th>Durée:</th>
+        <td> {{ sortie.duree }}</td>
+        <th>Description et infos:</th>
+        <td>{{ sortie.infosSortie }}</td>
+{#        <li>Lieu: {{ sortie.lieu.nom }}</li>#}
 {#        <li>Ville: {{ lieu.rue }}</li>#}
 {#        <li>Ville: {{ ville.nom }}</li>#}
 {#        <li>Ville: {{ lieu.latitudel }}</li>#}
 {#        <li>Ville: {{ lieu.longitude }}</li>#}
+   </tr>
+        <table>
+            <thead>Participants</thead>
+            <tbody>
+            {% for participant in participant %}
+                <tr>
+                    <td>{{ participant.nom }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
 
-    </ul>
     <br>
 {% endblock %}

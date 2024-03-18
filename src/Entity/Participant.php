@@ -47,7 +47,7 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var list<string> The user roles
      */
-    #[ORM\Column(name: 'roles')]
+    #[ORM\Column(name: 'roles', nullable: true)]
     private array $roles = [];
 
     /*
