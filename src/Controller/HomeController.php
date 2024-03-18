@@ -20,6 +20,7 @@ class HomeController extends AbstractController
     public function home(Request $request, EntityManagerInterface $entityManager, SortieRepository $sortieRepository, ParticipantRepository $participantRepository): Response
     {
 
+        //gestion du formulaire de recherche (filtre)
         $form = $this->createForm(SearchType::class);
         $form->handleRequest($request);
 

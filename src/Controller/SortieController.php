@@ -22,7 +22,14 @@ use Symfony\Contracts\EventDispatcher\Event;
 class SortieController extends AbstractController
 {
 
-    #[Route('/detail/{id}', name: 'detail', requirements: ['id' => '\d+'], methods: ['GET'])]
+    private $authenticationUtils;
+
+    public function __construct(AuthenticationUtils $authenticationUtils)
+    {
+        $this->authenticationUtils = $authenticationUtils;
+    }
+
+    #[Route(path: '/detail/{id}', name: 'detail', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function detail(Sortie $sortie): Response
     {
 
@@ -32,14 +39,6 @@ class SortieController extends AbstractController
 
         ]);
     }
-
-    private $authenticationUtils;
-
-    public function __construct(AuthenticationUtils $authenticationUtils)
-    {
-        $this->authenticationUtils = $authenticationUtils;
-    }
-
 
     #[Route(path: '/creer', name: 'creer')]
     public function creerSortie(Request $request, EntityManagerInterface $entityManager): Response
@@ -83,6 +82,27 @@ class SortieController extends AbstractController
         return $this->render('sortie/creerSortie.html.twig', [
             'formSortie' => $formSortie
         ]);
+    }
+
+    #[Route(path: '/modifier/{id}', name: 'modifier', requirements: ['id' => '\d+'])]
+    public function modifierSortie(Sortie $sortie, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(SortieType::class, $sortie);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted()) {
+            $entityManager->persist($sortie);
+            $entityManager->flush();
+
+            $this->addFlash('succes', 'La sortie a bien été modifiée');
+            return $this->redirectToRoute('app_home');
+        }
+
+        return $this->render('sortie/modifier.html.twig', [
+            'modif_form' => $form
+        ]);
 
     }
+
+
 }

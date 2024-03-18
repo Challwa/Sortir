@@ -3,5 +3,9 @@
 {% block title %}{{ parent() }} : Modifier Sortie{% endblock %}
 
 {% block body %}
+    <div class="container">
+        {{ form_start(modif_form) }}
+        {{ form_end(modif_form) }}
+    </div>
 
 {% endblock %}
