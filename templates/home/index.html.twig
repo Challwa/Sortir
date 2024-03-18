@@ -57,21 +57,22 @@
                             <th>{{ sortie.participants.contains(app.user) ? 'X' : '' }}</th>
                             <th>{{ sortie.organisateur.prenom|capitalize }} {{ sortie.organisateur.nom|upper|u.truncate(2,'.') }}</th>
 
+                        <th>
                             {% if sortie.etats.id == 2 %}
-                                <th>
-                                    <form action="{{ path('inscription_sortie', {'id': sortie.id}) }}" method="post">
-                                        <button type="submit" class="btn btn-primary">
-                                            {% if sortie.participants.contains(app.user) %}
-                                                Se désister
-                                            {% else %}
-                                                S'inscrire
-                                            {% endif %}
-                                        </button>
+                                {% if sortie.participants.contains(app.user) %}
+                                    <form action="{{ path('desinscription_sortie', {'id': sortie.id}) }}" method="post">
+                                        <button type="submit" class="btn btn-danger">Se désister</button>
                                     </form>
-                                </th>
+                                {% else %}
+                                    <form action="{{ path('inscription_sortie', {'id': sortie.id}) }}" method="post">
+                                        <button type="submit" class="btn btn-primary">S'inscrire</button>
+                                    </form>
+                                {% endif %}
+                        </th>
                             {% else %}
                                 <th>Afficher</th>
                             {% endif %}
+
                     </tr>
                     {% endfor %}
                     </tbody>
