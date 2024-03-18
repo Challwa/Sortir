@@ -20,6 +20,7 @@ class HomeController extends AbstractController
     public function home(Request $request, EntityManagerInterface $entityManager, SortieRepository $sortieRepository, ParticipantRepository $participantRepository): Response
     {
 
+        //gestion du formulaire de recherche (filtre)
         $form = $this->createForm(SearchType::class);
         $form->handleRequest($request);
 
@@ -29,8 +30,7 @@ class HomeController extends AbstractController
             // Requête pour récupérer les sorties filtrées en fonction de la recherche
             $sorties =  $entityManager->getRepository(Sortie::class)->filter($searchData);
 
-            $entityManager->persist();
-            $entityManager->flush();
+            //A suivre
 
         }
 
@@ -47,19 +47,6 @@ class HomeController extends AbstractController
         $organisateur = $participantRepository->findAllWithOrganisateur();
 
         return $this->render('home/index.html.twig', compact('sites', 'sorties', 'organisateur', 'form'));
-    }
-
-
-   #[Route(path: "profil", name: "app_profil", methods: ["GET"])]
-    public function profil(): Response
-    {
-        return $this->render('home/profil.html.twig');
-    }
-
-    #[Route(path: "creationCompte", name: "app_creationCompte", methods: ["GET"])]
-    public function creationCompte(): Response
-    {
-        return $this->render('home/creationCompte.html.twig');
     }
 
 }
