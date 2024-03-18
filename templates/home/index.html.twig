@@ -48,32 +48,38 @@
                     </thead>
                     <tbody>
                     {% for sortie in sorties %}
-                    <tr>
-                            <th>{{ sortie.nom }}</th>
-                            <th>{{ sortie.dateHeureDebut|date("d/m/Y H:i") }}</th>
-                            <th>{{ sortie.dateLimiteInscription|date("d/m/Y") }}</th>
-                            <th>{{ sortie.participants.count }}/{{ sortie.nbInscriptionsMax }}</th>
-                            <th>{{ sortie.etats.libelle }}</th>
-                            <th>{{ sortie.participants.contains(app.user) ? 'X' : '' }}</th>
-                            <th>{{ sortie.organisateur.prenom|capitalize }} {{ sortie.organisateur.nom|upper|u.truncate(2,'.') }}</th>
-
-                        <th>
-                            {% if sortie.etats.id == 2 %}
-                                {% if sortie.participants.contains(app.user) %}
-                                    <form action="{{ path('desinscription_sortie', {'id': sortie.id}) }}" method="post">
-                                        <button type="submit" class="btn btn-danger">Se désister</button>
-                                    </form>
-                                {% else %}
-                                    <form action="{{ path('inscription_sortie', {'id': sortie.id}) }}" method="post">
-                                        <button type="submit" class="btn btn-primary">S'inscrire</button>
-                                    </form>
-                                {% endif %}
-                        </th>
-                            {% else %}
-                                <th>Afficher</th>
-                            {% endif %}
-
-                    </tr>
+                        <tr>
+                            <td>{{ sortie.nom }}</td>
+                            <td>{{ sortie.dateHeureDebut|date("d/m/Y H:i") }}</td>
+                            <td>{{ sortie.dateLimiteInscription|date("d/m/Y") }}</td>
+                            <td>{{ sortie.participants.count }}/{{ sortie.nbInscriptionsMax }}</td>
+                            <td>{{ sortie.etats.libelle }}</td>
+                            <td>{{ sortie.participants.contains(app.user) ? 'X' : '' }}</td>
+                            <td>{{ sortie.organisateur.prenom|capitalize }} {{ sortie.organisateur.nom|upper|u.truncate(2,'.') }}</td>
+                            <td>
+                                <div class="button-container">
+                                    {% if sortie.etats.id != 1 %}
+                                        <button class="btn btn-primary">Afficher</button>
+                                    {% endif %}
+                                    {% if sortie.etats.id == 2 and sortie.participants.contains(app.user) %}
+                                        <form action="{{ path('desinscription_sortie', {'id': sortie.id}) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir vous désinscrire de cette sortie ?');">
+                                            <button type="submit" class="btn btn-primary">Se désister</button>
+                                        </form>
+                                    {% elseif sortie.etats.id == 2 %}
+                                        <form action="{{ path('inscription_sortie', {'id': sortie.id}) }}" method="post">
+                                            <button type="submit" class="btn btn-primary">S'inscrire</button>
+                                        </form>
+                                    {% endif %}
+                                    {% if sortie.etats.id == 1 and sortie.organisateur == app.user %}
+                                        <button class="btn btn-primary">Modifier</button>
+                                        <button class="btn btn-primary">Publier</button>
+                                    {% endif %}
+                                    {% if sortie.etats.id == 2 and sortie.organisateur == app.user %}
+                                        <button class="btn btn-primary">Annuler</button>
+                                    {% endif %}
+                                </div>
+                            </td>
+                        </tr>
                     {% endfor %}
                     </tbody>
                 </table>

@@ -144,4 +144,14 @@ thead {
     justify-content: space-around;
     margin-top: 20px;
 }
+.button-container {
+    display: flex;
+    justify-content: space-around;
+}
+
+.button-container button {
+    width: 150px;
+    margin: 0 5px;
+}
+
 
