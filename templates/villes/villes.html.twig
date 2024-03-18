@@ -23,13 +23,16 @@
                 </tr>
                 </thead>
                 {% for i in ville %}
+                    <tbody>
                     <tr>
-                        <th>{{ i.nom|upper }}</th>
-{#                        <th>{{ i.codePostal }}</th>#}
-{#                        <th><a href="{{ path('app_villes_ajouter', { id : i.id }) }}">Modifier</a></th>#}
-                        <th>-</th>
-                        <th><a href="">Supprimer</a></th>
+                        <th>{{ i.nom | upper}}</th>
+                        <th>{{ i.CodePostal }}</th>
+                        <td>
+{#                        <a href="{{ path('app_villes_modifier', { id : i.id }) }}">Modifier</a> |#}
+{#                            <a href="{{ path('app_delete', { id : i.id}) }}">Supprimer</a>#}
+                        </td>
                     </tr>
+                    </tbody>
                 {% endfor %}
             </table>
         </div>
