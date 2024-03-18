@@ -23,7 +23,7 @@ class SearchType extends AbstractType
             'class' => Site::class,
             'choice_label' => 'nom',
         ])
-            ->add('search', TextType::class, [
+            ->add('nom', TextType::class, [
                 'label' => 'Le nom de la sortie contient :'
                 ])
             ->add('startDate', DateType::class, [
@@ -36,22 +36,22 @@ class SearchType extends AbstractType
                 'label' => ' et : ',
                 'widget' => 'single_text'
             ])
-            ->add('organisateur', CheckboxType::class, [
-                'required' => false,
-                'label' => 'Sorties dont je suis l\'organisateur/trice',
-            ])
-            ->add('inscrit', CheckboxType::class, [
-                'required' => false,
-                'label' => 'Sorties auxquelles je suis inscrit/e',
-            ])
-            ->add('nonInscrit', CheckboxType::class, [
-                'required' => false,
-                'label' => 'Sorties auxquelles je ne suis pas inscrit/e',
-            ])
-            ->add('passees', CheckboxType::class, [
-                'required' => false,
-                'label' => 'Sorties passées',
-            ])
+//            ->add('organisateur', CheckboxType::class, [
+//                'required' => false,
+//                'label' => 'Sorties dont je suis l\'organisateur/trice',
+//            ])
+//            ->add('inscrit', CheckboxType::class, [
+//                'required' => false,
+//                'label' => 'Sorties auxquelles je suis inscrit/e',
+//            ])
+//            ->add('nonInscrit', CheckboxType::class, [
+//                'required' => false,
+//                'label' => 'Sorties auxquelles je ne suis pas inscrit/e',
+//            ])
+//            ->add('passees', CheckboxType::class, [
+//                'required' => false,
+//                'label' => 'Sorties passées',
+//            ])
             ->add('submit', SubmitType::class, [
             'label' => 'Rechercher'
         ]);
@@ -61,7 +61,7 @@ class SearchType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Sortie::class,
+
         ]);
     }
 }
