@@ -63,14 +63,13 @@ class SortieController extends AbstractController
 
             } elseif ($formSortie->get('btnPublish')->isClicked()) {
 
-                $etat = $entityManager->getRepository(Etat::class)->find(2);
+            $etat = $entityManager->getRepository(Etat::class)->find(2);
+        }
+        $sortie->setEtats($etat);
 
-            }
 
-            $sortie->setEtats($etat);
-
-            $sites = $entityManager->getRepository(Site::class)->find(1);
-            $sortie->setSites($sites);
+        $sites = $user->getSites();
+        $sortie->setSites($sites);
 
 
             $entityManager->persist($sortie);
@@ -78,12 +77,22 @@ class SortieController extends AbstractController
 
             $this->addFlash('success', 'La sortie a bien été crée.');
 
-            return $this->redirectToRoute('app_home'); // a changer apres la creation de la vue des sorties -> sorties.html.twig
-        }
+        return $this->redirectToRoute('app_home');
+    }
 
         return $this->render('sortie/creerSortie.html.twig', [
             'formSortie' => $formSortie
         ]);
 
+    }
+
+    #[Route(path: "/{id}", name: "modifier")]
+    public function modifier(int $id, EntityManagerInterface $entityManager): Response
+    {
+        $detail = $entityManager->getRepository(Sortie::class)->findOneBy([
+           'id' => $id
+        ]);
+
+        return $this->render('sortie/modifier.html.twig', compact('detail'));
     }
 }
