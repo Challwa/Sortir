@@ -20,7 +20,6 @@ class InscriptionSortieController extends AbstractController
 
         // Recuperer la sortie
         $sortie = $entityManager->getRepository(Sortie::class)->find($id);
-        $dateFinAc = clone $sortie->getDateHeureDebut();
         $now = new \DateTime('now');
         // Recuperer le participant
         $participant = $entityManager->getRepository(Participant::class)->find($userId);
@@ -50,11 +49,6 @@ class InscriptionSortieController extends AbstractController
         if ($sortie->getParticipants()->count() >= $sortie->getNbInscriptionsMax()) {
             $this->addFlash('danger', 'La sortie est complète');
             return $this->redirectToRoute('app_home');
-        }
-        if ($sortie->getEtat()->getId()=== 4 || $sortie->getEtat()->getId()=== 5) {
-            if ($dateFinAc->modify('+1 month') < $now) {
-                $sortie->setEtat("Archivee");
-            }
         }
 
 

@@ -42,9 +42,14 @@ class Sortie
     private ?int $nbInscriptionsMax = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\Length(max: 255, maxMessage: 'Le lieu de la sortie ne doit pas dépasser 255 caractères')]
-    #[Assert\NotBlank(message: 'Le lieu de la sortie est obligatoire')]
+    #[Assert\Length(max: 255, maxMessage: 'La description la sortie ne doit pas dépasser 255 caractères')]
+    #[Assert\NotBlank(message: 'La description de la sortie est obligatoire')]
     private ?string $infosSortie = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Length(max: 255, maxMessage: 'Le motif d\'annulation de la sortie ne doit pas dépasser 255 caractères')]
+    #[Assert\NotBlank(message: 'Le motif d\'annulation de la sortie est obligatoire')]
+    private ?string $motif = null;
 
     #[ORM\ManyToOne(inversedBy: 'sorties')]
     #[ORM\JoinColumn(nullable: false)]
@@ -261,6 +266,18 @@ class Sortie
 
         return $this;
     }
+
+    public function getMotif(): ?string
+    {
+        return $this->motif;
+    }
+
+    public function setMotif(?string $motif): void
+    {
+        $this->motif = $motif;
+    }
+
+
 
 
 }

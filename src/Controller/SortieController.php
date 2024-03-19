@@ -7,10 +7,14 @@ use App\Entity\Lieu;
 use App\Entity\Participant;
 use App\Entity\Site;
 use App\Entity\Sortie;
+use App\Form\AnnulationType;
 use App\Form\SortieType;
+use App\Repository\LieuRepository;
+use App\Repository\SiteRepository;
 use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,7 +36,7 @@ class SortieController extends AbstractController
     #[Route(path: '/detail/{id}', name: 'detail', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function detail(Sortie $sortie): Response
     {
-        $participant=$sortie->getParticipants();
+        $participant = $sortie->getParticipants();
         return $this->render('sortie/detail.html.twig', [
             'sortie' => $sortie,
             'participant' => $participant
@@ -92,7 +96,7 @@ class SortieController extends AbstractController
         $form = $this->createForm(SortieType::class, $sortie);
         $form->handleRequest($request);
 
-        if($form->isSubmitted()) {
+        if ($form->isSubmitted()) {
             $entityManager->persist($sortie);
             $entityManager->flush();
 
@@ -103,8 +107,46 @@ class SortieController extends AbstractController
         return $this->render('sortie/modifier.html.twig', [
             'modif_form' => $form, 'detailSortie' => $detailSortie,
         ]);
-
     }
 
+    #[Route(path: '/annuler/{id}', name: 'annuler', requirements: ['id' => '\d+'])]
+    public function annulerSortie(int $id, Sortie $sortie, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $annulerSortie = $entityManager->getRepository(Sortie::class)->find($id);
 
+        $form = $this->createForm(AnnulationType::class, $sortie);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            if ($form->get('btnRegister')->isClicked()) {
+
+                $etat = $entityManager->getRepository(Etat::class)->find(6);
+            }
+            $sortie->setEtats($etat);
+
+            $entityManager->persist($sortie);
+            $entityManager->flush();
+
+            $this->addFlash('succes', 'L\'annulation a bien été modifiée');
+            return $this->redirectToRoute('app_home');
+        }
+
+        return $this->render('sortie/annulation.html.twig', [
+            'annuler_form' => $form, 'annulerSortie' => $annulerSortie,
+        ]);
+    }
+
+    #[Route(path:'/publier/{id}', name: 'publier')]
+    public function publierSortie(int $id, Sortie $sortie, EntityManagerInterface $entityManager): RedirectResponse
+    {
+        $etatOuverte = $entityManager->getRepository(Etat::class)->find(2);
+        $sortie->setEtats($etatOuverte);
+        $entityManager->persist($sortie);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'La sortie a bien été publiee');
+
+        return $this->redirectToRoute('app_home');
+
+    }
 }
