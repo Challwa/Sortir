@@ -39,6 +39,7 @@ class ProfileType extends AbstractType
                     new File([
                         'maxSize' => '1024k',
                         'mimeTypes' => [
+                            //accepte tous les formats d'image
                             'image/*',
                         ],
                         'maxSizeMessage' => 'Ce fichier est trop lourd',

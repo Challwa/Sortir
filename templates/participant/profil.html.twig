@@ -17,7 +17,7 @@
 
             {{ form_start(profilForm) }}
 
-            <img class="image_profil" src="{{ asset(picture_dir ~ '/' ~ app.user.image) }}" width="400px"/>
+            <img class="image_profil" src="{{ asset(picture_dir ~ '/' ~ app.user.image) }}" width="400px" alt="Mon image"/>
 
             {{ form_row(profilForm.pseudo, {'value': app.user.pseudo}) }}
             {{ form_row(profilForm.nom, {'value': app.user.nom}) }}

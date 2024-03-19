@@ -36,22 +36,6 @@ class SearchType extends AbstractType
                 'label' => ' et : ',
                 'widget' => 'single_text'
             ])
-//            ->add('organisateur', CheckboxType::class, [
-//                'required' => false,
-//                'label' => 'Sorties dont je suis l\'organisateur/trice',
-//            ])
-//            ->add('inscrit', CheckboxType::class, [
-//                'required' => false,
-//                'label' => 'Sorties auxquelles je suis inscrit/e',
-//            ])
-//            ->add('nonInscrit', CheckboxType::class, [
-//                'required' => false,
-//                'label' => 'Sorties auxquelles je ne suis pas inscrit/e',
-//            ])
-//            ->add('passees', CheckboxType::class, [
-//                'required' => false,
-//                'label' => 'Sorties passées',
-//            ])
             ->add('submit', SubmitType::class, [
             'label' => 'Rechercher'
         ]);
