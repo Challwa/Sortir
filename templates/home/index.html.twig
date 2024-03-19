@@ -76,7 +76,9 @@
                                     <form action="{{ path('sortie_modifier', {'id': sortie.id}) }}">
                                         <button class="btn btn-primary">Modifier</button>
                                     </form>
-                                        <button class="btn btn-primary">Publier</button>
+                                        <form action="{{ path('sortie_publier', {'id': sortie.id}) }}">
+                                            <button class="btn btn-primary">Publier</button>
+                                        </form>
                                     {% endif %}
                                     {% if sortie.etats.id == 2 and sortie.organisateur == app.user %}
                                         <form action="{{ path('sortie_annuler', {'id': sortie.id}) }}">
