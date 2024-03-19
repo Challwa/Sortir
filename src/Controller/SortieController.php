@@ -11,6 +11,7 @@ use App\Form\SortieType;
 use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -106,5 +107,17 @@ class SortieController extends AbstractController
 
     }
 
+    #[Route(path:'/publier/{id}', name: 'publier')]
+    public function publierSortie(int $id, Sortie $sortie, EntityManagerInterface $entityManager): RedirectResponse
+    {
+        $etatOuverte = $entityManager->getRepository(Etat::class)->find(2);
+        $sortie->setEtats($etatOuverte);
+        $entityManager->persist($sortie);
+        $entityManager->flush();
 
+        $this->addFlash('success', 'La sortie a bien été publiee');
+
+        return $this->redirectToRoute('app_home');
+
+    }
 }
