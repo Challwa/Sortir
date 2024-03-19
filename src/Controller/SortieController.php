@@ -58,7 +58,7 @@ class SortieController extends AbstractController
 
         $formSortie->handleRequest($request);
 
-        if ($formSortie->isSubmitted() && $formSortie->isValid()) {
+        if ($formSortie->isSubmitted()) {
 
             if ($formSortie->get('btnRegister')->isClicked()) {
 
