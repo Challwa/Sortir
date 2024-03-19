@@ -16,17 +16,17 @@
 
             {{ form_start(form) }}
             <div id="filter">
-            {{ form_row(form.sites) }}
-            {{ form_row(form.nom) }}
-            {{ form_row(form.startDate) }}
-            {{ form_row(form.endDate) }}
-            <div class="checkbox-group">
-{#                {{ form_row(form.organisateur) }}#}
-{#                {{ form_row(form.inscrit) }}#}
-{#                {{ form_row(form.nonInscrit) }}#}
-{#                {{ form_row(form.passees) }}#}
-            </div>
-            {{ form_row(form.submit) }}
+                {{ form_row(form.sites) }}
+                {{ form_row(form.nom) }}
+                {{ form_row(form.startDate) }}
+                {{ form_row(form.endDate) }}
+                <div class="checkbox-group">
+                    {#                {{ form_row(form.organisateur) }} #}
+                    {#                {{ form_row(form.inscrit) }} #}
+                    {#                {{ form_row(form.nonInscrit) }} #}
+                    {#                {{ form_row(form.passees) }} #}
+                </div>
+                {{ form_row(form.submit) }}
             </div>
             {{ form_end(form) }}
 
@@ -48,46 +48,51 @@
                     </thead>
                     <tbody>
                     {% for sortie in sorties %}
-                        <tr>
-                            <td>{{ sortie.nom|capitalize }}</td>
-                            <td>{{ sortie.dateHeureDebut|date("d/m/Y H:i") }}</td>
-                            <td>{{ sortie.dateLimiteInscription|date("d/m/Y") }}</td>
-                            <td>{{ sortie.participants.count }}/{{ sortie.nbInscriptionsMax }}</td>
-                            <td>{{ sortie.etats.libelle|capitalize }}</td>
-                            <td>{{ sortie.participants.contains(app.user) ? 'X' : '' }}</td>
-                            <td>{{ sortie.organisateur.prenom|capitalize }} {{ sortie.organisateur.nom|upper|u.truncate(2,'.') }}</td>
-                            <td>
-                                <div class="button-container">
-                                    {% if sortie.etats.id != 1 %}
-                                        <form action="{{ path('sortie_detail', {'id': sortie.id}) }}">
-                                            <button class="btn btn-primary">Afficher</button>
-                                        </form>
-                                    {% endif %}
-                                    {% if sortie.etats.id == 2 and sortie.participants.contains(app.user) %}
-                                        <form action="{{ path('desinscription_sortie', {'id': sortie.id}) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir vous désinscrire de cette sortie ?');">
-                                            <button type="submit" class="btn btn-primary">Se désister</button>
-                                        </form>
-                                    {% elseif sortie.etats.id == 2 %}
-                                        <form action="{{ path('inscription_sortie', {'id': sortie.id}) }}" method="post">
-                                            <button type="submit" class="btn btn-primary">S'inscrire</button>
-                                        </form>
-                                    {% endif %}
-                                    {% if sortie.etats.id == 1 and sortie.organisateur == app.user %}
-                                    <form action="{{ path('sortie_modifier', {'id': sortie.id}) }}">
-                                        <button class="btn btn-primary">Modifier</button>
-                                    </form>
-                                        <form action="{{ path('sortie_publier', {'id': sortie.id}) }}">
-                                            <button class="btn btn-primary">Publier</button>
-                                        </form>
-                                    {% endif %}
-                                    {% if sortie.etats.id == 2 and sortie.organisateur == app.user %}
-                                        <form action="{{ path('sortie_annuler', {'id': sortie.id}) }}">
-                                        <button class="btn btn-primary">Annuler</button>
-                                        </form>
-                                    {% endif %}
-                                </div>
-                            </td>
-                        </tr>
+                        {% if sortie.etats.id != 7 %}
+                            <tr>
+                                <td>{{ sortie.nom|capitalize }}</td>
+                                <td>{{ sortie.dateHeureDebut|date("d/m/Y H:i") }}</td>
+                                <td>{{ sortie.dateLimiteInscription|date("d/m/Y") }}</td>
+                                <td>{{ sortie.participants.count }}/{{ sortie.nbInscriptionsMax }}</td>
+                                <td>{{ sortie.etats.libelle|capitalize }}</td>
+                                <td>{{ sortie.participants.contains(app.user) ? 'X' : '' }}</td>
+                                <td>{{ sortie.organisateur.prenom|capitalize }} {{ sortie.organisateur.nom|upper|u.truncate(2,'.') }}</td>
+                                <td>
+                                    <div class="button-container">
+                                        {% if sortie.etats.id != 1 %}
+                                            <form action="{{ path('sortie_detail', {'id': sortie.id}) }}">
+                                                <button class="btn btn-primary">Afficher</button>
+                                            </form>
+                                        {% endif %}
+                                        {% if sortie.etats.id == 2 and sortie.participants.contains(app.user) %}
+                                            <form action="{{ path('desinscription_sortie', {'id': sortie.id}) }}"
+                                                  method="post"
+                                                  onsubmit="return confirm('Êtes-vous sûr de vouloir vous désinscrire de cette sortie ?');">
+                                                <button type="submit" class="btn btn-primary">Se désister</button>
+                                            </form>
+                                        {% elseif sortie.etats.id == 2 %}
+                                            <form action="{{ path('inscription_sortie', {'id': sortie.id}) }}"
+                                                  method="post">
+                                                <button type="submit" class="btn btn-primary">S'inscrire</button>
+                                            </form>
+                                        {% endif %}
+                                        {% if sortie.etats.id == 1 and sortie.organisateur == app.user %}
+                                            <form action="{{ path('sortie_modifier', {'id': sortie.id}) }}">
+                                                <button class="btn btn-primary">Modifier</button>
+                                            </form>
+                                            <form action="{{ path('sortie_publier', {'id': sortie.id}) }}">
+                                                <button class="btn btn-primary">Publier</button>
+                                            </form>
+                                        {% endif %}
+                                        {% if sortie.etats.id == 2 and sortie.organisateur == app.user %}
+                                            <form action="{{ path('sortie_annuler', {'id': sortie.id}) }}">
+                                                <button class="btn btn-primary">Annuler</button>
+                                            </form>
+                                        {% endif %}
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endif %}
                     {% endfor %}
                     </tbody>
                 </table>

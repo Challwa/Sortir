@@ -24,6 +24,7 @@
             <nav>
                 <ul>
                     <li><a href="{{ path('app_home') }}">Accueil</a></li>
+                    <li><a href="{{ path('app_register') }}">S'inscrire</a></li>
                     {% if is_granted('ROLE_ADMIN', 'IS_AUTHENTICATED') %}
                         <li><a href="{{ path('app_villes_') }}">Villes</a></li>
                         <li><a href="{{ path('app_sites_') }}">Sites</a></li>
