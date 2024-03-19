@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} : Annuler Sortie{% endblock %}
+
+{% block body %}
+    <div class="container">
+        {{ form_start(annuler_form) }}
+{#            {{ form_row(annuler_form.btnAnnulation, path('app_home')) }}#}
+        {{ form_end(annuler_form) }}
+
+    </div>
+{% endblock %}
+
+

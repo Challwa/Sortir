@@ -79,7 +79,9 @@
                                         <button class="btn btn-primary">Publier</button>
                                     {% endif %}
                                     {% if sortie.etats.id == 2 and sortie.organisateur == app.user %}
+                                        <form action="{{ path('sortie_annuler', {'id': sortie.id}) }}">
                                         <button class="btn btn-primary">Annuler</button>
+                                        </form>
                                     {% endif %}
                                 </div>
                             </td>
