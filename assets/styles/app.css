@@ -160,4 +160,25 @@ thead {
     margin: 0 5px;
 }
 
+.sortie-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+
+}
+
+.info-list,
+.location-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.info-list li,
+.location-list li {
+    margin-bottom: 5px;
+
+}
+
 

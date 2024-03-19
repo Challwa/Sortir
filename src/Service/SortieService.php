@@ -36,6 +36,12 @@ class SortieService
                     $sortie->setEtats($etat = $this->entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'archivee']));
                 }
             }
+
+            if ($sortie->getParticipants()->count() === $sortie->getNbInscriptionsMax()) {
+                // Mettre à jour l'état de la sortie à "cloturée"
+                $etat= $this->entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'cloturee']);
+                $sortie->setEtats($etat);
+            }
         }
 
         $this->entityManager->flush();
