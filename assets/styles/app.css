@@ -3,14 +3,17 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background-color: #f5ee95;
+    /*background-color: #f5ee95;*/
+    background: rgb(63,94,251);
+    background: linear-gradient(90deg, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
     margin-top: 15vh;
     margin-bottom: 2rem;
 }
 .header-wrapper {
     position: fixed;
     top: 0;
-    background-color: #ada866;
+    background: rgb(218,35,72);
+    background: linear-gradient(90deg, rgba(218,35,72,1) 15%, rgba(149,251,63,1) 78%);
     height: 10vh;
     width: 100%;
     display: flex;
@@ -87,7 +90,8 @@ footer {
     width: 100%;
     text-align: center;
     padding: 20px 0;
-    background-color: #e8e5ba;
+    background: rgb(34,193,195);
+    background: linear-gradient(0deg, rgba(34,193,195,1) 13%, rgba(253,187,45,1) 55%);
     font-family: 'Anta', sans-serif;
 }
 
