@@ -21,10 +21,20 @@
                 {{ form_row(form.startDate) }}
                 {{ form_row(form.endDate) }}
                 <div class="checkbox-group">
-                    {#                {{ form_row(form.organisateur) }} #}
-                    {#                {{ form_row(form.inscrit) }} #}
-                    {#                {{ form_row(form.nonInscrit) }} #}
-                    {#                {{ form_row(form.passees) }} #}
+                    <input type="checkbox" id="sortie-orga" name="sortie-orga"/>
+                    <label for="sortie-orga">Sorties dont je suis l'organisateur/trice</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="sortie-inscrit" name="sortie-inscrit"/>
+                    <label for="sortie-inscrit">Sorties auxquelles je suis inscrit/e</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="sortie-non-inscrit" name="sortie-non-inscrit"/>
+                    <label for="sortie-non-inscrit">Sorties auxquelles je ne suis pas inscrit/e</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="sortie-archive" name="sortie-archive"/>
+                    <label for="sortie-archive">Sorties passées</label>
                 </div>
                 {{ form_row(form.submit) }}
             </div>
