@@ -2,6 +2,7 @@
 
 namespace App\Security;
 
+use App\Service\SortieService;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,12 +19,15 @@ use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
 class AppAuthenticator extends AbstractLoginFormAuthenticator
 {
+    private $sortieService;
     use TargetPathTrait;
 
     public const LOGIN_ROUTE = 'app_login';
 
-    public function __construct(private UrlGeneratorInterface $urlGenerator)
+    public function __construct(private UrlGeneratorInterface $urlGenerator, SortieService $sortieService)
     {
+        $this->urlGenerator = $urlGenerator;
+        $this->sortieService = $sortieService;
     }
 
     public function authenticate(Request $request): Passport
@@ -47,6 +51,8 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
+
+        $this->sortieService->updateEtatSortie();
 
         // For example:
         return new RedirectResponse($this->urlGenerator->generate('app_home'));
