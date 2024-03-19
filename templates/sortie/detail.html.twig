@@ -32,6 +32,7 @@
             <tbody>
             {% for participant in participant %}
                 <tr>
+                    <a href="{{ path('participant_show', {id: participant.id}) }}">{{ participant.pseudo }}</a>
                     <td>{{ participant.nom }}</td>
                 </tr>
             {% endfor %}
