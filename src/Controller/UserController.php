@@ -66,7 +66,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'profil_update', methods: ['GET', 'POST'])]
+    #[Route('{id}', name: 'profil_update', methods: ['GET', 'POST'])]
     public function updateUser(Participant      $user, UserPasswordHasherInterface $userPasswordHasher,
                                Request          $request, EntityManagerInterface $entityManager,
                                SluggerInterface $slugger): Response
