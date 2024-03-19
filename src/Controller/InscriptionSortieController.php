@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Participant;
 use App\Entity\Sortie;
+use App\Repository\EtatRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,13 +13,15 @@ use Symfony\Component\Routing\Attribute\Route;
 class InscriptionSortieController extends AbstractController
 {
     #[Route('/inscription/{id}', name: 'inscription_sortie')]
-    public function inscription(EntityManagerInterface $entityManager, int $id): Response
+    public function inscription(EntityManagerInterface $entityManager, int $id, EtatRepository $etatRepository): Response
     {
         $userId = $this->getUser()->getId();
 
+
         // Recuperer la sortie
         $sortie = $entityManager->getRepository(Sortie::class)->find($id);
-
+        $dateFinAc = clone $sortie->getDateHeureDebut();
+        $now = new \DateTime('now');
         // Recuperer le participant
         $participant = $entityManager->getRepository(Participant::class)->find($userId);
 
@@ -48,6 +51,12 @@ class InscriptionSortieController extends AbstractController
             $this->addFlash('danger', 'La sortie est complète');
             return $this->redirectToRoute('app_home');
         }
+        if ($sortie->getEtat()->getId()=== 4 || $sortie->getEtat()->getId()=== 5) {
+            if ($dateFinAc->modify('+1 month') < $now) {
+                $sortie->setEtat("Archivee");
+            }
+        }
+
 
         // Asocier le participant à la sortie
         $sortie->getParticipants()->add($participant);
