@@ -5,9 +5,19 @@
 {% block body %}
     <div class="container">
         {{ form_start(annuler_form) }}
-{#            {{ form_row(annuler_form.btnAnnulation, path('app_home')) }}#}
+        {{ form_row(annuler_form.nom) }}
+        {{ form_row((annuler_form.dateHeureDebut)) }}
+        {{ form_row(annuler_form.sites) }}
+        {{ form_row(annuler_form.lieux) }}
+        {{ form_row(annuler_form.motif) }}
+        <div class="form-buttons">
+            {{ form_row(annuler_form.btnRegister) }}
+            <button class="btn btn-primary"
+                    onclick="if(confirm('Vous êtes sur le point de revenir sans enregistrer les modifications. Voulez-vous continuer?')) window.location.href='{{ path('app_home') }}'">
+                Annuler
+            </button>
+        </div>
         {{ form_end(annuler_form) }}
-
     </div>
 {% endblock %}
 

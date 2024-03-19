@@ -3,41 +3,43 @@
 {% block title %}{{ parent() }} :: Detail{% endblock %}
 
 {% block body %}
+    <div class="container" id="home-page">
     <h2>Afficher une sortie</h2>
-
-    <table class="table">
-    <tbody>
-   <tr>
-
-        <th>Nom de la sortie:</th>
-        <td>{{ sortie.nom }}</td>
-        <th>Date et heure de la sortie: </th>
-        <td>{{ sortie.dateHeureDebut|date("d/m/Y H:i") }}</td>
-        <th>Date limite d'inscription:</th>
-        <td>{{ sortie.dateLimiteInscription|date("d/m/Y") }}</td>
-        <th>Nombre de places: </th>
-        <td>{{ sortie.nbInscriptionsMax}}</td>
-        <th>Durée:</th>
-        <td> {{ sortie.duree }}</td>
-        <th>Description et infos:</th>
-        <td>{{ sortie.infosSortie }}</td>
-{#        <li>Lieu: {{ sortie.lieu.nom }}</li>#}
-{#        <li>Ville: {{ lieu.rue }}</li>#}
-{#        <li>Ville: {{ ville.nom }}</li>#}
-{#        <li>Ville: {{ lieu.latitudel }}</li>#}
-{#        <li>Ville: {{ lieu.longitude }}</li>#}
-   </tr>
+    <div class="table-container">
         <table>
-            <thead>Participants</thead>
+            <thead>
+            <tr>
+                <th>Nom de la sortie:</th>
+                <th>Date et heure de la sortie:</th>
+                <th>Date limite d'inscription:</th>
+                <th>Nombre de places:</th>
+                <th>Durée:</th>
+                <th>Description et infos:</th>
+                {#        <li>Lieu: {{ sortie.lieu.nom }}</li> #}
+                {#        <li>Ville: {{ lieu.rue }}</li> #}
+                {#        <li>Ville: {{ ville.nom }}</li> #}
+                {#        <li>Ville: {{ lieu.latitudel }}</li> #}
+                {#        <li>Ville: {{ lieu.longitude }}</li> #}
+            </tr>
+            </thead>
             <tbody>
-            {% for participant in participant %}
-                <tr>
-                    <a href="{{ path('participant_show', {id: participant.id}) }}">{{ participant.pseudo }}</a>
-                    <td>{{ participant.nom }}</td>
-                </tr>
-            {% endfor %}
+            <tr>
+            <td>{{ sortie.nom|capitalize }}</td>
+                <td>{{ sortie.dateHeureDebut|date("d/m/Y H:i") }}</td>
+                <td>{{ sortie.dateLimiteInscription|date("d/m/Y") }}</td>
+                <td>{{ sortie.nbInscriptionsMax }}</td>
+                <td>{{ sortie.duree }}</td>
+                <td>{{ sortie.infosSortie }}</td>
+            </tr>
             </tbody>
+            {#                <thead>Participants</thead> #}
+            {#                <tbody> #}
+            {#                {% for participant in participant %} #}
+            {#                    <tr> #}
+            {#                        <td>{{ participant.nom }}</td> #}
+            {#                    </tr> #}
+            {#                {% endfor %} #}
+            {#                </tbody> #}
         </table>
-
-    <br>
+    </div>
 {% endblock %}

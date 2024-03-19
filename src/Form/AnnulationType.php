@@ -46,9 +46,6 @@ class AnnulationType extends AbstractType
             ])
             ->add('btnRegister', SubmitType::class, [
                 'label' => 'Enregistrer',
-            ])
-            ->add('btnAnnulation', SubmitType::class, [
-                'label' => 'Annuler',
             ]);
     }
 
