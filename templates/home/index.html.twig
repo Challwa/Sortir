@@ -66,7 +66,13 @@
                                 <td>{{ sortie.participants.count }}/{{ sortie.nbInscriptionsMax }}</td>
                                 <td>{{ sortie.etats.libelle|capitalize }}</td>
                                 <td>{{ sortie.participants.contains(app.user) ? 'X' : '' }}</td>
-                                <td>{{ sortie.organisateur.prenom|capitalize }} {{ sortie.organisateur.nom|upper|u.truncate(2,'.') }}</td>
+                                {% if sortie.organisateur == app.user %}
+                                    <td>{{ sortie.organisateur.prenom|capitalize }} {{ sortie.organisateur.nom|upper|u.truncate(2,'.') }}</td>
+                                {% else %}
+                                    <td>
+                                        <a href="">{{ sortie.organisateur.prenom|capitalize }} {{ sortie.organisateur.nom|upper|u.truncate(2,'.') }}</a>
+                                    </td>
+                                {% endif %}
                                 <td>
                                     <div class="button-container">
                                         {% if sortie.etats.id != 1 %}
