@@ -16,6 +16,7 @@
             {{ form_row(formSortie.duree) }}
             {{ form_row(formSortie.infosSortie) }}
             {{ form_row(formSortie.lieux) }}
+            <div id="info-lieu"></div>
             <div class="form-buttons">
                 {{ form_row(formSortie.btnRegister) }}
                 {{ form_row(formSortie.btnPublish) }}
@@ -24,6 +25,29 @@
 
             </div>
             {{ form_end(formSortie) }}
+
+        <script>
+            document.getElementById('sortie_lieux').addEventListener('change', function() {
+                var lieuId = this.value;
+                getInfoLieu(lieuId);
+            });
+
+            function getInfoLieu(lieuId){
+                fetch("{{ path('lieu_info',{'id': 'PLACEHOLDER'}) }}".replace('PLACEHOLDER',lieuId))
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('info-lieu').innerHTML = `
+                    <p>Latitude: ${data.latitude}</p>
+                    <p>Longitude: ${data.longitude}</p>
+                `;
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+
+
+        </script>
+
+
         </div>
     </div>
 {% endblock %}
