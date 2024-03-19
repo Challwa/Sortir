@@ -69,8 +69,9 @@ textarea {
 }
 button.btn.btn-primary,
 button[type="submit"] {
-    background-color: #007bff;
-    color: #fff;
+    background: rgb(238,174,202);
+    background: linear-gradient(90deg, rgba(238,174,202,1) 24%, rgba(148,187,233,1) 66%);
+    color: black;
     padding: 10px 20px;
     border: none;
     border-radius: 10% 30% 50% 70%;
@@ -81,7 +82,8 @@ button[type="submit"] {
 }
 button.btn.btn-primary.btn:hover,
 button[type="submit"]:hover {
-    background-color: #0056b3;
+    background: rgb(238,174,202);
+    background: linear-gradient(90deg, rgba(238,174,202,1) 24%, rgba(148,187,233,1) 66%);
 }
 footer {
     position: fixed;
