@@ -13,13 +13,23 @@
             {% endfor %}
         </div>
         <div class="container" id="home-page">
+            <h2>Bienvenue {{ app.user.pseudo}} !</h2>
 
             {{ form_start(form) }}
             <div id="filter">
                 {{ form_row(form.sites) }}
                 {{ form_row(form.nom) }}
+
+            </div>
+            <div id="filter">
                 {{ form_row(form.startDate) }}
                 {{ form_row(form.endDate) }}
+                {{ form_row(form.submit) }}
+            </div>
+
+
+
+
                 <div class="checkbox-group">
                     <input type="checkbox" id="sortie-orga" name="sortie-orga"/>
                     <label for="sortie-orga">Sorties dont je suis l'organisateur/trice</label>
@@ -36,8 +46,8 @@
                     <input type="checkbox" id="sortie-archive" name="sortie-archive"/>
                     <label for="sortie-archive">Sorties passées</label>
                 </div>
-                {{ form_row(form.submit) }}
-            </div>
+
+
             {{ form_end(form) }}
 
             <br>

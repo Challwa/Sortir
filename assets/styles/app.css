@@ -86,9 +86,9 @@ button[type="submit"]:hover {
     background: linear-gradient(90deg, rgba(238,174,202,1) 24%, rgba(148,187,233,1) 66%);
 }
 footer {
-    position: fixed;
+    position: absolute;
     bottom: 0;
-    height: 2rem;
+    height: 0.5rem;
     width: 100%;
     text-align: center;
     padding: 20px 0;
@@ -98,7 +98,7 @@ footer {
 }
 
 .table-container {
-    max-height: 200px;
+    max-height: 300px;
     overflow-y: auto; /* Ajoute une barre de défilement verticale si nécessaire */
     border: 2px solid #ddd;
 }
@@ -122,9 +122,9 @@ thead {
 }
 
 #home-page {
-    max-width: 1500px;
-    margin: 0 auto;
-    padding: 15px;
+    max-width: 1800px;
+    margin: 10px auto;
+    padding:10px;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -132,17 +132,22 @@ thead {
 
 #filter {
     display: flex;
-    flex-direction: column;
+    flex-flow: row  ;
+
 
 }
 
 #filter > div {
+    width:300px;
+    margin-right: 50px;
     margin-bottom: 10px; /* Espacement entre chaque élément */
 }
 
 .checkbox-group {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    margin-top: 10px;
+
 }
 
 .form-buttons {
