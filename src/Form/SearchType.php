@@ -18,7 +18,7 @@ class SearchType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder
+        $builder->setMethod('GET')
             ->add('sites', EntityType::class, [
             'class' => Site::class,
             'choice_label' => 'nom',
