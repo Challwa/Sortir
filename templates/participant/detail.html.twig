@@ -1,0 +1,29 @@
+{%  extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | {{ participant.pseudo }} {% endblock %}
+
+{% block body %}
+    <div class="text-center">
+        <h1>{{ participant.pseudo }}</h1>
+        <div>
+            <label for="prenom">Prénom : {{ participant.prenom }}</label>
+        </div>
+        <div>
+            <label for="nom">Nom : {{ participant.nom }}</label>
+        </div>
+        <div>
+            <label for="telephone">Téléphone : {{ participant.telephone }}</label>
+        </div>
+        <div>
+            <label for="">Email : {{ participant.email }}</label>
+        </div>
+        <div>
+            <label for="">Site : {{ participant.sites.nom }}</label>
+        </div>
+        <div>
+{#            <a href="{{ path('sortie_detail', {'id': sortie.id}) }}"><button>Retour à la sortie</button></a>#}
+{#            test#}
+        </div>
+    </div>
+
+{% endblock %}
