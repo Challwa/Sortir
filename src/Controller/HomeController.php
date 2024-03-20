@@ -16,21 +16,23 @@ use Symfony\Component\Routing\Attribute\Route;
 class HomeController extends AbstractController
 {
     #[Route(path: "")]
-    #[Route('/home', name: 'app_home')]
+    #[Route('/home', name: 'app_home', methods:['GET', 'POST'])]
     public function home(Request $request, EntityManagerInterface $entityManager, SortieRepository $sortieRepository, ParticipantRepository $participantRepository): Response
     {
 
-        //gestion du formulaire de recherche (filtre)
+        //gestion du formulaire de recherche par nom (filtre)
         $form = $this->createForm(SearchType::class);
         $form->handleRequest($request);
+
+        //Récupérer les états des sorties
+        $sortiesToDisplay = $sortieRepository->findAllWithEtat();
+        $sorties = $sortiesToDisplay;
 
         if ($form->isSubmitted()) {
             $searchData = $form->getData();
 
             // Requête pour récupérer les sorties filtrées en fonction de la recherche
             $sorties =  $entityManager->getRepository(Sortie::class)->filter($searchData);
-
-            //A suivre
 
         }
 
@@ -40,13 +42,16 @@ class HomeController extends AbstractController
             $site->setNom(strtoupper($site->getNom()));
         }
 
-        //Afficher les états des sorties
-        $sorties = $sortieRepository->findAllWithEtat();
-
         //Afficher les organisteurs selon les sorties
         $organisateur = $participantRepository->findAllWithOrganisateur();
 
-        return $this->render('home/index.html.twig', compact('sites', 'sorties', 'organisateur', 'form'));
+
+        return $this->render('home/index.html.twig', [
+            'sites' => $sites,
+            'sorties' => $sorties,
+            'organisateur' => $organisateur,
+            'form' => $form
+        ]);
     }
 
 }
