@@ -37,14 +37,16 @@ class SortieService
                 }
             }
 
-            if ($sortie->getParticipants()->count() === $sortie->getNbInscriptionsMax()) {
-                $dateDebut = $sortie->getDateHeureDebut();
-                $difference = $now->diff($dateDebut);
-                $interval = $difference->format('%m'); // Obtient le nombre de mois de la différence
+            if ($sortie->getEtats()->getId() !== 5) {
+                if ($sortie->getParticipants()->count() === $sortie->getNbInscriptionsMax()) {
+                    $dateDebut = $sortie->getDateHeureDebut();
+                    $difference = $now->diff($dateDebut);
+                    $interval = $difference->format('%m');
 
-                if ($interval < 1) {
-                    $etat = $this->entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'cloturee']);
-                    $sortie->setEtats($etat);
+                    if ($interval < 1) {
+                        $etat = $this->entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'cloturee']);
+                        $sortie->setEtats($etat);
+                    }
                 }
             }
         }
