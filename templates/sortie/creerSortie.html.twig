@@ -22,8 +22,10 @@
                     <button class="btn btn-primary" onclick="if(confirm('Vous êtes sur le point de revenir sans enregistrer les modifications. Voulez-vous continuer?')) window.location.href='{{ path('app_home') }}'">Annuler</button>
                 </div>
             </div>
-            {{ form_row(formSortie.lieux) }}
-            <div id="info-lieu"></div>
+            <div class="selector-container">
+                {{ form_row(formSortie.lieux) }}
+                <div id="info-lieu"></div>
+            </div>
             {{ form_end(formSortie) }}
         </div>
 

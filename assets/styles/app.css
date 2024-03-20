@@ -204,6 +204,30 @@ thead {
 }
 #info-lieu{
     flex: 1;
+    margin-top: 40px;
+}
+.selector-container {
+    width: 300px;
+    overflow-y: auto;
+    position: relative;
+}
+.selector-container select {
+    width: 100%; /* Opcional: ajusta el ancho del selector según sea necesario */
+    padding: 10px; /* Ajusta el relleno según sea necesario */
+    border: 1px solid #ccc; /* Añade un borde */
+    border-radius: 5px; /* Añade bordes redondeados */
+    background-color: #fff; /* Establece el color de fondo */
+    font-size: 12.5px; /* Ajusta el tamaño de fuente según sea necesario */
+    /* Otros estilos opcionales */
 }
 
+/* Estilo para la flecha del selector */
+.selector-container select::after {
+    content: '\25BC'; /* Agrega una flecha hacia abajo usando el carácter Unicode */
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    pointer-events: none; /* Evita que la flecha sea clickeable */
+}
 
