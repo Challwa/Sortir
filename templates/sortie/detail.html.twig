@@ -38,12 +38,16 @@
             </tr>
             </thead>
             <tbody>
-                {% for participant in participant %}
+            {% for participant in participant %}
                 <tr>
-                    <th><a href="">{{ participant.pseudo|upper }}</a></th>
+                    {% if participant == app.user %}
+                        <th>{{ participant.pseudo|upper }} (organisteur)</th>
+                    {% else %}
+                        <th><a href="">{{ participant.pseudo|upper }}</a></th>
+                    {% endif %}
                     <th>{{ participant.prenom|capitalize }} {{ participant.nom|upper }}</th>
                 </tr>
-                {% endfor %}
+            {% endfor %}
             </tbody>
         </table>
     </div>
