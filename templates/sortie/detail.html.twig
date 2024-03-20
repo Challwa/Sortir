@@ -41,7 +41,7 @@
             {% for participant in participant %}
                 <tr>
                     {% if participant == app.user %}
-                        <th>{{ participant.pseudo|upper }} (organisteur)</th>
+                        <th>{{ participant.pseudo|upper }} (organisateur)</th>
                     {% else %}
                         <th><a href="">{{ participant.pseudo|upper }}</a></th>
                     {% endif %}

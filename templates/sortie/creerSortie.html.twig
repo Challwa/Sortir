@@ -36,7 +36,11 @@
                 fetch("{{ path('lieu_info',{'id': 'PLACEHOLDER'}) }}".replace('PLACEHOLDER',lieuId))
                     .then(response => response.json())
                     .then(data => {
+                        console.log(data);
                         document.getElementById('info-lieu').innerHTML = `
+                    <p>Rue: ${data.rue}</p>
+                    <p>Ville: ${data.ville}</p>
+                    <p>Code Postal: ${data.codepostal}</p>
                     <p>Latitude: ${data.latitude}</p>
                     <p>Longitude: ${data.longitude}</p>
                 `;
