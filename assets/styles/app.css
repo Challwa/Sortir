@@ -43,6 +43,14 @@ ul{
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
+.container-creation {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
 label {
     display: block;
     font-weight: bold;
@@ -86,7 +94,7 @@ button[type="submit"]:hover {
     background: linear-gradient(90deg, rgba(238,174,202,1) 24%, rgba(148,187,233,1) 66%);
 }
 footer {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     height: 0.5rem;
     width: 100%;
@@ -152,8 +160,10 @@ thead {
 
 .form-buttons {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     margin-top: 20px;
+    gap: 20px;
+
 }
 .button-container {
     display: flex;
@@ -183,7 +193,17 @@ thead {
 .info-list li,
 .location-list li {
     margin-bottom: 5px;
+}
 
+.form-info-wrapper{
+    display: flex;
+}
+.form-container{
+    flex: 1;
+    margin-right: 20px;
+}
+#info-lieu{
+    flex: 1;
 }
 
 

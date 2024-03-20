@@ -70,7 +70,7 @@ class SortieType extends AbstractType
                 'label' => 'Enregistrer',
             ])
             ->add('btnPublish', SubmitType::class, [
-                'label' => 'Publier la sortie',
+                'label' => 'Publier',
             ])
         ;
     }

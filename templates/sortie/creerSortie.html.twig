@@ -5,27 +5,29 @@
 {% endblock %}
 
 {% block body %}
-    <div class="container">
+    <div class="container-creation" >
         <h1>Créer une sortie</h1>
-        <div class="form-container">
-            {{ form_start(formSortie) }}
-            {{ form_row(formSortie.nom) }}
-            {{ form_row(formSortie.dateHeureDebut) }}
-            {{ form_row(formSortie.dateLimiteInscription) }}
-            {{ form_row(formSortie.nbInscriptionsMax) }}
-            {{ form_row(formSortie.duree) }}
-            {{ form_row(formSortie.infosSortie) }}
+        <div class="form-info-wrapper">
+            <div class="form-container">
+                {{ form_start(formSortie) }}
+                {{ form_row(formSortie.nom) }}
+                {{ form_row(formSortie.dateHeureDebut) }}
+                {{ form_row(formSortie.dateLimiteInscription) }}
+                {{ form_row(formSortie.nbInscriptionsMax) }}
+                {{ form_row(formSortie.duree) }}
+                {{ form_row(formSortie.infosSortie) }}
+                <div class="form-buttons">
+                    {{ form_row(formSortie.btnRegister) }}
+                    {{ form_row(formSortie.btnPublish) }}
+                    <button class="btn btn-primary" onclick="if(confirm('Vous êtes sur le point de revenir sans enregistrer les modifications. Voulez-vous continuer?')) window.location.href='{{ path('app_home') }}'">Annuler</button>
+                </div>
+            </div>
             {{ form_row(formSortie.lieux) }}
             <div id="info-lieu"></div>
-            <div class="form-buttons">
-                {{ form_row(formSortie.btnRegister) }}
-                {{ form_row(formSortie.btnPublish) }}
-                <button class="btn btn-primary" onclick="if(confirm('Vous êtes sur le point de revenir sans enregistrer les modifications. Voulez-vous continuer?')) window.location.href='{{ path('app_home') }}'">Annuler</button>
-
-
-            </div>
             {{ form_end(formSortie) }}
+        </div>
 
+    </div>
         <script>
             document.getElementById('sortie_lieux').addEventListener('change', function() {
                 var lieuId = this.value;
