@@ -77,10 +77,10 @@
                                 <td>{{ sortie.etats.libelle|capitalize }}</td>
                                 <td>{{ sortie.participants.contains(app.user) ? 'X' : '' }}</td>
                                 {% if sortie.organisateur == app.user %}
-                                    <td>{{ sortie.organisateur.prenom|capitalize }} {{ sortie.organisateur.nom|upper|u.truncate(2,'.') }}</td>
+                                    <td><a href="{{ path('participant_detail', {'id':sortie.organisateur.id}) }}">{{ sortie.organisateur.prenom|capitalize }} {{ sortie.organisateur.nom|upper|u.truncate(2,'.') }}</td>
                                 {% else %}
                                     <td>
-                                        <a href="">{{ sortie.organisateur.prenom|capitalize }} {{ sortie.organisateur.nom|upper|u.truncate(2,'.') }}</a>
+                                        <a href="{{ path('participant_detail', {'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.prenom|capitalize }} {{ sortie.organisateur.nom|upper|u.truncate(2,'.') }}</a>
                                     </td>
                                 {% endif %}
                                 <td>

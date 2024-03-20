@@ -28,27 +28,29 @@
         </ul>
     </div>
     <br>
-    <h4>Liste des participants inscrits :</h4>
-    <div class="table-container">
-        <table>
-            <thead>
-            <tr>
-                <th>Pseudos</th>
-                <th>Nom</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for participant in participant %}
+    {% if participants != null %}
+        <h4>Liste des participants inscrits :</h4>
+        <div class="table-container">
+            <table>
+                <thead>
                 <tr>
-                    {% if participant == app.user %}
-                        <th>{{ participant.pseudo|upper }} (organisateur)</th>
-                    {% else %}
-                        <th><a href="">{{ participant.pseudo|upper }}</a></th>
-                    {% endif %}
-                    <th>{{ participant.prenom|capitalize }} {{ participant.nom|upper }}</th>
+                    <th>Pseudos</th>
+                    <th>Nom</th>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    </div>
+                </thead>
+                <tbody>
+                {% for participant in participants %}
+                    <tr>
+                        {% if participant == app.user %}
+                            <th>{{ participant.pseudo|upper }} (organisateur)</th>
+                        {% else %}
+                            <th><a href="">{{ participant.pseudo|upper }}</a></th>
+                        {% endif %}
+                        <th>{{ participant.prenom|capitalize }} {{ participant.nom|upper }}</th>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
 {% endblock %}

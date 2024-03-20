@@ -36,10 +36,10 @@ class SortieController extends AbstractController
     #[Route(path: '/detail/{id}', name: 'detail', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function detail(Sortie $sortie): Response
     {
-        $participant = $sortie->getParticipants();
+        $participants = $sortie->getParticipants();
         return $this->render('sortie/detail.html.twig', [
             'sortie' => $sortie,
-            'participant' => $participant
+            'participants' => $participants
 
         ]);
     }
