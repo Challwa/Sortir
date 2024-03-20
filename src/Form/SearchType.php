@@ -20,25 +20,28 @@ class SearchType extends AbstractType
     {
         $builder->setMethod('GET')
             ->add('sites', EntityType::class, [
-            'class' => Site::class,
-            'choice_label' => 'nom',
-        ])
+                'class' => Site::class,
+                'choice_label' => 'nom',
+                'placeholder' => 'Choisir un site',
+                'required' => false,
+            ])
             ->add('nom', TextType::class, [
-                'label' => 'Le nom de la sortie contient :'
-                ])
+                'label' => 'Le nom de la sortie contient :',
+                'required' => false,
+            ])
             ->add('startDate', DateType::class, [
                 'required' => false,
                 'label' => 'Entre : ',
                 'widget' => 'single_text'
-                ])
+            ])
             ->add('endDate', DateType::class, [
                 'required' => false,
                 'label' => ' et : ',
                 'widget' => 'single_text'
             ])
             ->add('submit', SubmitType::class, [
-            'label' => 'Rechercher'
-        ]);
+                'label' => 'Rechercher'
+            ]);
 
     }
 

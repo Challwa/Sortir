@@ -16,42 +16,36 @@ use Symfony\Component\Routing\Attribute\Route;
 class HomeController extends AbstractController
 {
     #[Route(path: "")]
-    #[Route('/home', name: 'app_home', methods:['GET', 'POST'])]
-    public function home(Request $request, EntityManagerInterface $entityManager, SortieRepository $sortieRepository, ParticipantRepository $participantRepository): Response
+    #[Route('/home', name: 'app_home', methods: ['GET', 'POST'])]
+    public function home(Request $request, EntityManagerInterface $entityManager, SortieRepository $sortieRepository): Response
     {
-
         //gestion du formulaire de recherche par nom (filtre)
         $form = $this->createForm(SearchType::class);
         $form->handleRequest($request);
 
-        //Récupérer les états des sorties
+        //Récupérer les sorties avec les états
         $sortiesToDisplay = $sortieRepository->findAllWithEtat();
         $sorties = $sortiesToDisplay;
 
+        //filtre de recherche site, nom et date
         if ($form->isSubmitted()) {
+
+            //on récupère les données écrites dans le formulaire
             $searchData = $form->getData();
 
-            // Requête pour récupérer les sorties filtrées en fonction de la recherche
-            $sorties =  $entityManager->getRepository(Sortie::class)->filter($searchData);
-
+            // on appelle la fonction filter du repository et on lui passe les données
+            $sorties = $entityManager->getRepository(Sortie::class)->filter($searchData);
         }
 
-        //Chercher les sites te les afficher dans un select en majuscule
+        //Chercher les sites et les afficher dans un select en majuscule
         $sites = $entityManager->getRepository(Site::class)->findAll();
-        foreach ($sites as $site){
+        foreach ($sites as $site) {
             $site->setNom(strtoupper($site->getNom()));
         }
 
-        //Afficher les organisteurs selon les sorties
-        $organisateur = $participantRepository->findAllWithOrganisateur();
-
-
         return $this->render('home/index.html.twig', [
-            'sites' => $sites,
             'sorties' => $sorties,
-            'organisateur' => $organisateur,
             'form' => $form
         ]);
     }
-
 }

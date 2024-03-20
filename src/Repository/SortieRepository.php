@@ -25,18 +25,42 @@ class SortieRepository extends ServiceEntityRepository
     public function findAllWithEtat()
     {
         return $this->createQueryBuilder('s')
-            ->leftJoin('s.etats','e')
+            ->leftJoin('s.etats', 'e')
             ->addSelect('e')
             ->getQuery()
             ->getResult();
     }
 
-    public function filter(array $searchData):array
+    public function filter(array $searchData): array
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.nom LIKE :nom')
-            ->setParameter('nom', '%' .$searchData['nom'] . '%')
-            ->getQuery()
-            ->getResult();
+        $queryBuilder = $this->createQueryBuilder('s');
+
+        if ($searchData['nom']) {
+            $queryBuilder->andWhere('s.nom LIKE :nom')
+                ->setParameter('nom', '%' . $searchData['nom'] . '%');
+        }
+
+        if ($searchData['sites']) {
+            $queryBuilder->leftJoin('s.sites', 'sites')
+                ->andWhere('sites.nom LIKE :site')
+                ->setParameter('site', '%' . $searchData['sites']->getNom() . '%');
+        }
+
+        if($searchData['startDate']){
+
+            $startDate = new \DateTime($searchData['startDate']->format('d-m-Y') . '00:00:00');
+            $queryBuilder->andWhere('s.dateHeureDebut >= :startDate')
+                ->setParameter('startDate', $startDate);
+        }
+
+        if($searchData['endDate']){
+            $endDate = new \DateTime($searchData['endDate']->format('d-m-Y') . '23:59:59');
+            $queryBuilder->andWhere('s.dateLimiteInscription <= :endDate')
+                ->setParameter('endDate', $endDate);
+        }
+
+        $query = $queryBuilder->getQuery();
+
+        return $query->getResult();
     }
 }
