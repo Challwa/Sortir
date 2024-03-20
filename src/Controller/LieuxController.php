@@ -15,8 +15,9 @@ class LieuxController extends AbstractController
     public function getInfoLieu(Lieu $lieu): JsonResponse
     {
         $information = [
-            'ville' => $lieu->getVilles(),
+            'ville' => $lieu->getVilles()-> getNom(),
             'rue' => $lieu->getRue(),
+            'codepostal' => $lieu->getVilles()->getCodePostal(),
             'latitude' => $lieu->getLatitude(),
             'longitude' => $lieu->getLongitude(),
         ];
