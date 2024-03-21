@@ -36,7 +36,7 @@
                         <th>{{ i.nom|upper }}</th>
                         <th><a href="{{ path('app_sites_ajouter', { id : i.id }) }}">Modifier</a></th>
                         <th>-</th>
-                        <th><a href="">Supprimer</a></th>
+                        <th><a href="{{ path('app_sites_supprimer', { id : i.id }) }}" onclick="return confirm('Voulez-vous vraiment supprimer ce site ?')">Supprimer</a></th>
                     </tr>
                 {% endfor %}
                 </tbody>
