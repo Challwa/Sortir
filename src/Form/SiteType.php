@@ -13,19 +13,20 @@ class SiteType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('nom', TextType::class, [
-            'label' => 'Nom du site'
-        ]);
+        $builder->setMethod('GET')
+            ->add('nom', TextType::class, [
+                'label' => 'Nom du site'
+            ]);
         $builder->add('submit', SubmitType::class, [
             'label' => 'Enregistrer'
         ]);
-        
+
     }
+
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Site::class,
-            'trim' => true,
+
         ]);
     }
 
