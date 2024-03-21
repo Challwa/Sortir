@@ -20,20 +20,24 @@
                     <th>Ville</th>
                     <th>Code Postal</th>
                     <th>Actions</th>
+                    <th></th>
+                    <th></th>
                 </tr>
                 </thead>
-                {% for ville in ville %}
-                    <tbody>
+                <tbody>
+
+                {% for city in villes %}
+
                     <tr>
-                        <th>{{ ville.nom | upper}}</th>
-                        <th>{{ ville.codePostal }}</th>
-                        <td>
-{#                        <a href="{{ path('app_villes_modifier', { id : i.id }) }}">Modifier</a> |#}
-{#                            <a href="{{ path('app_delete', { id : i.id}) }}">Supprimer</a>#}
-                        </td>
+                        <th>{{ city.nom | upper}}</th>
+                        <th>{{ city.codePostal }}</th>
+                        <th><a href="{{ path('app_villes_edit', { id : city.id }) }}">Modifier</a></th>
+                        <th>-</th>
+                        <th><a href="{{ path('app_villes_supprimer', { id : city.id }) }}" onclick="return confirm('Voulez-vous vraiment supprimer cette ville ?')">Supprimer</a></th>
+
                     </tr>
+                 {% endfor %}
                     </tbody>
-                {% endfor %}
             </table>
         </div>
         <br>

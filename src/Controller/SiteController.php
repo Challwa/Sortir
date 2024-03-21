@@ -42,7 +42,7 @@ class SiteController extends AbstractController
     }
 
     #[Route(path: 'supprimer/{id}', name: 'supprimer')]
-    public function delete(EntityManagerInterface $entityManager, Site $site): Response
+    public function deleteSite(EntityManagerInterface $entityManager, Site $site): Response
     {
         $entityManager->remove($site);
         $entityManager->flush();
