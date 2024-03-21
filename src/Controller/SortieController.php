@@ -58,7 +58,7 @@ class SortieController extends AbstractController
 
         $formSortie->handleRequest($request);
 
-        if ($formSortie->isSubmitted() )  {
+        if ($formSortie->isSubmitted()) {
 
             if ($formSortie->get('btnRegister')->isClicked()) {
 
@@ -118,16 +118,20 @@ class SortieController extends AbstractController
     #[Route(path: '/annuler/{id}', name: 'annuler', requirements: ['id' => '\d+'])]
     public function annulerSortie(int $id, Sortie $sortie, Request $request, EntityManagerInterface $entityManager): Response
     {
+        //On récupère l'id de la sortie
         $annulerSortie = $entityManager->getRepository(Sortie::class)->find($id);
 
         $form = $this->createForm(AnnulationType::class, $sortie);
         $form->handleRequest($request);
 
+        //Soumission de formulaire
         if ($form->isSubmitted()) {
             if ($form->get('btnRegister')->isClicked()) {
 
+                //On va chercher l'état annulé qui est d'id 6
                 $etat = $entityManager->getRepository(Etat::class)->find(6);
             }
+            //on va mettre à jour la sortie et lui mettre l'id de l'état à 6
             $sortie->setEtats($etat);
 
             $entityManager->persist($sortie);
@@ -138,11 +142,12 @@ class SortieController extends AbstractController
         }
 
         return $this->render('sortie/annulation.html.twig', [
-            'annuler_form' => $form, 'annulerSortie' => $annulerSortie,
+            'annuler_form' => $form,
+            'annulerSortie' => $annulerSortie,
         ]);
     }
 
-    #[Route(path:'/publier/{id}', name: 'publier')]
+    #[Route(path: '/publier/{id}', name: 'publier')]
     public function publierSortie(int $id, Sortie $sortie, EntityManagerInterface $entityManager): RedirectResponse
     {
         $etatOuverte = $entityManager->getRepository(Etat::class)->find(2);
