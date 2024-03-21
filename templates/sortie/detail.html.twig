@@ -44,7 +44,7 @@
                         {% if participant == app.user %}
                             <th>{{ participant.pseudo|upper }} (organisateur)</th>
                         {% else %}
-                            <th><a href="">{{ participant.pseudo|upper }}</a></th>
+                            <th><a href="{{ path('participant_detail', {'id': participant.id}) }}">{{ participant.pseudo|upper }}</a></th>
                         {% endif %}
                         <th>{{ participant.prenom|capitalize }} {{ participant.nom|upper }}</th>
                     </tr>

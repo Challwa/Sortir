@@ -3,23 +3,28 @@
 {% block title %}{{ parent() }} | {{ participant.pseudo }} {% endblock %}
 
 {% block body %}
-    <div class="text-center">
-        <h1>{{ participant.pseudo }}</h1>
-        <div>
-            <label for="prenom">Prénom : {{ participant.prenom }}</label>
-        </div>
-        <div>
-            <label for="nom">Nom : {{ participant.nom }}</label>
-        </div>
-        <div>
-            <label for="telephone">Téléphone : {{ participant.telephone }}</label>
-        </div>
-        <div>
-            <label for="">Email : {{ participant.email }}</label>
-        </div>
-        <div>
-            <label for="">Site : {{ participant.sites.nom }}</label>
-        </div>
+    <div class="container">
+        <h1>{{ participant.pseudo|capitalize }}</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Prénom</th>
+                    <th>Nom</th>
+                    <th>Téléphone</th>
+                    <th>Email</th>
+                    <th>Site</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ participant.prenom }}</td>
+                    <td>{{ participant.nom }}</td>
+                    <td>{{ participant.telephone }}</td>
+                    <td>{{ participant.email }}</td>
+                    <td>{{ participant.sites.nom }}</td>
+                </tr>
+            </tbody>
+        </table>
 
     </div>
 
