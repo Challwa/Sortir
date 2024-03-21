@@ -55,5 +55,14 @@ class SiteController extends AbstractController
         return $this->render('sites/edit.html.twig', compact('formSite'));
     }
 
+    #[Route(path: 'supprimer/{id}', name: 'supprimer')]
+    public function deleteSite(EntityManagerInterface $entityManager, Site $site): Response
+    {
+        $entityManager->remove($site);
+        $entityManager->flush();
+        $this->addFlash('success', 'Le site a bien été supprimé');
+        return $this->redirectToRoute('app_sites_');
+    }
+
 
 }

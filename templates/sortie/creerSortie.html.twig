@@ -36,7 +36,6 @@
                 var lieuId = this.value;
                 getInfoLieu(lieuId);
             });
-
             function getInfoLieu(lieuId){
                 fetch("{{ path('lieu_info',{'id': 'PLACEHOLDER'}) }}".replace('PLACEHOLDER',lieuId))
                     .then(response => response.json())
@@ -52,8 +51,6 @@
                     })
                     .catch(error => console.error('Error:', error));
             }
-
-
         </script>
 
 
