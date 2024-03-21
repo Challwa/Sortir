@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Participant;
 use App\Entity\Site;
 use App\Entity\Sortie;
 use App\Service\SortieService;
@@ -13,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 
 class HomeController extends AbstractController
@@ -37,14 +39,18 @@ class HomeController extends AbstractController
         $sortiesToDisplay = $sortieRepository->findAllWithEtat();
         $sorties = $sortiesToDisplay;
 
+        //on récupère l'utilisateur connecté pour les filtres checkbox
+        $userConnected = $this->getUser();
+
         //filtre de recherche site, nom et date
         if ($form->isSubmitted()) {
 
             //on récupère les données écrites dans le formulaire
             $searchData = $form->getData();
 
+
             // on appelle la fonction filter du repository et on lui passe les données
-            $sorties = $entityManager->getRepository(Sortie::class)->filter($searchData);
+            $sorties = $entityManager->getRepository(Sortie::class)->filter($searchData, $userConnected);
         }
 
         //Chercher les sites et les afficher dans un select en majuscule

@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\Sortie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use http\Client\Curl\User;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 
 /**
@@ -31,7 +33,7 @@ class SortieRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function filter(array $searchData): array
+    public function filter(array $searchData, $userConnected): array
     {
         $queryBuilder = $this->createQueryBuilder('s');
 
@@ -46,18 +48,31 @@ class SortieRepository extends ServiceEntityRepository
                 ->setParameter('site', '%' . $searchData['sites']->getNom() . '%');
         }
 
-        if($searchData['startDate']){
-
+        if ($searchData['startDate'] && $searchData['endDate']) {
             $startDate = new \DateTime($searchData['startDate']->format('d-m-Y') . '00:00:00');
-            $queryBuilder->andWhere('s.dateHeureDebut >= :startDate')
-                ->setParameter('startDate', $startDate);
-        }
-
-        if($searchData['endDate']){
             $endDate = new \DateTime($searchData['endDate']->format('d-m-Y') . '23:59:59');
-            $queryBuilder->andWhere('s.dateLimiteInscription <= :endDate')
+
+            $queryBuilder->andWhere('s.dateHeureDebut BETWEEN :startDate AND :endDate')
+                ->setParameter('startDate', $startDate)
                 ->setParameter('endDate', $endDate);
         }
+
+        if($searchData['organisateur'] === true){
+            $queryBuilder->andWhere('s.organisateur = :user')
+                ->setParameter('user', $userConnected);
+        }
+
+        if($searchData['inscrit'] === true){
+            $queryBuilder->leftJoin('s.participants', 'p')
+                ->andWhere('p = :user')
+                ->setParameter('user', $userConnected);
+        }
+
+//        if($searchData['nonInscrit'] === true){
+//            $queryBuilder->leftJoin('s.participants', 'p')
+//                ->andWhere('p <> :user OR p IS NULL')
+//                ->setParameter('user', $userConnected);
+//        }
 
         $query = $queryBuilder->getQuery();
 
