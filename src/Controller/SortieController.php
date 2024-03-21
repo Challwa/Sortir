@@ -75,6 +75,12 @@ class SortieController extends AbstractController
             $sortie->setSites($sites);
 
 
+            $lieu = $formSortie->getData()->getLieux();
+
+            $sortie->setLieux($lieu);
+//          dd($lieu);
+
+
             $entityManager->persist($sortie);
             $entityManager->flush();
 
