@@ -15,15 +15,19 @@ class Lieu
     #[ORM\Column]
     private ?int $id = null;
     #[ORM\Column(length: 30)]
+    #[Assert\NotNull(message: 'Le nom du lieu doit être renseigné.')]
     private ?string $nom = null;
 
     #[ORM\Column(length: 30, nullable: true)]
+    #[Assert\NotNull(message: 'La rue du lieu doit être renseigné.')]
     private ?string $rue = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\NotNull(message: 'La latitude  du lieu doit être renseigné.')]
     private ?float $latitude = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\NotNull(message: 'La longitude  du lieu doit être renseigné.')]
     private ?float $longitude = null;
 
     #[ORM\ManyToOne(inversedBy: 'lieux')]
