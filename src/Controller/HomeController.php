@@ -42,6 +42,7 @@ class HomeController extends AbstractController
         //on récupère l'utilisateur connecté pour les filtres checkbox
         $userConnected = $this->getUser();
 
+
         //filtre de recherche site, nom et date
         if ($form->isSubmitted()) {
 

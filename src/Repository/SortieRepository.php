@@ -5,8 +5,6 @@ namespace App\Repository;
 use App\Entity\Sortie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use http\Client\Curl\User;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 
 /**
@@ -57,22 +55,29 @@ class SortieRepository extends ServiceEntityRepository
                 ->setParameter('endDate', $endDate);
         }
 
-        if($searchData['organisateur'] === true){
+        if ($searchData['organisateur'] === true) {
             $queryBuilder->andWhere('s.organisateur = :user')
                 ->setParameter('user', $userConnected);
         }
 
-        if($searchData['inscrit'] === true){
+        if ($searchData['inscrit'] === true) {
             $queryBuilder->leftJoin('s.participants', 'p')
-                ->andWhere('p = :user')
+                ->andWhere('p IN (:user)')
                 ->setParameter('user', $userConnected);
         }
 
-//        if($searchData['nonInscrit'] === true){
-//            $queryBuilder->leftJoin('s.participants', 'p')
-//                ->andWhere('p <> :user OR p IS NULL')
-//                ->setParameter('user', $userConnected);
-//        }
+        if($searchData['nonInscrit'] === true){
+            $queryBuilder->leftJoin('s.participants', 'p')
+                ->andWhere('p.id NOT IN (:user) OR p.id IS NULL')
+                ->setParameter('user', $userConnected);
+
+        }
+
+        if ($searchData['passees'] === true) {
+            $queryBuilder->leftJoin('s.etats', 'etats')
+                ->andWhere('etats.id = :id')
+                ->setParameter('id', 5);
+        }
 
         $query = $queryBuilder->getQuery();
 

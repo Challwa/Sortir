@@ -13,12 +13,13 @@
     <div class="container">
         <h1>Gérer les sites</h1>
 
-        <div>
-            <p>Filtrer les sites</p>
-            <label for="site-search">Le nom contient:</label>
-            <input type="search" id="site-search" name="filter"/>
-            <button type="submit">Rechercher</button>
+        <p>Filtrer les sites</p>
+        {{ form_start(form) }}
+        <div id="filter">
+            {{ form_row(form.nom) }}
+            {{ form_row(form.submit) }}
         </div>
+        {{ form_end(form) }}
         <br>
         <div class="table-container">
             <table>

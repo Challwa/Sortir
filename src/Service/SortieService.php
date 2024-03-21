@@ -60,7 +60,6 @@ class SortieService
                 }
             }
             //gestion état "activité en cours"
-
 //            $dateFinSortie = clone $dateDebut;
 //            $dateFinSortie->add(new DateInterval('PT' . $sortie->getDuree() . 'S'));
 //            if ($dateDebut < $now && $now < $dateFinSortie) {

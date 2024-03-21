@@ -14,22 +14,36 @@ use Symfony\Component\Routing\Attribute\Route;
 class SiteController extends AbstractController
 {
     #[Route(path: '', name: '')]
-    public function sites(EntityManagerInterface $entityManager): Response
+    public function sites(Request $request, EntityManagerInterface $entityManager): Response
     {
+        //Afficher tous les sites
         $sites = $entityManager->getRepository(Site::class)->findAll();
 
-        return $this->render('sites/sites.html.twig', compact('sites'));
+        $form = $this->createForm(SiteType::class);
+        $form->handleRequest($request);
+
+        //filtre de recherche
+        if ($form->isSubmitted()) {
+            $searchData = $form->getData();
+
+            $sites = $entityManager->getRepository(Site::class)->filterSite($searchData);
+        }
+
+        return $this->render('sites/sites.html.twig', [
+            'sites' => $sites,
+            'form' => $form
+        ]);
     }
 
     #[Route(path: 'ajouter', name: 'ajouter')]
     public function create(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $site= new Site();
+        $site = new Site();
         $formSite = $this->createForm(SiteType::class, $site);
 
         $formSite->handleRequest($request);
 
-        if($formSite->isSubmitted()){
+        if ($formSite->isSubmitted()) {
 
             $entityManager->persist($site);
             $entityManager->flush();
