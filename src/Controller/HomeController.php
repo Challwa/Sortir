@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Site;
 use App\Entity\Sortie;
+use App\Service\SortieService;
 use App\Form\SearchType;
 use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
@@ -13,8 +14,16 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+
 class HomeController extends AbstractController
 {
+
+    private $sortieService;
+
+    public function __construct(SortieService $sortieService)
+    {
+        $this->sortieService = $sortieService;
+    }
     #[Route(path: "")]
     #[Route('/home', name: 'app_home', methods: ['GET', 'POST'])]
     public function home(Request $request, EntityManagerInterface $entityManager, SortieRepository $sortieRepository): Response
@@ -22,6 +31,7 @@ class HomeController extends AbstractController
         //gestion du formulaire de recherche par nom (filtre)
         $form = $this->createForm(SearchType::class);
         $form->handleRequest($request);
+        $this->sortieService->updateEtatSortie();
 
         //Récupérer les sorties avec les états
         $sortiesToDisplay = $sortieRepository->findAllWithEtat();

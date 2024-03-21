@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Entity\Etat;
 use App\Entity\Sortie;
 use Doctrine\ORM\EntityManagerInterface;
+use DateInterval;
 
 class SortieService
 {
@@ -18,10 +19,7 @@ class SortieService
 
     public function updateEtatSortie(): void
     {
-
-
         $sorties = $this->entityManager->getRepository(Sortie::class)->findAll();
-
 
         foreach ($sorties as $sortie) {
             $dateFinSortie = clone $sortie->getDateHeureDebut();
@@ -36,16 +34,15 @@ class SortieService
             $now = new \DateTime('now');
 
 
-            //gestion etat "ouverte"
-
-            if ($dateDebut && $dateFinSortie > $now) {
-
+            //gestion tat "ouverte"
+            if ($dateDebut > $now && $dateFinSortie > $now && $sortie->getEtats()->getId() !== 3) {
+                $sortie->setEtats($this->entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'ouverte']));
             }
 
             //gestion état "archivée"
             if ($sortie->getEtats()->getId() === 5 || $sortie->getEtats()->getId() === 6 || $sortie->getEtats()->getId() === 3) {
                 if ($sortie->getDateHeureDebut()->modify('+1 month') < $now) {
-                    $sortie->setEtats($etat = $this->entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'archivee']));
+                    $sortie->setEtats($this->entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'archivee']));
                 }
             }
 
@@ -63,10 +60,13 @@ class SortieService
                 }
             }
             //gestion état "activité en cours"
-            if($dateDebut < $now && $now< ($dateDebut + $sortie->getDuree())) {
-                $etat = $this->entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'activite en cours']);
-                $sortie->setEtats($etat);
-            }
+
+//            $dateFinSortie = clone $dateDebut;
+//            $dateFinSortie->add(new DateInterval('PT' . $sortie->getDuree() . 'S'));
+//            if ($dateDebut < $now && $now < $dateFinSortie) {
+//                $etat = $this->entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'activite en cours']);
+//                $sortie->setEtats($etat);
+//            }
         }
 
         $this->entityManager->flush();
