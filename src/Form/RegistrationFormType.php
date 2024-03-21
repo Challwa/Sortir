@@ -31,20 +31,20 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('pseudo', TextType::class, [
 
-                'data' => 'lisou',
+                'data' => 'update farceurs',
             ])
             ->add('nom', TextType::class, [
 
-                'data' => 'lisou',
+                'data' => 'joker',
             ])
             ->add('prenom', TextType::class, [
 
-                'data' => 'lisou',
+                'data' => 'batman',
             ])
             ->add('telephone')
             ->add('email', TextType::class, [
 
-                'data' => 'lisou@lisou.com',
+                'data' => 'update@farceurs.com',
             ])
             ->add('sites', EntityType::class, [
                 'label' => 'Site',
