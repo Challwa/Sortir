@@ -1,4 +1,4 @@
-{%  extends 'base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}{{ parent() }} | {{ participant.pseudo }} {% endblock %}
 
@@ -20,10 +20,7 @@
         <div>
             <label for="">Site : {{ participant.sites.nom }}</label>
         </div>
-        <div>
-{#            <a href="{{ path('sortie_detail', {'id': sortie.id}) }}"><button>Retour à la sortie</button></a>#}
-{#            test#}
-        </div>
+
     </div>
 
 {% endblock %}

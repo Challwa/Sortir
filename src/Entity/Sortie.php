@@ -56,7 +56,7 @@ class Sortie
     private ?Etat $etats = null;
 
     #[ORM\ManyToOne(inversedBy: 'sorties')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull(message: 'Le lieu de la sortie doit être renseigné.')]
     private ?Lieu $lieux = null;
 
     #[ORM\ManyToOne(inversedBy: 'sorties')]
