@@ -27,12 +27,12 @@ class VilleController extends AbstractController
     #[Route(path: 'ajouter', name: 'ajouter')]
     public function create(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $ville= new Ville();
+        $ville = new Ville();
         $formVille = $this->createForm(VilleType::class, $ville);
-
         $formVille->handleRequest($request);
 
-        if($formVille->isSubmitted()){
+        if($formVille->isSubmitted() && $formVille->isValid()){
+
 
             $entityManager->persist($ville);
             $entityManager->flush();

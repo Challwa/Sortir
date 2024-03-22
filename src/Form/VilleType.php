@@ -27,10 +27,10 @@ class VilleType extends AbstractType
     }
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
-            'data_class' => null,
-            'trim' => true,
-        ]);
+//        $resolver->setDefaults([
+//            'data_class' => null,
+//            'trim' => true,
+//        ]);
     }
 
 }
